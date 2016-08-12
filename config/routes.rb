@@ -1,2 +1,2 @@
-Kuroko2Engine::Engine.routes.draw do
+Kuroko2::Engine.routes.draw do
 end
