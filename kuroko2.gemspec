@@ -9,14 +9,16 @@ Gem::Specification.new do |s|
   s.version     = Kuroko2::VERSION
   s.authors     = ["Eisuke Oishi"]
   s.email       = ["eisuke-oishi@cookpad.com"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of Kuroko2."
-  s.description = "TODO: Description of Kuroko2."
+  s.homepage    = "https://github.com/cookpad/kuroko2"
+  s.summary     = "Kuroko2 is a web-based job scheduler/workflow manager."
+  s.description = "Kuroko2 is a web-based job scheduler/workflow manager created at Cookpad inc."
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
+  s.test_files = Dir["spec/**/*"]
 
-  s.add_dependency "rails", "~> 5.0.0", ">= 5.0.0.1"
-
-  s.add_development_dependency "sqlite3"
+  s.add_dependency "rails", ">= 4.2.5"
+  s.add_development_dependency "mysql2"
+  s.add_development_dependency "rspec-rails"
+  s.add_development_dependency "factory_girl_rails", "~> 4.4.0"
 end
