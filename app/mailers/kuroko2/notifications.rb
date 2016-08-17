@@ -10,7 +10,7 @@ module Kuroko2
       @definition = job_instance.job_definition
       @instance   = job_instance
 
-      attachments.inline['kuroko-logo-horizontal.jpg'] = Rails.root.join('app/assets/images/kuroko-logo-horizontal.png').read
+      attachments.inline['kuroko-logo-horizontal.jpg'] = Kuroko2::Engine.root.join('app/assets/images/kuroko2/kuroko-logo-horizontal.png').read
 
       mail(subject: "[CRITICAL] Failed to execute '#{@definition.name}' on kuroko",
         to:      @definition.admins.map(&:email),
@@ -21,7 +21,7 @@ module Kuroko2
       @definition = job_instance.job_definition
       @instance   = job_instance
 
-      attachments.inline['kuroko-logo-horizontal.jpg'] = Rails.root.join('app/assets/images/kuroko-logo-horizontal.png').read
+      attachments.inline['kuroko-logo-horizontal.jpg'] = Kuroko2::Engine.root.join('app/assets/images/kuroko-logo-horizontal.png').read
 
       mail(subject: "[WARN] '#{@definition.name}' is still in ERROR state",
         to:      @definition.admins.map(&:email),
