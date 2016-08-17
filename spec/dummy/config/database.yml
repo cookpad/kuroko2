@@ -1,25 +1,28 @@
 # SQLite version 3.x
-#   gem install sqlite3
+#   gem install mysql2
 #
 #   Ensure the SQLite 3 gem is defined in your Gemfile
-#   gem 'sqlite3'
+#   gem 'mysql2'
 #
 default: &default
-  adapter: sqlite3
+  adapter: mysql2
+  encoding: utf8
   pool: 5
-  timeout: 5000
+  username: root
+  password:
+  host: 127.0.0.1
 
 development:
   <<: *default
-  database: db/development.sqlite3
+  database: kuroko2_dummy_development
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: db/test.sqlite3
+  database: kuroko2_dummy_test
 
 production:
   <<: *default
-  database: db/production.sqlite3
+  database: kuroko2_dummy_production
