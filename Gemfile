@@ -13,7 +13,7 @@ gemspec
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
 
-group :development, :test do
+group :test do
   gem 'pry-byebug'
   gem 'timecop'
 end
