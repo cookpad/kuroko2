@@ -18,8 +18,6 @@ class User < ActiveRecord::Base
   validates :name, uniqueness: { case_sensitive: false} , presence: true
   validates :email, uniqueness: { case_sensitive: false}, presence: true
 
-  validates_format_of :email, with: /@cookpad.(com|jp)\z/, if: :google_account?
-
   before_create :set_gravatar_image
 
   def self.find_or_create_user(uid, attributes)
