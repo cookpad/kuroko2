@@ -7,8 +7,8 @@ default: &default
   custom_tasks: ~
   notifiers:
     mail:
-      mail_from: 'Kuroko2 <no-reply@cookpad.com>'
-      mail_to: "kuroko@cookpad.com"
+      mail_from: 'Kuroko2 <no-reply@example.com>'
+      mail_to: "kuroko@example.com"
     slack:
       webhook_url: ~
   api_basic_authentication_applications:
