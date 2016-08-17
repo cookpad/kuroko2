@@ -1,0 +1,18 @@
+The following error has occurred while processing your job:
+
+- Name: <%= @definition.name %>
+- URL: <%= job_instance_url %>
+<% if @instance.logs.any? %>
+
+Logs
+```
+<% for log in @instance.logs -%>
+<%= "%s %-5s: %s" % [log.created_at.iso8601, log.level, log.message] %>
+<% end -%>
+```
+<% else -%>
+<% end -%>
+
+Thanks,
+-- 
+Kuroko

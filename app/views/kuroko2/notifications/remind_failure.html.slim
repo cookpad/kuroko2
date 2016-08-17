@@ -1,0 +1,21 @@
+doctype html
+html
+  head
+    title Failed to execute "#{@definition.name}" on Kuroko
+    meta charset='UTF-8'
+    meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'
+  body
+    h1= image_tag attachments['kuroko-logo-horizontal.jpg'].url, width: 290, height: 100
+    p
+      ' This is a reminder mail. The following job is still in
+      span> style="color: #e75521; font-weight: bold;" ERROR
+      ' state.
+    ul
+      li
+        b> Name:
+        = @definition.name
+      li
+        b> URL:
+        = job_instance_url
+
+    p Please fix the error and retry or cancel the job.
