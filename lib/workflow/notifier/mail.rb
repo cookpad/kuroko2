@@ -35,7 +35,7 @@ module Workflow
       private
 
       def deliver_job_failure
-        Notifications.job_failure(@job_instance).deliver_now
+        Kuroko2::Notifications.job_failure(@job_instance).deliver_now
       end
     end
   end
