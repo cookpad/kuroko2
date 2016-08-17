@@ -6,5 +6,7 @@ module Kuroko2
       require 'kaminari'
       require 'chrono'
     end
+
+    config.autoload_paths << root.join('lib')
   end
 end
