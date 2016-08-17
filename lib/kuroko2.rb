@@ -37,13 +37,17 @@ module Kuroko2
   end
 
   if config.action_mailer
-    URI.parse(config.action_mailer.default_url).tap do |url|
-      Kuroko2::Engine.config.action_mailer.default_url_options = {
-        host: url.host,
-        protocol: url.scheme,
-        port: url.port
-      }
+    URI.parse(config.url).tap do |url|
+      config.url_host   = url.host
+      config.url_scheme = url.scheme
+      config.url_port   = url.port
     end
+
+    Kuroko2::Engine.config.action_mailer.default_url_options = {
+      host:     config.url_host,
+      protocol: config.url_scheme,
+      port:     config.url_port
+    }
 
     Kuroko2::Engine.config.action_mailer.delivery_method =
       config.action_mailer.delivery_method.to_sym

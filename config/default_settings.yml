@@ -1,6 +1,6 @@
 default: &default
+  url: 'http://localhost:3000'
   action_mailer:
-    default_url: 'http://localhost:3000'
     delivery_method: 'test'
   execution_logger:
     type: 'Void'

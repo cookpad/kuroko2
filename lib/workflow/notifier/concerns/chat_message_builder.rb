@@ -24,7 +24,12 @@ module Workflow
         end
 
         def job_instance_path
-          Rails.application.routes.url_helpers.job_definition_job_instance_url(@definition, @instance, host: 'kuroko2.ckpd.co', protocol: 'https')
+          Rails.application.routes.url_helpers.job_definition_job_instance_url(
+            @definition,
+            @instance,
+            host: Kuroko2.config.url_host,
+            protocol: Kuroko2.config.url_scheme,
+          )
         end
       end
     end
