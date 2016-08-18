@@ -1,0 +1,23 @@
+default: &default
+  url: 'http://localhost:3000'
+  action_mailer:
+    delivery_method: 'test'
+  execution_logger:
+    type: 'Void'
+  custom_tasks: ~
+  notifiers:
+    mail:
+      mail_from: 'Kuroko2 <no-reply@example.com>'
+      mail_to: "kuroko@example.com"
+    slack:
+      webhook_url: ~
+  api_basic_authentication_applications:
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default
