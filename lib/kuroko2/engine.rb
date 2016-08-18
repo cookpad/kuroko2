@@ -9,15 +9,13 @@ module Kuroko2
 
     config.autoload_paths << root.join('lib')
 
-    config.before_initialize do
+    initializer "kuroko2.configuration" do |app|
       URI.parse(Kuroko2.config.url).tap do |url|
         Kuroko2.config.url_host   = url.host
         Kuroko2.config.url_scheme = url.scheme
         Kuroko2.config.url_port   = url.port
       end
-    end
 
-    initializer "kuroko2.configuration" do |app|
       if Kuroko2.config.custom_tasks
         Kuroko2.config.custom_tasks.each do |key, klass|
           unless Workflow::Node::TASK_REGISTORY.has_key?(key)
