@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     kuroko2 (0.1.0)
+      addressable
       chrono
       hashie
       kaminari
@@ -45,6 +46,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    addressable (2.4.0)
     arel (6.0.3)
     builder (3.2.2)
     byebug (9.0.5)

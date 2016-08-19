@@ -24,4 +24,5 @@ Gem::Specification.new do |s|
   s.add_dependency "kaminari"
   s.add_dependency "chrono"
   s.add_dependency "hashie"
+  s.add_dependency "addressable"
 end

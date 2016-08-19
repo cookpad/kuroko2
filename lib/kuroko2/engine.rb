@@ -5,6 +5,7 @@ module Kuroko2
     config.before_configuration do
       require 'kaminari'
       require 'chrono'
+      require 'addressable'
     end
 
     config.autoload_paths << root.join('lib')
