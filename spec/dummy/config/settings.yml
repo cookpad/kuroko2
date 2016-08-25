@@ -10,8 +10,8 @@ default: &default
       mail_from: 'Kuroko2 <no-reply@example.com>'
       mail_to: "kuroko@example.com"
     slack:
-      webhook_url: ~
-  api_basic_authentication_applications:
+      webhook_url: 'https://localhost/test/slack'
+  api_basic_authentication_applications: ~
 
 development:
   <<: *default
