@@ -90,7 +90,7 @@ module Command
       Kuroko2.logger.info { message }
       execution.job_instance.logs.warn(message)
 
-      Notifications.process_absence(execution, @hostname).deliver_now
+      Kuroko2::Notifications.process_absence(execution, @hostname).deliver_now
       execution.touch(:mailed_at)
     end
 
@@ -100,7 +100,7 @@ module Command
         Kuroko2.logger.info { message }
         execution.job_instance.logs.warn(message)
 
-        Notifications.executor_not_assigned(execution, @hostname).deliver_now
+        Kuroko2::Notifications.executor_not_assigned(execution, @hostname).deliver_now
         execution.touch(:mailed_at)
       end
     end
