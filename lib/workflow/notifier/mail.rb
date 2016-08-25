@@ -29,7 +29,7 @@ module Workflow
       end
 
       def notify_long_elapsed_time
-        Notifications.notify_long_elapsed_time(@job_instance).deliver_now
+        Kuroko2::Notifications.notify_long_elapsed_time(@job_instance).deliver_now
       end
 
       private
