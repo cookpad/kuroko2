@@ -6,6 +6,9 @@ module Kuroko2
       require 'kaminari'
       require 'chrono'
       require 'addressable'
+      require 'aws-sdk'
+      require 'retryable'
+      require 'faraday'
     end
 
     config.autoload_paths << root.join('lib')

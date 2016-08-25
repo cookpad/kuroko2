@@ -25,4 +25,7 @@ Gem::Specification.new do |s|
   s.add_dependency "chrono"
   s.add_dependency "hashie"
   s.add_dependency "addressable"
+  s.add_dependency 'aws-sdk', '~> 2'
+  s.add_dependency 'retryable'
+  s.add_dependency 'faraday'
 end
