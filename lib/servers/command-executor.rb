@@ -1,4 +1,5 @@
 require 'kuroko2'
+require 'serverengine'
 
 if Rails.env.development?
   ActionMailer::Base.logger = Kuroko2.logger
