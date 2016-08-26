@@ -1,3 +1,10 @@
+require 'kaminari'
+require 'chrono'
+require 'addressable'
+require 'aws-sdk'
+require 'retryable'
+require 'faraday'
+
 require "kuroko2/engine"
 require "kuroko2/configuration"
 

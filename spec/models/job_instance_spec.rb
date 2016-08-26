@@ -49,7 +49,10 @@ describe JobInstance do
   end
 
   describe '#generate_token' do
-    before { create(:job_instance, job_definition: definition) }
+    before do
+      ActionMailer::Base.deliveries.clear
+      create(:job_instance, job_definition: definition)
+    end
     subject! { definition.job_instances.create }
 
     context 'notify_cancellation is false' do
