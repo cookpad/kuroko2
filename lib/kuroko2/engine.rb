@@ -2,15 +2,6 @@ module Kuroko2
   class Engine < ::Rails::Engine
     isolate_namespace Kuroko2
 
-    config.before_configuration do
-      require 'kaminari'
-      require 'chrono'
-      require 'addressable'
-      require 'aws-sdk'
-      require 'retryable'
-      require 'faraday'
-    end
-
     config.autoload_paths << root.join('lib')
 
     initializer "kuroko2.configuration" do |app|
