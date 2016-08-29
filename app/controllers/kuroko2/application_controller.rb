@@ -14,7 +14,7 @@ class Kuroko2::ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   helper_method :current_user, :signed_in?
-  before_action :require_sign_in, :set_raven_context
+  before_action :require_sign_in
 
   rescue_from HTTP::BadRequest do
     respond_to do |format|
@@ -54,12 +54,4 @@ class Kuroko2::ApplicationController < ActionController::Base
       redirect_to sign_in_path(return_to: url_for(params.merge(only_path: true)))
     end
   end
-
-  def set_raven_context
-    Raven.tags_context revision: REVISION
-    if signed_in?
-      Raven.user_context id: current_user.id, name: "#{current_user.first_name} #{current_user.last_name}"
-    end
-  end
-
 end
