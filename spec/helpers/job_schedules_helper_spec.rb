@@ -1,4 +1,4 @@
 require 'rails_helper'
 
-describe JobSchedulesHelper do
+describe Kuroko2::JobSchedulesHelper do
 end

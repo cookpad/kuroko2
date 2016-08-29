@@ -1,4 +1,4 @@
 require 'rails_helper'
 
-describe TokensHelper do
+describe Kuroko2::TokensHelper do
 end

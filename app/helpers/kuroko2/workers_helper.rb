@@ -1,2 +1,4 @@
-module WorkersHelper
+module Kuroko2
+  module WorkersHelper
+  end
 end

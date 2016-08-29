@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe JobDefinitionsHelper do
+describe Kuroko2::JobDefinitionsHelper do
   describe '#first_line' do
     subject { first_line(text) }
 

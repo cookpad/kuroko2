@@ -1,4 +1,4 @@
 require 'rails_helper'
 
-describe ExecutionsHelper do
+describe Kuroko2::ExecutionsHelper do
 end

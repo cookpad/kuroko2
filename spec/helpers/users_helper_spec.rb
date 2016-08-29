@@ -1,4 +1,4 @@
 require 'rails_helper'
 
-describe UsersHelper do
+describe Kuroko2::UsersHelper do
 end

@@ -1,4 +1,4 @@
 require 'rails_helper'
 
-describe WorkersHelper do
+describe Kuroko2::WorkersHelper do
 end

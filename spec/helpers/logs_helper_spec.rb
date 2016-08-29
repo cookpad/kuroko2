@@ -1,4 +1,4 @@
 require 'rails_helper'
 
-describe LogsHelper do
+describe Kuroko2::LogsHelper do
 end
