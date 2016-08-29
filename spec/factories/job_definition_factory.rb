@@ -8,7 +8,7 @@ FactoryGirl.define do
     memory_expectancy { create_memory_expectancy! }
 
     factory :job_definition_with_instances do
-      ignore do
+      transient do
         job_instances_count 1
         job_instances_token_status Token::WORKING
       end
