@@ -4,6 +4,9 @@ require 'addressable'
 require 'aws-sdk'
 require 'retryable'
 require 'faraday'
+require 'html/pipeline'
+require 'slim-rails'
+require 'jbuilder'
 
 require "kuroko2/engine"
 require "kuroko2/configuration"
