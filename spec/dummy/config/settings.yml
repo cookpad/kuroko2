@@ -12,6 +12,8 @@ default: &default
       mail_to: "kuroko@example.com"
     slack:
       webhook_url: 'https://localhost/test/slack'
+    hipchat:
+      api_token: 'token'
   api_basic_authentication_applications: ~
 
 development:
