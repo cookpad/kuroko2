@@ -7,6 +7,8 @@ require 'faraday'
 require 'html/pipeline'
 require 'slim-rails'
 require 'jbuilder'
+require 'garage'
+require 'weak_parameters'
 
 require "kuroko2/engine"
 require "kuroko2/configuration"
