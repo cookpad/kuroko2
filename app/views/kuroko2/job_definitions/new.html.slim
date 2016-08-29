@@ -1,0 +1,12 @@
+- @title = 'New Job Definition'
+- @content_title = '<i class="fa fa-database"></i> New Job Definition'
+
+- content_for :breadcrumb do
+  ol.breadcrumb
+    li= link_to raw('<i class="fa fa-database"></i> Job Definitions'), job_definitions_path
+    li.active New Job Definition
+
+= render 'alert'
+
+.box.box-solid
+  = render 'form'

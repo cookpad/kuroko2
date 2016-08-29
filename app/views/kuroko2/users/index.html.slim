@@ -1,0 +1,55 @@
+- @title = 'Users' + (params[:target] == 'group' ? ' > Groups' : '')
+- @content_title = "<i class=\"fa fa-users\"></i> Users#{params[:target] == 'group' ? ' <i class="fa fa-angle-double-right"></i> Groups' : ''}"
+- @scope = @users
+
+- if @user.errors.any?
+  .alert.alert-danger
+    i.fa.fa-ban
+    h4 #{pluralize(@user.errors.count, "error")} prohibited this employee from being saved:
+    ul
+    - @user.errors.full_messages.each do |message|
+      li= message
+
+.row
+  .col-md-7
+    .box
+      .box-header
+        h3.box-title All Users
+      .box-body.table-responsive.no-padding
+        table#users.table.table-hover data-definitions-path="#{users_path}"
+          thead
+            tr
+              th #
+              th.col-md-5 Name
+              th.col-md-5 Email
+              th.col-md-1 &nbsp;
+              th.col-md-1 &nbsp;
+          tbody
+            - for user in @users do
+              tr
+                td= user.id
+                td.no-decorate= link_to user.name, user_path(user)
+                td= user.email
+                td
+                  - unless user.google_account?
+                    span.label.label-default Group
+                  - if user.suspended_at?
+                    span.label.label-warning Suspended
+                td= link_to raw('<i class="fa fa-chevron-right"></i> View Details'), user, class: 'btn btn-sm btn-default'
+      .box-footer
+        = paginate @users, theme: 'list'
+
+  .col-md-5
+    .box
+      .box-header
+        h3.box-title New Mail Address
+      .box-body
+        = form_for @user, url: users_path, role: 'form', method: :post do |form|
+          .form-group
+            = form.label :name
+            = form.text_field :name, class: 'form-control', placeholder: 'Group Name'
+          .form-group
+            = form.label :email
+            = form.text_field :email, class: 'form-control', placeholder: 'group@example.com'
+          .form-group
+            = form.submit 'Add mail address', class: 'btn btn-default'

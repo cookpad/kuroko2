@@ -1,0 +1,7 @@
+- if @definition.errors.any?
+  .alert.alert-danger
+    i.fa.fa-ban
+    h4 #{pluralize(@definition.errors.count, "error")} prohibited this employee from being saved:
+    ul
+    - @definition.errors.full_messages.each do |message|
+      li= message

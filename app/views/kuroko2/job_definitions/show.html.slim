@@ -1,0 +1,90 @@
+- @title = "##{@definition.id} #{@definition.name} « Job Definitions"
+- @content_title = "Job Definition Details"
+
+- content_for :breadcrumb do
+  ol.breadcrumb
+    li= link_to raw('<i class="fa fa-database"></i> Job Definitions'), job_definitions_path
+    li.active Details
+
+.row
+  .col-md-7
+    .box
+      .box-header
+        h2.box-title.star-holder #{star_link_for(@definition)} ##{@definition.id} #{@definition.name}
+        - if @definition.suspended?
+          .box-tools.pull-right
+            span.label.label-warning SUSPENDED
+      .box-body
+        .description= markdown_format @definition.description
+
+        h4= 'Tags'
+        - for tag in @definition.tags
+          =link_to tag.name, job_definitions_path(tag: [tag.name]), class: 'badge'
+
+        h3= 'Administrator'.pluralize(@definition.admins.count)
+        ul.media-list
+          - for admin in @definition.admins
+            li.media
+              span.pull-left
+                img.img-rounded src="#{admin.image}" height='20' width='20'
+              .media-body.no-decorate= link_to admin.name, user_path(admin)
+        h3 Script
+        pre.kuroko-script #{@definition.script}
+
+        'API execution allowed: #{@definition.api_allowed ? 'Yes' : 'No'}
+
+        h4 Estimated Memory Consumption
+        p
+          strong #{number_with_delimiter(@definition.memory_expectancy.expected_value)} Kbytes
+
+        h3 Options
+        h4 Notification
+        ul
+          - if @definition.hipchat_room.present? || @definition.slack_channel.present?
+            - if @definition.hipchat_notify_finished?
+              li
+                'Notify all event to Slack/Hipchat
+                ul
+                  li hipchat room: #{@definition.hipchat_room}
+                  li slack channel: #{@definition.slack_channel}
+                  - if @definition.hipchat_additional_text
+                    li Failure notification text: #{@definition.hipchat_additional_text}
+            - else
+              li
+                'Notify failure event to Slack/Hipchat
+                ul
+                  li hipchat room: #{@definition.hipchat_room}
+                  li slack channel: #{@definition.slack_channel}
+                  - if @definition.hipchat_additional_text
+                    li Failure notification text: #{@definition.hipchat_additional_text}
+
+          - if @definition.notify_cancellation
+            li Notify administrators when the job is cancelled by system.
+
+          - if !@definition.hipchat_room.present? && !@definition.slack_channel && !@definition.notify_cancellation
+            li None
+
+        h4 Next Job Execution
+        ul
+          - case @definition.prevent_multi
+          - when 0
+            li Always launch next job (allow parallel execution)
+          - when 1
+            li Prevent if current job is WORKING or ERROR
+          - when 2
+            li Prevent if current job is WORKING
+          - when 3
+            li Prevent if current job is ERROR
+
+      .box-footer
+        .row
+          .col-md-6
+            = link_to 'Edit Job Definition', edit_job_definition_path(@definition), class: 'btn btn-default btn-block', role: 'button'
+          .col-md-6
+            = link_to 'Destroy Job Definition', @definition, method: :delete, class: 'btn btn-default btn-block', role: 'button', data: { confirm: 'Are you sure?' }
+  .col-md-5#schedules-holder
+    = render template: 'job_schedules/index'
+  .col-md-5#suspend-schedules-holder
+    = render template: 'job_suspend_schedules/index'
+  .col-md-5#instances-holder
+    = render template: 'job_instances/index'

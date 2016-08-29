@@ -1,0 +1,31 @@
+- @title = "Job Timelines"
+- @content_title = "<i class=\"fa fa-clock-o\"></i> #{@user.name}'s Job Timelines"
+- @content_title << " tagged by #{params[:tag].join(',')}" if params[:tag].present?
+
+.row
+  .col-md-12
+    .box
+      .box-header
+        nav class="navbar navbar-default"
+          div class="container-fluid"
+            div class="navbar-header"
+              a class="navbar-brand" href="#" Period
+            div class="" id="period-nav"
+              ul class="nav navbar-nav"
+                li class="#{params[:period] == '1h' || !params[:period] ? 'active' : ''}"
+                  = link_to '1 hour', job_timelines_path(params.permit(:user_id, tag: []).merge(period: '1h'))
+                li class="#{params[:period] == '3h' ? 'active' : ''}"
+                  = link_to '3 hours', job_timelines_path(params.permit(:user_id, tag: []).merge(period: '3h'))
+                li class="#{params[:period] == '6h' ? 'active' : ''}"
+                  = link_to '6 hours', job_timelines_path(params.permit(:user_id, tag: []).merge(period: '6h'))
+                li class="#{params[:period] == '12h' ? 'active' : ''}"
+                  = link_to '12 hours', job_timelines_path(params.permit(:user_id, tag: []).merge(period: '12h'))
+                li class="#{params[:period] == '1d' ? 'active' : ''}"
+                  = link_to '1 day', job_timelines_path(params.permit(:user_id, tag: []).merge(period: '1d'))
+                li class="#{params[:period] == '3d' ? 'active' : ''}"
+                  = link_to '3 days', job_timelines_path(params.permit(:user_id, tag: []).merge(period: '3d'))
+                li class="#{params[:period] == '1w' ? 'active' : ''}"
+                  = link_to '1 week', job_timelines_path(params.permit(:user_id, tag: []).merge(period: '1w'))
+
+      .box-body
+        div#timeline data-dataset-path="#{dataset_job_timelines_path(params.permit(:user_id, :period, tag: []))}"

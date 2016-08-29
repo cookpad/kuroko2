@@ -1,0 +1,58 @@
+.box#instances data-instances-path="#{job_definition_job_instances_path(@definition)}"
+  .box-header
+    .row
+      .col-md-6
+        h3.box-title Job&nbsp;Instances
+      .col-md-6
+        .row
+          .col-md-6.right-button
+            = link_to raw('<i class="fa fa-bar-chart"></i> Show Stats'), job_definition_job_definition_stats_path(@definition), class: 'btn btn-default btn-small'
+          .col-md-6.right-button
+            button type="button" class="btn btn-default btn-small" data-toggle="modal" data-target="#launchAdHocModal"
+              i class="fa fa-play-circle"
+              'Launch
+  .box-body.table-responsive
+    table.table.table-hover
+      tbody
+        tr
+          th #
+          th Status
+          th Started at
+          th Elapsed Time
+          th &nbsp;
+        - for instance in @instances
+          tr
+            td= instance.id
+            td= labeled_status(instance)
+            td= l(instance.created_at, format: :short)
+            td
+              - if instance.created_at && instance.finished_at
+                = distance_of_time(instance.created_at, instance.finished_at)
+              - else
+                '-
+            td
+              = link_to raw('<i class="fa fa-chevron-right"></i>Details'), job_definition_job_instance_path(job_definition_id: @definition.id, id: instance.id), class: 'btn btn-default btn-xs'
+  .box-footer
+    = paginate @instances, remote: true, theme: 'history'
+
+.modal.fade id="launchAdHocModal" tabindex="-1" role="dialog" aria-labelledby="launchAdHocModalLabel"
+  .modal-dialog
+    .modal-content
+      = form_for @definition, url: job_definition_job_instances_path(@definition), method: :post, html: { role: 'form' } do |form|
+
+        .modal-header
+          button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          span aria-hidden="true"
+            times
+          h4.modal-title
+            'Launch Job
+        .modal-body
+          .form-group
+            = form.label :script
+            = form.text_area :script, class: 'form-control script-input', rows: 10, value: @definition.script
+
+        .modal-footer
+          button type="button" class="btn btn-default" data-dismiss="modal"
+            'Cancel
+          button type="submit" class="btn btn-primary"
+            'Launch

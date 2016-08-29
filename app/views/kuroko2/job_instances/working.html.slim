@@ -1,0 +1,37 @@
+- @title = "Working Jobs"
+- @content_title = '<i class="fa fa-spinner"></i> Working Jobs'
+
+.box
+  .box-header
+    .row
+      .col-md-4
+        h3.box-title Working Jobs
+  - if @instances.empty?
+    .box-body
+      .text-muted.well.well-sm.no-shadow There are no working jobs.
+  - else
+    .box-body.table-responsive
+      table.table.table-hover
+        tbody
+          tr
+            th #
+            th Status
+            th Job Name
+            th Job Description
+            th Admins
+            th Started at
+            th &nbsp;
+          - for instance in @instances
+            - definition = instance.job_definition
+            tr
+              td= instance.id
+              td= labeled_status(instance)
+              td.no-decorate= link_to definition.name, job_definition_job_instance_path(instance.job_definition, instance)
+              td= first_line(definition.description)
+              td.no-decorate
+                - definition.admins.each do |user|
+                  = link_to user.name, user_path(user)
+                  br
+              td.nowrap= l(instance.created_at, format: :short)
+              td
+                = link_to raw('<i class="fa fa-chevron-right"></i>Details'), job_definition_job_instance_path(job_definition_id: instance.job_definition.id, id: instance.id), class: 'btn btn-default btn-xs'

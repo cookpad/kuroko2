@@ -1,0 +1,42 @@
+.box#instance data-instance-path="#{naked_job_definition_job_instance_path(@definition, @instance)}"
+  .box-header
+    h2.box-title
+      = link_to "##{@definition.id} #{@definition.name}", job_definition_path(@definition)
+  .box-body
+    table.table
+      tr
+        th Status
+        td#instance-status= labeled_status(@instance)
+      tr
+        th Job Definition Version
+        td= @instance.job_definition_version || '-'
+      tr
+        th Max Memory Consumption
+        td= @instance.memory_consumption_log ? "#{@instance.memory_consumption_log.value} Kbytes" : '-'
+      tr
+        th Created at
+        td= @instance.created_at || '-'
+      tr
+        th Finished at
+        td= @instance.finished_at || '-'
+      tr
+        th Elapsed Time
+        td
+          - if @instance.created_at && @instance.finished_at
+            = distance_of_time(@instance.created_at, @instance.finished_at)
+          - else
+            '-
+      tr
+        th Canceled at
+        td= @instance.canceled_at || '-'
+      tr
+        th Error at
+        td= @instance.error_at || '-'
+    h4 Script
+    pre.kuroko-script= @instance.script
+  .box-footer
+    .row
+      #cancel-button.col-md-4.col-md-offset-8
+        = link_to 'Cancel', job_definition_job_instance_path(@definition, @instance), class: 'btn btn-default btn-block', role: 'button', method: :delete, disabled: !@instance.cancelable?
+      #force-cancel-button.col-md-4.col-md-offset-8.display-none
+        = link_to 'Force Cancel', force_destroy_job_definition_job_instance_path(@definition, @instance), class: 'btn btn-danger btn-block', role: 'button', method: :delete, disabled: !@instance.working?

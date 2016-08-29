@@ -1,0 +1,27 @@
+.box#suspend-schedules data-suspend-schedules-path="#{job_definition_job_suspend_schedules_path(@definition)}"
+  .box-header
+    .row
+      .col-md-12
+        h3.box-title <i class="fa fa-minus-square" aria-hidden="true"></i> Job&nbsp;Suspend Schedules
+  .box-body
+    - if @suspend_schedules.present?
+      .no-padding
+        table.table.table-condensed
+          tbody
+            tr
+              th CRON
+              th &nbsp;
+            - for schedule in @suspend_schedules
+              tr
+                td
+                  .log= schedule.cron
+                td= link_to 'Delete', job_definition_job_suspend_schedule_path(job_definition_id: @definition.id, id: schedule.id), class: 'btn btn-default btn-xs', method: :delete, remote: true
+    - else
+      .text-muted.well.well-sm.no-shadow There are no suspend schedules.
+  = form_for([@definition, @suspend_schedule], remote: true) do |form|
+    .box-body
+      #suspend-cron-field.row.form-group
+        .col-md-8
+          = form.text_field :cron, class: 'form-control script-input', placeholder: '0 9 * * *'
+        .col-md-4
+          = form.submit 'Add Suspend Schedule', class: 'btn btn-default btn-block'

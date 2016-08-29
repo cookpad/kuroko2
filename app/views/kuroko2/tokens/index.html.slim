@@ -1,0 +1,42 @@
+- @instance.tokens.any?
+  .box#tokens data-tokens-path="#{job_definition_job_instance_tokens_path(@definition, @instance)}"
+    .box-header
+      .row
+        .col-md-8
+          h3.box-title Working Tokens
+        .col-md-4.right-button
+          = link_to 'Cancel', job_definition_job_instance_path(@definition, @instance), class: 'btn btn-default btn-block btn-small pull-right', role: 'button', method: :delete, disabled: !@instance.cancelable?
+    .box-body.table-responsive
+      .row
+        .col-md-12
+          table.table.table-condensed.table-hover
+            - for token in @instance.tokens
+              tr
+                td.col-md-1= labeled_token_status(token.status_name)
+                td.col-md-2= truncate(token.uuid, length: 11)
+                td.col-md-3= token.path
+                td.col-md-3= button_to('Retry',
+                                    job_definition_job_instance_token_path(job_definition_id: @definition.id, job_instance_id: @instance.id, id: token.id),
+                                    method: :patch,
+                                    params: { invoke: 'retry' },
+                                    class: 'btn btn-default btn-block btn-xs',
+                                    role: 'button',
+                                    disabled: !token.failure?)
+                td.col-md-3= button_to('Skip',
+                                    job_definition_job_instance_token_path(job_definition_id: @definition.id, job_instance_id: @instance.id, id: token.id),
+                                    method: :patch,
+                                    params: { invoke: 'skip' },
+                                    class: 'btn btn-default btn-block btn-xs',
+                                    role: 'button',
+                                    disabled: !token.failure?,
+                                    data: { confirm: 'Continue executing job script? If not, use "Cancel" button.' })
+              - if (execution = token.execution)
+                tr
+                  td &nbsp;
+                  td colspan='3' = execution.shell
+                  td colspan='2' = button_to('Terminate',
+                                                   job_definition_job_instance_execution_path(job_definition_id: @definition.id, job_instance_id: @instance.id, id: execution.id),
+                                                   method: :delete,
+                                                   class: 'btn btn-default btn-block btn-xs',
+                                                   role: 'button',
+                                                   disabled: !execution.pid?)

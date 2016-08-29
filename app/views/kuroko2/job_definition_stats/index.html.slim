@@ -1,0 +1,48 @@
+- @title = 'Job Definition Stats'
+- @content_title = '<i class="fa fa-bar-chart"></i> Job Definition Stats'
+
+- content_for :breadcrumb do
+  ol.breadcrumb
+    li= link_to job_definitions_path do
+      i class="fa fa-database"
+      Job Definitions
+    li= link_to 'Details', job_definition_path(@definition)
+    li.active Stats
+
+.row
+  .col-md-12
+    h3 ##{@definition.id} #{@definition.name}
+
+    .box
+      nav class="navbar navbar-default"
+        div class="container-fluid"
+          div class="navbar-header"
+            a class="navbar-brand" href="#" Period
+          div class="" id="period-nav"
+            ul class="nav navbar-nav"
+              li class="#{params[:period] == '1d' ? 'active' : ''}"
+                = link_to '1 day', job_definition_job_definition_stats_path(@definition, period: '1d')
+              li class="#{params[:period] == '3d' ? 'active' : ''}"
+                = link_to '3 days', job_definition_job_definition_stats_path(@definition, period: '3d')
+              li class="#{params[:period] == '1w' ? 'active' : ''}"
+                = link_to '1 week', job_definition_job_definition_stats_path(@definition, period: '1w')
+              li class="#{params[:period] == '2w' ? 'active' : ''}"
+                = link_to '2 weeks', job_definition_job_definition_stats_path(@definition, period: '2w')
+
+              li class="#{params[:period] == '1m' ? 'active' : ''}"
+                = link_to '1 month', job_definition_job_definition_stats_path(@definition, period: '1m')
+              li class="#{params[:period] == '2m' ? 'active' : ''}"
+                = link_to '2 months', job_definition_job_definition_stats_path(@definition, period: '2m')
+              li class="#{params[:period] == '3m' ? 'active' : ''}"
+                = link_to '3 months', job_definition_job_definition_stats_path(@definition, period: '3m')
+
+    .box
+      .box-header
+        h3.box-title Execution Time
+      .box-body
+        div#execution-time data-execution-time-path="#{execution_time_job_definition_job_definition_stats_path(@definition, period: params[:period])}"
+    .box
+      .box-header
+        h3.box-title Memory Usage
+      .box-body
+        div#memory data-memory-path="#{memory_job_definition_job_definition_stats_path(@definition, period: params[:period])}"

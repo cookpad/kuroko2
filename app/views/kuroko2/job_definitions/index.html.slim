@@ -1,0 +1,11 @@
+- @title = 'Job Definitions'
+- @content_title = '<i class="fa fa-database"></i> Job Definitions'
+
+.row
+  .col-md-9
+    .box#search_results
+      = render 'search_results', { definitions: @definitions, input_tags: @input_tags, params: params }
+
+  .col-md-3
+    .box#tags
+      = render 'taglist', { input_tags: @input_tags, related_tags: @related_tags, add_params: { q: params[:q] } }

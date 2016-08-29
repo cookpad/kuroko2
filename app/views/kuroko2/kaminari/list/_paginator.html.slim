@@ -1,0 +1,17 @@
+.row
+  .col-xs-4
+    - unless current_page.first?
+      - if params[:q].present? || params[:tag].present?
+        = link_to_previous_page(@scope, '« Prev', class: 'btn btn-default btn-sm btn-block', role: 'button', params: { q: params[:q], tag: params[:tag] }, remote: remote)
+      - else
+        = link_to_previous_page(@scope, '« Prev', class: 'btn btn-default btn-sm btn-block', role: 'button', remote: remote)
+    - else
+      a.btn.btn-default.btn-sm.btn-block.disabled role='button' « Prev
+  .col-xs-4.col-xs-offset-4
+    - unless current_page.last?
+      - if params[:q].present? || params[:tag].present?
+        = link_to_next_page(@scope, 'Next »', class: 'btn btn-default btn-sm btn-block', role: 'button', params: { q: params[:q], tag: params[:tag] }, remote: remote)
+      - else
+        = link_to_next_page(@scope, 'Next »', class: 'btn btn-default btn-sm btn-block', role: 'button', remote: remote)
+    - else
+      button.btn.btn-default.btn-sm.btn-block.disabled role='button' Next »

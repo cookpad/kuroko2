@@ -1,0 +1,15 @@
+.row
+  .col-xs-4
+    - unless current_page.first?
+      = link_to('« New',
+                paged_job_definition_job_instances_path(job_definition_id: @definition.id, page: current_page - 1),
+                class: 'btn btn-default btn-sm btn-block', role: 'button', remote: true)
+    - else
+      a.btn.btn-default.btn-sm.btn-block.disabled role='button' « New
+  .col-xs-4.col-xs-offset-4
+    - unless current_page.last?
+      = link_to('Old »',
+                 paged_job_definition_job_instances_path(job_definition_id: @definition.id, page: current_page + 1),
+                 class: 'btn btn-default btn-sm btn-block', role: 'button', remote: true)
+    - else
+      button.btn.btn-default.btn-sm.btn-block.disabled role='button' Old »

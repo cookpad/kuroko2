@@ -1,0 +1,19 @@
+- @title = "##{@definition.id} #{@definition.name} « Jobs"
+- @content_title = "Job Instance Details"
+
+- content_for :breadcrumb do
+  ol.breadcrumb
+    li= link_to raw('<i class="fa fa-database"></i> Job Definitions'), job_definitions_path
+    li= link_to 'Definition Details', job_definition_path(@definition.id)
+    li.active Job Instance
+
+.row
+  .col-md-6#instance-holder
+    = render 'instance'
+
+  .col-md-6#tokens-holder
+    = render template: 'tokens/index'
+
+.row
+  .col-md-12#logs-holder
+    = render template: 'logs/index'

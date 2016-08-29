@@ -1,0 +1,49 @@
+- @title = 'Dashboard'
+- @content_title = '<i class="fa fa-dashboard"></i> Dashboard'
+
+.row
+  .col-md-7
+    .box#definitions
+      .box-header
+        .row
+          .col-md-9
+            h2.box-title
+              i.fa.fa-star
+              ' Favorite Job Definitions
+              - if @input_tags.present?
+                'tagged by #{@input_tags.join(',')}
+          .col-md-3.right-button
+            = link_to raw('<i class="fa fa-clock-o"></i> Show Timeline'), job_timelines_path(params.permit(tag: [])), class: 'btn btn-default btn-small btn-block js-to-timeline'
+
+      .box-body.table-responsive#definitions_list
+        = render 'job_definitions/list', { definitions: @definitions }
+  .col-md-5
+    .box#tags
+      = render 'taglist', { input_tags: @input_tags, related_tags: @related_tags }
+  .col-md-5
+    .box#instances
+      .box-header
+        h2.box-title
+          i.fa.fa-star
+          ' Working Jobs of Your Favorites
+      - if @instances.any?
+        .box-body.table-responsive
+          table.table.table-hover
+            tbody
+              tr
+                th #
+                th Status
+                th Job Definition Name
+                th Started at
+                th &nbsp;
+              - for instance in @instances
+                tr
+                  td= instance.id
+                  td= labeled_status(instance)
+                  td.no-decorate= link_to instance.job_definition.name, job_definition_job_instance_path(instance.job_definition, instance)
+                  td.nowrap= l(instance.created_at, format: :short)
+                  td
+                    = link_to raw('<i class="fa fa-chevron-right"></i>Details'), job_definition_job_instance_path(instance.job_definition, instance), class: 'btn btn-default btn-xs'
+      - else
+        .box-body
+          .text-muted.well.well-sm.no-shadow There are no working jobs.

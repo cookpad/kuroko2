@@ -1,0 +1,23 @@
+- @title = 'Sign in'
+
+doctype html
+html.bg-black
+  head
+    title #{@title} « Kuroko 2
+    meta charset='UTF-8'
+    meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'
+    = stylesheet_link_tag 'application'
+    = javascript_include_tag 'application'
+  body.bg-black
+    #login-box.form-box
+      .header Sign In
+      .body
+        p.lead Please sign in with Google account.
+        .text-center
+          a.btn.btn-social.btn-google-plus href=auth_path("google_oauth2", state: params[:return_to])
+            i.fa.fa-google-plus
+            span Sign in with Google
+      .footer
+        p
+         ' If you have a question about Kuroko 2 feel free to
+         a href='mailto:tech-dept@cookpad.com' contact us.

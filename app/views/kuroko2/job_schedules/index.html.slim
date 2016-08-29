@@ -1,0 +1,32 @@
+.box#schedules data-schedules-path="#{job_definition_job_schedules_path(@definition)}"
+  .box-header
+    .row
+      .col-md-12
+        h3.box-title <i class="fa fa-calendar" aria-hidden="true"></i> Job&nbsp;Schedules
+
+  .box-body
+    - if @schedules.present?
+      .no-padding
+        table.table.table-condensed
+          tbody
+            tr
+              th CRON
+              th Next
+              th &nbsp;
+            - for schedule in @schedules
+              tr
+                td
+                  .log= schedule.cron
+                td
+                  - next_schedule = schedule.next
+                  = next_schedule ? l(next_schedule, format: :short) : '-'
+                td= link_to 'Delete', job_definition_job_schedule_path(job_definition_id: @definition.id, id: schedule.id), class: 'btn btn-default btn-xs', method: :delete, remote: true
+    - else
+      .text-muted.well.well-sm.no-shadow There are no schedules.
+  = form_for([@definition, @schedule], remote: true) do |form|
+    .box-body
+      #cron-field.row.form-group
+        .col-md-8
+          = form.text_field :cron, class: 'form-control script-input', placeholder: '0 9 * * *'
+        .col-md-4
+          = form.submit 'Add Schedule', class: 'btn btn-default btn-block'

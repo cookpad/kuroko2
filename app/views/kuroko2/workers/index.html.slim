@@ -1,0 +1,40 @@
+- @title = 'Kuroko Workers'
+- @content_title = '<i class="fa fa-rocket"></i> Kuroko Workers'
+
+.box#workers
+  .box-header
+    h3.box-title Kuroko Workers
+  .box-body.table-responsive
+    table.table.table-hover
+      tbody
+        tr
+          th.col-md-2 Hostname
+          th.col-md-1 WID
+          th.col-md-2 Queue
+          th.col-md-1 Status
+          th.col-md-5 Execution
+          th.col-md-1 &nbsp;
+        - for worker in @workers
+          tr
+            td= worker.hostname
+            td= worker.worker_id
+            td= worker.queue
+            td
+              - if worker.working
+                span.label.label-primary WORKING
+              - else
+                '&nbsp;
+            td
+              - if worker.execution
+                .log= worker.execution.shell
+              - elsif worker.execution_id?
+                span.text-danger Couldn't find Execution with 'id'=#{worker.execution_id}.
+              - else
+                '&nbsp;
+            td
+              - if worker.execution
+                = link_to(raw('<i class="fa fa-chevron-right"></i> Details'),
+                          job_definition_job_instance_path(job_definition_id: worker.execution.job_definition_id, id: worker.execution.job_instance_id),
+                          role: 'button', class: 'btn btn-sm btn-default')
+              - else
+                '&nbsp;

@@ -1,0 +1,26 @@
+- if definitions.any?
+  table.table.table-hover.sortable
+    thead
+      tr
+        th #
+        th.col-md-3 Name
+        th.col-md-3 Next Job
+        th.col-md-2 Latest Status
+        th.col-md-8 data-defaultsort='disabled' Description
+        th.col-md-1 data-defaultsort='disabled' &nbsp;
+    tbody
+      - for definition in definitions
+        tr
+          td= definition.id
+          td.no-decorate= link_to definition.name, definition
+          - if !definition.suspended? && definition.job_schedules.present?
+            - next_job_schedule = definition.job_schedules.map(&:next).min
+            td data-value=next_job_schedule.to_i = l(next_job_schedule, format: :short)
+          - else
+            td data-value="9999999999" --
+          td= labeled_status(definition.job_instances.take)
+          td= first_line(definition.description)
+          td
+            = link_to raw('<i class="fa fa-chevron-right"></i> View Details'), definition, class: 'btn btn-sm btn-default'
+- else
+  .text-muted.well.well-sm.no-shadow There are no favorite job definitions.

@@ -1,0 +1,33 @@
+ul class="nav nav-pills" role="tablist"
+ li role="presentation" class="active"
+   a href="#logs" aria-controls="logs" role="tab" data-toggle="tab"
+     'Logs
+ li role="presentation"
+   a href="#execution_logs" aria-controls="execution_logs" role="tab" data-toggle="tab"
+     'Execution Logs
+.box
+  .box-header
+  .box-body.tab-content
+    div class="tab-pane active" role="tabpanel" id="logs" data-logs-path="#{job_definition_job_instance_logs_path(@definition, @instance)}"
+      table.table.table-condensed.table-hover data-reload="#{@instance.working? && !@instance.error?}"
+        thead
+          tr
+            th.col-md-1 &nbsp;
+            th.col-md-1 Time
+            th.col-md-10 Message
+          - for log in @logs
+            tr
+              td= labeled_log_level(log.level)
+              td.nowrap= l(log.created_at, format: :short)
+              td.log= rinku_auto_link(log.message, :urls)
+      = javascript_include_tag 'instance_linker'
+
+    div class="tab-pane" role="tabpanel" id="execution_logs" data-api-path="#{job_definition_job_instance_execution_logs_path(@definition, @instance)}" data-logger="#{Kuroko2.config.execution_logger.try!(:type)}"
+      table.table.table-condensed.table-hover
+        thead
+          tr
+            th.col-md-1 Time
+            th.col-md-1 PID
+            th.col-md-2 Token
+            th.col-md-8 Message
+        tbody#execution_log_body
