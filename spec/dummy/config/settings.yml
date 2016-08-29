@@ -4,13 +4,16 @@ default: &default
     delivery_method: 'test'
   execution_logger:
     type: 'Void'
-  custom_tasks: ~
+  custom_tasks:
+    custom_task1: 'CustomTask1'
   notifiers:
     mail:
       mail_from: 'Kuroko2 <no-reply@example.com>'
       mail_to: "kuroko@example.com"
     slack:
       webhook_url: 'https://localhost/test/slack'
+    hipchat:
+      api_token: 'token'
   api_basic_authentication_applications: ~
 
 development:

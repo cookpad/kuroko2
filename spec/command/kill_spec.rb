@@ -13,7 +13,7 @@ module Command
 
       it 'terminates spawned process' do
         is_expected.to eq signal
-        expect { Process.kill(0, pid) }.to raise_error
+        expect { Process.kill(0, pid) }.to raise_error(Errno::ESRCH)
       end
     end
   end
