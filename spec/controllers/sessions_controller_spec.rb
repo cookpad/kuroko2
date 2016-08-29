@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe Kuroko2::SessionsController do
+  routes { Kuroko2::Engine.routes }
+
   describe '#create' do
     let(:auth_hash) do
       {

@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe Kuroko2::HelloController do
+  routes { Kuroko2::Engine.routes }
+
   describe '#revision' do
     subject! { get :revision }
 

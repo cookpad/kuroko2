@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe Kuroko2::UsersController do
+  routes { Kuroko2::Engine.routes }
+
   before { sign_in(users.first) }
   let(:users) { create_list(:user, 2) }
 

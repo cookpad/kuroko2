@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe Kuroko2::JobDefinitionsController do
+  routes { Kuroko2::Engine.routes }
+
   before { sign_in }
 
   let(:definition) { create(:job_definition) }

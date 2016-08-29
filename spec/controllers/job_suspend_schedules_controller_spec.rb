@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe Kuroko2::JobSuspendSchedulesController do
+  routes { Kuroko2::Engine.routes }
+
   before { sign_in }
 
   let(:schedules) { create_list(:job_suspend_schedule, 1) }

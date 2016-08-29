@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe Kuroko2::JobDefinitionStatsController do
+  routes { Kuroko2::Engine.routes }
+
   before { sign_in }
 
   let(:instance_num) { 2 }

@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe Kuroko2::JobTimelinesController do
+  routes { Kuroko2::Engine.routes }
+
   let(:instance_num) { 2 }
   let(:definition) do
     create(
