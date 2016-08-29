@@ -28,4 +28,33 @@ Gem::Specification.new do |s|
   s.add_dependency 'aws-sdk', '~> 2'
   s.add_dependency 'retryable'
   s.add_dependency 'faraday'
+  s.add_dependency 'sprockets', '~> 2.12.3'
+  s.add_dependency 'slim-rails', '~> 3.0.1'
+  s.add_dependency 'sass', '~> 3.4.5'
+  s.add_dependency 'sass-rails'
+  s.add_dependency 'uglifier', '~> 2.7.1'
+  s.add_dependency 'jbuilder', '~> 2.2.12'
+  s.add_dependency 'coffee-script', '~> 2.3.0'
+
+  s.add_dependency 'jquery-rails', '~> 4.0.3'
+  s.add_dependency 'momentjs-rails'
+  s.add_dependency 'rails_bootstrap_sortable'
+  s.add_dependency "select2-rails"
+  s.add_dependency 'rack-store', '~> 0.0.4'
+  s.add_dependency 'dotenv-rails', '~> 0.11.1'
+  s.add_dependency 'serverengine', '~> 1.5.7'
+  s.add_dependency 'omniauth-google-oauth2', '~> 0.2.4'
+
+  s.add_dependency 'gemoji', '~> 2.1.0'
+  s.add_dependency 'html-pipeline', '~> 1.11.0'
+  s.add_dependency 'github-markdown', '~> 0.6.8'
+  s.add_dependency 'font-awesome-rails'
+  # s.add_dependency 'rinku', require: 'rails_rinku'
+  s.add_dependency 'visjs-rails'
+
+  s.add_dependency 'hipchat', '~> 1.3.0'
+  s.add_dependency 'dalli', '~> 2.7.2'
+
+  s.add_dependency 'the_garage'
+  s.add_dependency 'weak_parameters'
 end
