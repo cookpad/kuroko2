@@ -1,0 +1,2 @@
+module JobSchedulesHelper
+end
