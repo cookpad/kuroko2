@@ -1,4 +1,4 @@
-class HelloController < ApplicationController
+class Kuroko2::HelloController < Kuroko2::ApplicationController
 
   skip_before_action :require_sign_in
 

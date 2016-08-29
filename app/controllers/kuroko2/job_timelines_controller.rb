@@ -1,4 +1,4 @@
-class JobTimelinesController < ApplicationController
+class Kuroko2::JobTimelinesController < Kuroko2::ApplicationController
   def index
     find_user
   end

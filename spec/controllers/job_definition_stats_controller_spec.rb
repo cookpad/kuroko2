@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe JobDefinitionStatsController do
+describe Kuroko2::JobDefinitionStatsController do
   before { sign_in }
 
   let(:instance_num) { 2 }

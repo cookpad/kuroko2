@@ -1,4 +1,4 @@
-class JobSuspendSchedulesController < ApplicationController
+class Kuroko2::JobSuspendSchedulesController < Kuroko2::ApplicationController
   before_action :set_definition, only: %i(index create destroy)
 
   def index

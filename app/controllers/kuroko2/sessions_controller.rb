@@ -1,4 +1,4 @@
-class SessionsController < ApplicationController
+class Kuroko2::SessionsController < Kuroko2::ApplicationController
   skip_before_action :require_sign_in
 
   def new

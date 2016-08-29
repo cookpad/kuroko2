@@ -1,4 +1,4 @@
-class JobDefinitionStatsController < ApplicationController
+class Kuroko2::JobDefinitionStatsController < Kuroko2::ApplicationController
   def index
     set_definition
   end

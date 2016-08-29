@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class Kuroko2::UsersController < Kuroko2::ApplicationController
   before_action :set_user, only: [:destroy]
 
   def index

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe ExecutionsController do
+describe Kuroko2::ExecutionsController do
   before { sign_in }
 
   describe '#destroy' do

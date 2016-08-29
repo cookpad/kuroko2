@@ -1,4 +1,4 @@
-class ApplicationController < ActionController::Base
+class Kuroko2::ApplicationController < ActionController::Base
   REVISION = begin
     revision = Rails.root.join('REVISION')
 

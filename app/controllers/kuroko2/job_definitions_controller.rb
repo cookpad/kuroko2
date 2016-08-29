@@ -1,4 +1,4 @@
-class JobDefinitionsController < ApplicationController
+class Kuroko2::JobDefinitionsController < Kuroko2::ApplicationController
   before_action :set_definition, only: [:show, :edit, :update, :destroy]
 
   def index

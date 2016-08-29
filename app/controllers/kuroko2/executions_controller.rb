@@ -1,4 +1,4 @@
-class ExecutionsController < ApplicationController
+class Kuroko2::ExecutionsController < Kuroko2::ApplicationController
 
   before_action :set_execution, only: %i(destroy)
 

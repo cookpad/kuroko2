@@ -1,4 +1,4 @@
-class Api::JobInstancesController < Api::ApplicationController
+class Kuroko2::Api::JobInstancesController < Kuroko2::Api::ApplicationController
   include Garage::RestfulActions
 
   validates :create do

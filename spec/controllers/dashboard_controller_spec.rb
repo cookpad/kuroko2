@@ -1,5 +1,4 @@
 require 'rails_helper'
 
-RSpec.describe DashboardController, :type => :controller do
-
+RSpec.describe Kuroko2::DashboardController, :type => :controller do
 end

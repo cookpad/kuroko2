@@ -1,4 +1,4 @@
-class TokensController < ApplicationController
+class Kuroko2::TokensController < Kuroko2::ApplicationController
 
   before_action :set_token, only: %i(update)
   before_action :set_engine, only: %i(update)

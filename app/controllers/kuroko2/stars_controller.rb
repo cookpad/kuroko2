@@ -1,4 +1,4 @@
-class StarsController < ApplicationController
+class Kuroko2::StarsController < Kuroko2::ApplicationController
   def create
     star = Star.new do |star|
       star.job_definition = JobDefinition.find(star_params[:job_definition_id])

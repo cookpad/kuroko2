@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-RSpec.describe WorkersController, :type => :controller do
+RSpec.describe Kuroko2::WorkersController, :type => :controller do
 
 end

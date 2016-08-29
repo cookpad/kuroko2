@@ -1,4 +1,4 @@
-class LogsController < ApplicationController
+class Kuroko2::LogsController < Kuroko2::ApplicationController
   def index
     @definition = JobDefinition.find(logs_params[:job_definition_id])
     @instance   = JobInstance.find(logs_params[:job_instance_id])

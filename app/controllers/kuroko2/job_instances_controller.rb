@@ -1,4 +1,4 @@
-class JobInstancesController < ApplicationController
+class Kuroko2::JobInstancesController < Kuroko2::ApplicationController
   before_action :set_definition, only: %i(index create show destroy force_destroy)
   before_action :set_instance, only: %i(show destroy force_destroy)
 

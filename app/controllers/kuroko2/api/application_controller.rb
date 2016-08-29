@@ -1,4 +1,4 @@
-class Api::ApplicationController < ActionController::Base
+class Kuroko2::Api::ApplicationController < ActionController::Base
   include Garage::ControllerHelper
 
   before_action :api_authentication

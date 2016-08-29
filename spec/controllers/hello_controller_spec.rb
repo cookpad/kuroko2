@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe HelloController do
+describe Kuroko2::HelloController do
   describe '#revision' do
     subject! { get :revision }
 

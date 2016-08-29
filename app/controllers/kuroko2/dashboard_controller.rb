@@ -1,4 +1,4 @@
-class DashboardController < ApplicationController
+class Kuroko2::DashboardController < Kuroko2::ApplicationController
   def index
     @definitions = current_user.job_definitions
 

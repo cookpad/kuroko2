@@ -1,4 +1,4 @@
-class Api::StatsController < Api::ApplicationController
+class Kuroko2::Api::StatsController < Kuroko2::Api::ApplicationController
   skip_before_action :api_authentication
 
   COUNT_INSTANCES_SQL = <<-SQL

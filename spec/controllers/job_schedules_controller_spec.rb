@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe JobSchedulesController do
+describe Kuroko2::JobSchedulesController do
   before { sign_in }
 
   let(:schedules) { create_list(:job_schedule, 1) }

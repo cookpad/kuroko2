@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-RSpec.describe TokensController, :type => :controller do
+RSpec.describe Kuroko2::TokensController, :type => :controller do
 
 end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe JobInstancesController do
+describe Kuroko2::JobInstancesController do
   before { sign_in }
 
   let(:definition) { create(:job_definition_with_instances, job_instances_count: num_instances) }

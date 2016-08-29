@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe StarsController do
+describe Kuroko2::StarsController do
   before { sign_in }
 
   describe '#create' do

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe UsersController do
+describe Kuroko2::UsersController do
   before { sign_in(users.first) }
   let(:users) { create_list(:user, 2) }
 

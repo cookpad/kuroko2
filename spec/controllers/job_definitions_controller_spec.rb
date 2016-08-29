@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe JobDefinitionsController do
+describe Kuroko2::JobDefinitionsController do
   before { sign_in }
 
   let(:definition) { create(:job_definition) }
