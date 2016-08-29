@@ -4,7 +4,8 @@ default: &default
     delivery_method: 'test'
   execution_logger:
     type: 'Void'
-  custom_tasks: ~
+  custom_tasks:
+    custom_task1: 'CustomTask1'
   notifiers:
     mail:
       mail_from: 'Kuroko2 <no-reply@example.com>'
