@@ -1,13 +1,9 @@
-require 'kaminari'
 require 'chrono'
 require 'addressable'
 require 'aws-sdk'
 require 'retryable'
 require 'faraday'
 require 'html/pipeline'
-require 'slim'
-require 'jbuilder'
-require 'garage'
 require 'weak_parameters'
 
 require "kuroko2/engine"
