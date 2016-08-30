@@ -1,4 +1,3 @@
-require 'api/job_instance_resource'
 class Kuroko2::Api::JobInstancesController < Kuroko2::Api::ApplicationController
   include Garage::RestfulActions
 
@@ -11,7 +10,7 @@ class Kuroko2::Api::JobInstancesController < Kuroko2::Api::ApplicationController
   private
 
   def require_resources
-    protect_resource_as Api::JobInstanceResource
+    protect_resource_as ::Api::JobInstanceResource
   end
 
   def create_resource
@@ -29,7 +28,7 @@ class Kuroko2::Api::JobInstancesController < Kuroko2::Api::ApplicationController
 
   def require_resource
     instance = JobInstance.find(params[:id])
-    @resource = Api::JobInstanceResource.new(instance)
+    @resource = ::Api::JobInstanceResource.new(instance)
   end
 
   def env_script
