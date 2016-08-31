@@ -1,0 +1,86 @@
+/*
+ * = require 'fonts'
+ * = require 'bootstrap'
+ * = require 'font-awesome'
+ * = require 'admin-lte'
+ * = require_tree
+ * = require bootstrap-sortable
+ * = require select2
+ * = require vis
+*/
+
+.spacer-top-10 {
+  padding-top: 10px;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.log {
+  font-family: 'Inconsolata';
+  white-space: pre-wrap;
+}
+
+.no-decorate {
+  a {
+    color: #444;
+  }
+}
+
+.display-none {
+  display: none;
+}
+
+.skin-black .sidebar > .sidebar-menu > li {
+  a[name]:hover {
+    background-color: #333;
+  }
+
+  .active a {
+    background: #444;
+  }
+
+  .menu-child {
+    padding: 0px;
+  }
+
+  .menu-child-item {
+    > a {
+      padding: 12px 5px 12px 35px;
+      display: block;
+      margin-right: 1px;
+      color: #f6f6f6;
+
+      .fa {
+        width: 20px;
+      }
+    }
+    > a:hover {
+      background: #444;
+    }
+  }
+}
+
+#peek {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+}
+
+.right-button {
+  padding-top: 10px;
+  padding-right: 25px;
+}
+
+.vis-item .vis-item-overflow {
+  overflow: visible;
+}
+
+.vis-graph-label {
+  display: none;
+  font-size: 1.3em;
+  fill: #666;
+}

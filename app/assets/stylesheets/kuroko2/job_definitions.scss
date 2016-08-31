@@ -1,0 +1,27 @@
+// Place all the styles related to the job_definitions controller here.
+// They will automatically be included in application.css.
+// You can use Less here: http://lesscss.org/
+
+.description {
+  h1 {
+    font-size: 16px;
+  }
+  h2, h3, h4 {
+    font-weight: bold;
+    font-size: 14px;
+  }
+  .emoji {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.star-holder {
+  a:link, a:visited, a:hover, a:active {
+    color: #444;
+  }
+}
+
+.script-input {
+  font-family: 'Inconsolata';
+}
