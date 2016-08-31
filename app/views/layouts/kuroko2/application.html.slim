@@ -3,12 +3,12 @@ html
   head
     title #{@title} « Kuroko 2
     meta charset='UTF-8'
-    meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'
+    meta content='width=device-width, initial-scale=2, maximum-scale=1, user-scalable=no' name='viewport'
     link rel='icon' href='/favicon.ico'
-    link type='application/opensearchdescription+xml' rel='search' href='#{osd_path(format: 'xml')}' title='Kuroko2' 
+    link type='application/opensearchdescription+xml' rel='search' href='#{osd_path(format: 'xml')}' title='Kuroko2'
     = csrf_meta_tag
-    = stylesheet_link_tag 'application'
-    = javascript_include_tag 'application'
+    = stylesheet_link_tag 'kuroko2/application'
+    = javascript_include_tag 'kuroko2/application'
 
   body.skin-black
     header.header
