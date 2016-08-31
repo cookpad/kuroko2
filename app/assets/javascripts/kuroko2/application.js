@@ -1,7 +1,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
-//= stub instance_linker
+//= stub kuroko2/instance_linker
 //= require_tree
 //= require moment
 //= require bootstrap-sortable
