@@ -37,8 +37,6 @@ Kuroko2::Engine.routes.draw do
   get '/auth/:provider', as: :auth, to: lambda { |_env| [500, {}, 'Never called'] }
   get '/auth/:provider/callback', to: 'sessions#create'
 
-  get 'hello/revision'
-
   root 'dashboard#index'
   get '/osd' => 'dashboard#osd', as: :osd
 
