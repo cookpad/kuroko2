@@ -24,6 +24,7 @@ PATH
       rails (>= 4.2.7.1, < 5.0)
       rails_bootstrap_sortable
       retryable
+      rinku
       sass (~> 3.4.5)
       sass-rails
       select2-rails
@@ -225,6 +226,7 @@ GEM
     responders (2.2.0)
       railties (>= 4.2.0, < 5.1)
     retryable (2.0.4)
+    rinku (1.7.3)
     rspec-core (3.5.2)
       rspec-support (~> 3.5.0)
     rspec-expectations (3.5.0)
