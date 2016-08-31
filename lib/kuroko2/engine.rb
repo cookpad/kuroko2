@@ -7,6 +7,13 @@ module Kuroko2
       require 'slim'
       require 'jbuilder'
       require 'garage'
+      require 'jquery-rails'
+      require 'momentjs-rails'
+      require 'rails_bootstrap_sortable'
+      require 'select2-rails'
+      require 'font-awesome-rails'
+      require 'visjs/rails'
+      require 'rails_rinku'
     end
 
     config.autoload_paths << root.join('lib')

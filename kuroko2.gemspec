@@ -49,7 +49,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'html-pipeline', '~> 1.11.0'
   s.add_dependency 'github-markdown', '~> 0.6.8'
   s.add_dependency 'font-awesome-rails'
-  # s.add_dependency 'rinku', require: 'rails_rinku'
+  s.add_dependency 'rinku'
   s.add_dependency 'visjs-rails'
 
   s.add_dependency 'hipchat', '~> 1.3.0'
