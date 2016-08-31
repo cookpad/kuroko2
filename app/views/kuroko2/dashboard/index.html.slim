@@ -16,7 +16,7 @@
             = link_to raw('<i class="fa fa-clock-o"></i> Show Timeline'), job_timelines_path(params.permit(tag: [])), class: 'btn btn-default btn-small btn-block js-to-timeline'
 
       .box-body.table-responsive#definitions_list
-        = render 'job_definitions/list', { definitions: @definitions }
+        = render 'kuroko2/job_definitions/list', { definitions: @definitions }
   .col-md-5
     .box#tags
       = render 'taglist', { input_tags: @input_tags, related_tags: @related_tags }

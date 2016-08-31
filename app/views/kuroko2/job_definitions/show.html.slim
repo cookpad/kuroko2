@@ -83,8 +83,8 @@
           .col-md-6
             = link_to 'Destroy Job Definition', @definition, method: :delete, class: 'btn btn-default btn-block', role: 'button', data: { confirm: 'Are you sure?' }
   .col-md-5#schedules-holder
-    = render template: 'job_schedules/index'
+    = render template: 'kuroko2/job_schedules/index'
   .col-md-5#suspend-schedules-holder
-    = render template: 'job_suspend_schedules/index'
+    = render template: 'kuroko2/job_suspend_schedules/index'
   .col-md-5#instances-holder
-    = render template: 'job_instances/index'
+    = render template: 'kuroko2/job_instances/index'
