@@ -6,6 +6,12 @@ class Kuroko2::ApplicationController < ActionController::Base
   helper_method :current_user, :signed_in?
   before_action :require_sign_in
 
+  if Kuroko2.config.extentions && Kuroko2.config.extentions.controller
+    Kuroko2.config.extentions.controller.each do |extention|
+      include Module.const_get(extention, false)
+    end
+  end
+
   rescue_from HTTP::BadRequest do
     respond_to do |format|
       format.html { render 'public/500.html', layout: false, status: :bad_request }
