@@ -14,6 +14,7 @@ module Kuroko2
       require 'font-awesome-rails'
       require 'visjs/rails'
       require 'rails_rinku'
+      require 'dotenv-rails'
     end
 
     config.autoload_paths << root.join('lib')
