@@ -1,4 +1,4 @@
-module CustomController
+module DummyExtention
   extend ActiveSupport::Concern
   included do
     before_action :additional_before_action

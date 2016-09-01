@@ -24,7 +24,7 @@ default: &default
         hd: '<% ENV["GOOGLE_HOSTED_DOMAIN"] %>'
   extentions:
     controller:
-      - CustomController
+      - DummyExtention
 development:
   <<: *default
 
