@@ -32,7 +32,7 @@ describe Kuroko2::UsersController do
 
   describe '#create' do
     let(:name) { 'Test Users' }
-    let(:email) { 'test@cookpad.com' }
+    let(:email) { 'test@example.com' }
 
     subject! { post(:create, user: { name: name, email: email }) }
 
