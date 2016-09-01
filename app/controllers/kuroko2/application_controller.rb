@@ -24,10 +24,6 @@ class Kuroko2::ApplicationController < ActionController::Base
     redirect_to sign_in_path(return_to: url_for(params.merge(only_path: true)))
   end
 
-  def peek_enabled?
-    cookies[:peek].present? || Rails.env.development?
-  end
-
   private
 
   def current_user=(user)
