@@ -16,6 +16,12 @@ default: &default
       api_token: 'token'
   api_basic_authentication_applications:
     test_app: 'api_key'
+  app_authentication:
+    google_oauth2:
+      client_id: '<% ENV["GOOGLE_CLIENT_ID"] %>'
+      client_secret: '<% ENV["GOOGLE_CLIENT_SECRET"] %>'
+      options:
+        hd: '<% ENV["GOOGLE_HOSTED_DOMAIN"] %>'
 development:
   <<: *default
 

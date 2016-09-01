@@ -1,19 +1,7 @@
-require 'omniauth-google-oauth2'
-
-Rails.application.config.middleware.use OmniAuth::Builder do
-  opts = {
-    setup: (
-      lambda do |env|
-        env['omniauth.strategy'].options['token_params'] = {
-          redirect_uri: "http://localhost:3000/auth/google_oauth2/callback"
-        }
-      end
-    )
-  }
-
-  if ENV.has_key?('GOOGLE_HOSTED_DOMAIN')
-    opts[:hd] = ENV['GOOGLE_HOSTED_DOMAIN']
+config = Kuroko2.config.app_authentication.try!(:google_oauth2)
+if config.present?
+  require 'omniauth-google-oauth2'
+  Rails.application.config.middleware.use OmniAuth::Builder do
+    provider :google_oauth2, config.client_id, config.client_secret, options
   end
-
-  provider :google_oauth2, ENV["GOOGLE_CLIENT_ID"], ENV["GOOGLE_CLIENT_SECRET"], opts
 end
