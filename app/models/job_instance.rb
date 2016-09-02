@@ -110,7 +110,7 @@ class JobInstance < ActiveRecord::Base
       self.logs.warn(message)
       Kuroko2.logger.warn(message)
 
-      Workflow::Notifier.notify(:cancellation, self)
+      Kuroko2::Workflow::Notifier.notify(:cancellation, self)
     end
   end
 end

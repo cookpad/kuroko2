@@ -127,14 +127,14 @@ class JobDefinition < ActiveRecord::Base
   end
 
   def script_syntax
-    Workflow::ScriptParser.new(script).parse
+    Kuroko2::Workflow::ScriptParser.new(script).parse
 
     true
-  rescue Workflow::SyntaxError => e
+  rescue Kuroko2::Workflow::SyntaxError => e
     errors.add(:base, I18n.t('model.job_definition.script_syntax', reason: e.message))
 
     false
-  rescue Workflow::AssertionError => e
+  rescue Kuroko2::Workflow::AssertionError => e
     errors.add(:base, I18n.t('model.job_definition.validation_error', reason: e.message))
 
     false

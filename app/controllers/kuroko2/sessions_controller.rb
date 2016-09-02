@@ -11,7 +11,7 @@ class Kuroko2::SessionsController < Kuroko2::ApplicationController
 
     self.current_user = User.find_or_create_user(auth_hash[:uid], auth_hash[:info])
 
-    unless ReturnToValidator.valid?(return_to)
+    unless Kuroko2::ReturnToValidator.valid?(return_to)
       return_to = root_path
     end
     redirect_to return_to
