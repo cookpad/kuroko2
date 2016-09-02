@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-module Workflow::Task
+module Kuroko2::Workflow::Task
   describe Execute do
     subject { Execute.new(node, token).execute }
 
     let(:context) { { 'ENV' => { 'NAME' => 'alice' } } }
-    let(:node) { Workflow::Node.new(:execute, shell) }
+    let(:node) { Kuroko2::Workflow::Node.new(:execute, shell) }
 
     let(:token) { create(:token, path: '/', script: 'execute:', context: context, job_definition: definition, job_instance: instance) }
     let(:execution) { Execution.take }
@@ -77,7 +77,7 @@ module Workflow::Task
         end
 
         it 'alerts warnings' do
-          expect(Workflow::Notifier).to receive(:notify).with(:long_elapsed_time, token.job_instance)
+          expect(Kuroko2::Workflow::Notifier).to receive(:notify).with(:long_elapsed_time, token.job_instance)
 
           Execute.new(node, token).execute
           is_expected.to eq :pass
@@ -101,7 +101,7 @@ module Workflow::Task
           let(:notified_time) { Time.now }
 
           it 'does not alert warnings' do
-            expect(Workflow::Notifier).not_to receive(:notify)
+            expect(Kuroko2::Workflow::Notifier).not_to receive(:notify)
             Execute.new(node, token).execute
             is_expected.to eq :pass
             Execute.new(node, token).execute
@@ -113,7 +113,7 @@ module Workflow::Task
           let(:notified_time) { (1.hours + 1.second).ago }
 
           it 'alert warnings' do
-            expect(Workflow::Notifier).to receive(:notify).with(:long_elapsed_time, token.job_instance)
+            expect(Kuroko2::Workflow::Notifier).to receive(:notify).with(:long_elapsed_time, token.job_instance)
 
             Execute.new(node, token).execute
             is_expected.to eq :pass

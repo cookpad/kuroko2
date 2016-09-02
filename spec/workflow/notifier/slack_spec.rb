@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'webmock/rspec'
 
-module Workflow
+module Kuroko2::Workflow
   describe Notifier::Slack do
     let(:job_name) { 'My Job' }
     let(:slack_channel) { '#dummy' }

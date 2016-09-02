@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-module Workflow::Task
+module Kuroko2::Workflow::Task
   describe AutoSkipError do
     describe '#execute' do
-      let(:node) { Workflow::Node.new('auto_skip_error', 'true') }
+      let(:node) { Kuroko2::Workflow::Node.new('auto_skip_error', 'true') }
       let(:token) { build(:token, context: {}) }
 
       subject { AutoSkipError.new(node, token).execute }
@@ -14,7 +14,7 @@ module Workflow::Task
       end
 
       context 'Without options' do
-        let(:node) { Workflow::Node.new('auto_skip_error') }
+        let(:node) { Kuroko2::Workflow::Node.new('auto_skip_error') }
 
         it "sets AUTO_SKIP_ERROR context to false" do
           subject
@@ -23,7 +23,7 @@ module Workflow::Task
       end
 
       context 'With false options' do
-        let(:node) { Workflow::Node.new('auto_skip_error', 'false') }
+        let(:node) { Kuroko2::Workflow::Node.new('auto_skip_error', 'false') }
 
         it "sets AUTO_SKIP_ERROR context to false" do
           subject

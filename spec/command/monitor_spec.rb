@@ -1,6 +1,7 @@
 require 'rails_helper'
 
-module Command
+
+module Kuroko2::Command
   describe Monitor do
     let(:pid) { 32769 } # max int + 1
     let(:hostname) { 'rspec' }
@@ -15,7 +16,7 @@ module Command
 
       context 'not running process' do
         let!(:execution) { create(:execution, token: token, worker: worker, started_at: Time.now, finished_at: nil, pid: pid) }
-        let(:monitor) { Command::Monitor.new(hostname: hostname, worker_id: 1) }
+        let(:monitor) { Kuroko2::Command::Monitor.new(hostname: hostname, worker_id: 1) }
 
         subject! { 15.times { monitor.execute } }
 
@@ -31,7 +32,7 @@ module Command
 
       context 'not assigned process' do
         let!(:execution) { create(:execution, token: token, worker: worker, started_at: 2.minutes.ago, finished_at: nil, pid: nil) }
-        subject! { Command::Monitor.new(hostname: hostname, worker_id: 1).execute }
+        subject! { Kuroko2::Command::Monitor.new(hostname: hostname, worker_id: 1).execute }
 
         it 'sends a notification mail' do
           execution.reload
@@ -44,10 +45,10 @@ module Command
 
     describe 'memory consumption monitoring' do
       let!(:execution) { create(:execution, token: token, worker: worker, started_at: Time.now, finished_at: nil, pid: pid) }
-      let(:monitor) { Command::Monitor.new(hostname: hostname, worker_id: 1) }
+      let(:monitor) { Kuroko2::Command::Monitor.new(hostname: hostname, worker_id: 1) }
       before do
         allow(monitor).to receive(:check_process_absence).and_return(true)
-        allow(MemorySampler).to receive(:get_by_pgid).and_return(1)
+        allow(Kuroko2::MemorySampler).to receive(:get_by_pgid).and_return(1)
       end
 
       it 'logs memory consumption' do

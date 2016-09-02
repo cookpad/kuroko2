@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Workflow
+module Kuroko2::Workflow
   describe ShellScanner do
     subject(:scanner) { ShellScanner.new(text) }
 

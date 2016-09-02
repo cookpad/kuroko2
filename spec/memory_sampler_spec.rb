@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe MemorySampler do
+RSpec.describe Kuroko2::MemorySampler do
   describe 'get_by_pgid' do
     let!(:pid) { Process.spawn(*%w[sleep 10], pgroup: true) }
 

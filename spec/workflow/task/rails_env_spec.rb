@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-module Workflow::Task
+module Kuroko2::Workflow::Task
   describe RailsEnv do
     describe '#execute' do
       let(:rails_env) { 'test' }
-      let(:node) { Workflow::Node.new(:rails_env, rails_env) }
+      let(:node) { Kuroko2::Workflow::Node.new(:rails_env, rails_env) }
       let(:token) { build(:token, context: {}) }
 
       subject { RailsEnv.new(node, token).execute }
@@ -18,12 +18,12 @@ module Workflow::Task
 
       context 'with invalid rails_env' do
         let(:rails_env){ 'production' }
-        it { expect{ subject }.to raise_error(Workflow::AssertionError) }
+        it { expect{ subject }.to raise_error(Kuroko2::Workflow::AssertionError) }
       end
 
       context 'with not exists rails_env' do
         let(:rails_env){ 'xxxxxxx' }
-        it { expect{ subject }.to raise_error(Workflow::AssertionError) }
+        it { expect{ subject }.to raise_error(Kuroko2::Workflow::AssertionError) }
       end
     end
   end

@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-module Workflow::Task
+module Kuroko2::Workflow::Task
   describe Fork do
-    let(:node) { Workflow::ScriptParser.new(token.script).parse.find(token.path) }
+    let(:node) { Kuroko2::Workflow::ScriptParser.new(token.script).parse.find(token.path) }
     let(:definition) { create(:job_definition) }
     let(:instance) { create(:job_instance, job_definition: definition) }
 

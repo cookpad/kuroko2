@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe ExecutionLogger::CloudWatchLogs do
+describe Kuroko2::ExecutionLogger::CloudWatchLogs do
   let(:stream_name) { 'test' }
   let(:object) { described_class.new(stream_name: stream_name, group_name: 'kuroko') }
 

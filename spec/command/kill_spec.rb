@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-module Command
+module Kuroko2::Command
   describe Kill do
 
     describe '#execute' do

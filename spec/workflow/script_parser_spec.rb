@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Workflow
+module Kuroko2::Workflow
   describe ScriptParser do
     subject(:parser) { ScriptParser.new(script) }
 
@@ -78,7 +78,7 @@ noop:
       context 'with bad syntax' do
         let(:script) { ':' }
 
-        it { expect { root }.to raise_error(Workflow::SyntaxError) }
+        it { expect { root }.to raise_error(Kuroko2::Workflow::SyntaxError) }
       end
 
       context 'with bad syntax' do
@@ -88,7 +88,7 @@ noop
           EOF
         end
 
-        it { expect { root }.to raise_error(Workflow::SyntaxError) }
+        it { expect { root }.to raise_error(Kuroko2::Workflow::SyntaxError) }
       end
 
       context 'with inconsistent indentation' do
@@ -100,7 +100,7 @@ noop:
           EOF
         end
 
-        it { expect { root }.to raise_error(Workflow::SyntaxError) }
+        it { expect { root }.to raise_error(Kuroko2::Workflow::SyntaxError) }
       end
 
       context 'with bad semantics' do
@@ -112,7 +112,7 @@ fork:
           EOF
         end
 
-        it { expect { root }.to raise_error(AssertionError) }
+        it { expect { root }.to raise_error(Kuroko2::Workflow::AssertionError) }
       end
     end
   end

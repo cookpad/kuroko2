@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-module Workflow::Task
+module Kuroko2::Workflow::Task
   describe Wait do
     describe '#execute' do
       let(:wait_definition) { create(:job_definition, script: "noop:") }
       let(:wait_instance) { create(:job_instance, job_definition: definition) }
 
       let(:option) { "#{wait_definition.id}/daily" }
-      let(:node) { Workflow::Node.new(:wait, option) }
+      let(:node) { Kuroko2::Workflow::Node.new(:wait, option) }
       let(:now) { Time.zone.now }
 
       context 'with valid syntax' do
@@ -129,7 +129,7 @@ module Workflow::Task
           let(:option) { 'AAA/daily' }
           it 'raise error' do
             expect{ Wait.new(node, token).execute }.
-              to raise_error(Workflow::AssertionError)
+              to raise_error(Kuroko2::Workflow::AssertionError)
           end
         end
 
@@ -137,7 +137,7 @@ module Workflow::Task
           let(:option) { "#{wait_definition.id}/minutes" }
           it 'raise error' do
             expect{ Wait.new(node, token).execute }.
-              to raise_error(Workflow::AssertionError)
+              to raise_error(Kuroko2::Workflow::AssertionError)
           end
         end
 
@@ -145,7 +145,7 @@ module Workflow::Task
           let(:option) { "0/hourly" }
           it 'raise error' do
             expect{ Wait.new(node, token).execute }.
-              to raise_error(Workflow::AssertionError)
+              to raise_error(Kuroko2::Workflow::AssertionError)
           end
         end
 
@@ -153,7 +153,7 @@ module Workflow::Task
           let(:option) { "#{wait_definition.id}/hourly timeout=X" }
           it 'raise error' do
             expect{ Wait.new(node, token).execute }.
-              to raise_error(Workflow::AssertionError)
+              to raise_error(Kuroko2::Workflow::AssertionError)
           end
         end
       end

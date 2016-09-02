@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Workflow
+module Kuroko2::Workflow
   describe Notifier::Hipchat do
     let(:job_name) { 'My Job' }
     let(:hipchat_room) { 'dummy' }

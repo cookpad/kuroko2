@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-module Command
+module Kuroko2::Command
   describe Shell do
 
     describe '#execute' do

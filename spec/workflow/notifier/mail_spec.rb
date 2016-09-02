@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Workflow
+module Kuroko2::Workflow
   describe Notifier::Mail do
     let(:job_name) { 'MyJob' }
 

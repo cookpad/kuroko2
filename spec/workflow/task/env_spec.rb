@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-module Workflow::Task
+module Kuroko2::Workflow::Task
   describe Env do
     describe '#execute' do
       let(:token) { build(:token, script: 'env:', context: { 'ENV' => { 'EXISTING' => 'true' } }) }
@@ -10,7 +10,7 @@ module Workflow::Task
         subject { token.context }
 
         context 'with nil option' do
-          let(:node) { Workflow::Node.new(:env) }
+          let(:node) { Kuroko2::Workflow::Node.new(:env) }
 
           context 'with exisiting env' do
             it { is_expected.to eq({ 'ENV' => { 'EXISTING' => 'true' } }) }
@@ -24,22 +24,22 @@ module Workflow::Task
         end
 
         context 'with valid option' do
-          let(:node) { Workflow::Node.new(:env, 'A=1 B=2') }
+          let(:node) { Kuroko2::Workflow::Node.new(:env, 'A=1 B=2') }
 
           it { is_expected.to eq({ 'ENV' => { 'A' => '1', 'B' => '2', 'EXISTING' => 'true' } }) }
         end
 
         context 'with quote' do
-          let(:node) { Workflow::Node.new(:env, 'A="B=2 C=3"  D="E=5 F=\"6"' " G='\\'7'") }
+          let(:node) { Kuroko2::Workflow::Node.new(:env, 'A="B=2 C=3"  D="E=5 F=\"6"' " G='\\'7'") }
 
           it { is_expected.to eq({ 'ENV' => { 'A' => 'B=2 C=3', 'D' => 'E=5 F="6', 'G' => "'7", 'EXISTING' => 'true' } }) }
         end
       end
 
       context 'with invalid syntax' do
-        let(:node) { Workflow::Node.new(:env, 'A="B=2 C=3" D="E=5 F=\"6') }
+        let(:node) { Kuroko2::Workflow::Node.new(:env, 'A="B=2 C=3" D="E=5 F=\"6') }
 
-        it { expect { Env.new(node, token).execute }.to raise_error(Workflow::AssertionError) }
+        it { expect { Env.new(node, token).execute }.to raise_error(Kuroko2::Workflow::AssertionError) }
       end
     end
 

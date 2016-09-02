@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ReturnToValidator do
+RSpec.describe Kuroko2::ReturnToValidator do
   let(:validator) { described_class }
 
   describe '.valid?' do

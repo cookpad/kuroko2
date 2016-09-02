@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-module Workflow::Task
+module Kuroko2::Workflow::Task
   describe SubProcess do
     let(:definition) { create(:job_definition) }
     let(:sub_definition) { create(:job_definition) }
@@ -11,7 +11,7 @@ module Workflow::Task
       end
     end
 
-    let(:node) { Workflow::Node.new(:sub_process, sub_definition.id.to_s) }
+    let(:node) { Kuroko2::Workflow::Node.new(:sub_process, sub_definition.id.to_s) }
     let(:token) { create(:token, job_definition: definition, job_instance: instance) }
 
     let(:sub_instance) { sub_definition.job_instances.first }

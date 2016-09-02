@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-module Workflow
+module Kuroko2::Workflow
   describe Node do
     around do |example|
       Node.register(key: :node1, klass: Task::Base)

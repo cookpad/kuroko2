@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-module Workflow
+module Kuroko2::Workflow
   describe Engine do
     describe '#process' do
 
-      let(:shell) { Command::Shell.new(hostname: 'rspec', worker_id: 1, worker: worker) }
+      let(:shell) { Kuroko2::Command::Shell.new(hostname: 'rspec', worker_id: 1, worker: worker) }
       let(:token) { definition.job_instances.first.tokens.first }
       let(:worker) { create(:worker) }
 
