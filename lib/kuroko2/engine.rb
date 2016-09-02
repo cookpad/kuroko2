@@ -15,6 +15,7 @@ module Kuroko2
       require 'visjs/rails'
       require 'rails_rinku'
       require 'dotenv-rails'
+      require 'weak_parameters'
     end
 
     config.autoload_paths << root.join('lib')

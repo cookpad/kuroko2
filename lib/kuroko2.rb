@@ -4,7 +4,6 @@ require 'aws-sdk'
 require 'retryable'
 require 'faraday'
 require 'html/pipeline'
-require 'weak_parameters'
 
 require "kuroko2/engine"
 require "kuroko2/configuration"
