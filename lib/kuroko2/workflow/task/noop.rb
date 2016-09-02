@@ -1,10 +1,12 @@
-module Workflow
-  module Task
-    class Noop < Base
-      def execute
-        Kuroko2.logger.info("(token #{token.uuid}) NOOP")
+module Kuroko2
+  module Workflow
+    module Task
+      class Noop < Base
+        def execute
+          Kuroko2.logger.info("(token #{token.uuid}) NOOP")
 
-        :next
+          :next
+        end
       end
     end
   end

@@ -1,4 +1,6 @@
-module Workflow
-  class SyntaxError < EngineError
+module Kuroko2
+  module Workflow
+    class SyntaxError < EngineError
+    end
   end
 end

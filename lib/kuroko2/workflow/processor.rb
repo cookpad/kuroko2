@@ -1,38 +1,40 @@
-module Workflow
-  module Processor
-    def initialize
-      @hostname = Socket.gethostname
+module Kuroko2
+  module Workflow
+    module Processor
+      def initialize
+        @hostname = Socket.gethostname
 
-      @stop       = ServerEngine::BlockingFlag.new
-      @processing = ServerEngine::BlockingFlag.new
+        @stop       = ServerEngine::BlockingFlag.new
+        @processing = ServerEngine::BlockingFlag.new
 
-      @workflow = Workflow::Engine.new
-    end
+        @workflow = Workflow::Engine.new
+      end
 
-    def run
-      Kuroko2.logger = logger
-      Kuroko2.logger.info "[#{@hostname}-#{worker_id}] Start Workflow::Processor"
+      def run
+        Kuroko2.logger = logger
+        Kuroko2.logger.info "[#{@hostname}-#{worker_id}] Start Workflow::Processor"
 
-      until @stop.wait(1.0)
-        unless @processing.set?
-          begin
-            @processing.set!
-            @workflow.process_all
-            @processing.reset!
+        until @stop.wait(1.0)
+          unless @processing.set?
+            begin
+              @processing.set!
+              @workflow.process_all
+              @processing.reset!
+            end
           end
         end
+      rescue Exception => e
+        Kuroko2.logger.fatal("[#{@hostname}-#{worker_id}] #{e.class}: #{e.message}\n" +
+          e.backtrace.map { |trace| "    #{trace}" }.join("\n"))
+
+        raise e
       end
-    rescue Exception => e
-      Kuroko2.logger.fatal("[#{@hostname}-#{worker_id}] #{e.class}: #{e.message}\n" +
-                            e.backtrace.map { |trace| "    #{trace}" }.join("\n"))
 
-      raise e
-    end
+      def stop
+        Kuroko2.logger.info "[#{@hostname}-#{worker_id}] Stop Workflow::Processor"
 
-    def stop
-      Kuroko2.logger.info "[#{@hostname}-#{worker_id}] Stop Workflow::Processor"
-
-      @stop.set!
+        @stop.set!
+      end
     end
   end
 end
