@@ -47,6 +47,12 @@ module Kuroko2
       config.action_mailer.delivery_method = Kuroko2.config.action_mailer.delivery_method.to_sym
       config.action_mailer.smtp_settings =
         Kuroko2.config.action_mailer.smtp_settings.to_h.symbolize_keys || {}
+
+      if Kuroko2.config.extentions && Kuroko2.config.extentions.controller
+        Kuroko2.config.extentions.controller.each do |extention|
+          Kuroko2::ApplicationController.include(Module.const_get(extention, false))
+        end
+      end
     end
   end
 end
