@@ -1,4 +1,6 @@
-class Token < ActiveRecord::Base
+class Kuroko2::Token < Kuroko2::ApplicationRecord
+  include Kuroko2::TableNameCustomizable
+
   WORKING  = 0
   FINISHED = 1
   FAILURE  = 2

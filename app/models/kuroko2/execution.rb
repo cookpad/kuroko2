@@ -1,4 +1,6 @@
-class Execution < ActiveRecord::Base
+class Kuroko2::Execution < Kuroko2::ApplicationRecord
+  include Kuroko2::TableNameCustomizable
+
   DEFAULT_QUEUE = '@default'
 
   scope :of, ->(token) { where(token: token) }

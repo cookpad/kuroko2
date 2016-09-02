@@ -1,7 +1,9 @@
-class JobSuspendSchedule < ActiveRecord::Base
+class Kuroko2::JobSuspendSchedule < Kuroko2::ApplicationRecord
+  include Kuroko2::TableNameCustomizable
+
   belongs_to :job_definition
 
-  validates :cron, format: { with: JobSchedule::CRON_FORMAT }, uniqueness: { scope: :job_definition_id }
+  validates :cron, format: { with: Kuroko2::JobSchedule::CRON_FORMAT }, uniqueness: { scope: :job_definition_id }
   validate :validate_cron_schedule
 
   def suspend_times(time_from, time_to)
@@ -23,7 +25,7 @@ class JobSuspendSchedule < ActiveRecord::Base
   private
 
   def validate_cron_schedule
-    if JobSchedule::CRON_FORMAT === cron
+    if Kuroko2::JobSchedule::CRON_FORMAT === cron
       Chrono::Iterator.new(self.cron).next
     end
     nil

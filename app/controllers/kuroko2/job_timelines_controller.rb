@@ -11,7 +11,7 @@ class Kuroko2::JobTimelinesController < Kuroko2::ApplicationController
     definition_ids << my_difinitions.pluck(:id)
     definition_ids << assigned_definitions.pluck(:id)
 
-    @instances = JobInstance.includes(:job_definition).
+    @instances = Kuroko2::JobInstance.includes(:job_definition).
       where(job_definition_id: definition_ids.flatten.uniq, created_at: @start_at..@end_at).
       order(:created_at)
   end
@@ -32,7 +32,7 @@ class Kuroko2::JobTimelinesController < Kuroko2::ApplicationController
 
   def find_user
     if params[:user_id]
-      @user = User.find(params[:user_id])
+      @user = Kuroko2::User.find(params[:user_id])
     else
       @user = current_user
     end

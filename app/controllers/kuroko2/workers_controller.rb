@@ -1,5 +1,5 @@
 class Kuroko2::WorkersController < Kuroko2::ApplicationController
   def index
-    @workers = Worker.ordered.all
+    @workers = Kuroko2::Worker.ordered.all
   end
 end

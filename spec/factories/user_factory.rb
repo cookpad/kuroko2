@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :user do
+  factory :user, class: Kuroko2::User do
     sequence(:uid) { |n| "#{n}" }
 
     name { "Alice Pleasance Liddell #{uid}" }

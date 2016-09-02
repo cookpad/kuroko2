@@ -26,7 +26,7 @@ module Kuroko2::Workflow
           subject.process(token)
 
           expect(token).to be_finished
-          expect(Token.all.count).to eq 0
+          expect(Kuroko2::Token.all.count).to eq 0
         end
       end
 
@@ -46,7 +46,7 @@ module Kuroko2::Workflow
           subject.process(token)
 
           expect(token).to be_finished
-          expect(Token.all.count).to eq 0
+          expect(Kuroko2::Token.all.count).to eq 0
         end
       end
 
@@ -115,7 +115,7 @@ module Kuroko2::Workflow
           expect(token.status_name).to eq 'working'
 
           subject.process_all
-          expect(Token.all.count).to eq 0
+          expect(Kuroko2::Token.all.count).to eq 0
         end
       end
 
@@ -152,7 +152,7 @@ module Kuroko2::Workflow
           subject.process(token)
 
           expect(token.status_name).to eq 'finished'
-          expect(Token.all.count).to eq 0
+          expect(Kuroko2::Token.all.count).to eq 0
         end
       end
 
@@ -176,7 +176,7 @@ module Kuroko2::Workflow
           subject.process(token)
 
           expect(token.status_name).to eq 'finished'
-          expect(Token.all.count).to eq 0
+          expect(Kuroko2::Token.all.count).to eq 0
         end
       end
 
@@ -200,7 +200,7 @@ module Kuroko2::Workflow
           subject.process(token)
 
           expect(token.status_name).to eq 'finished'
-          expect(Token.all.count).to eq 0
+          expect(Kuroko2::Token.all.count).to eq 0
         end
       end
 

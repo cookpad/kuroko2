@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :job_definition do
+  factory :job_definition, class: Kuroko2::JobDefinition do
     name 'Job Definition'
     description 'This is description for the job definition.'
     script "noop:\n"
@@ -10,7 +10,7 @@ FactoryGirl.define do
     factory :job_definition_with_instances do
       transient do
         job_instances_count 1
-        job_instances_token_status Token::WORKING
+        job_instances_token_status Kuroko2::Token::WORKING
       end
 
       after(:create) do |job_definition, evaluator|

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe MemoryConsumptionLog do
+RSpec.describe Kuroko2::MemoryConsumptionLog do
   around {|example| Timecop.freeze(Time.now) { example.run } }
 
   describe described_class::Interval do

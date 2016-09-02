@@ -3,7 +3,7 @@ class Kuroko2::JobSuspendSchedulesController < Kuroko2::ApplicationController
 
   def index
     @suspend_schedules = @definition.job_suspend_schedules
-    @suspend_schedule  = JobSuspendSchedule.new
+    @suspend_schedule  = Kuroko2::JobSuspendSchedule.new
     render layout: false
   end
 
@@ -18,7 +18,7 @@ class Kuroko2::JobSuspendSchedulesController < Kuroko2::ApplicationController
   end
 
   def destroy
-    suspend_schedule = JobSuspendSchedule.find(params[:id])
+    suspend_schedule = Kuroko2::JobSuspendSchedule.find(params[:id])
     if suspend_schedule.destroy
       render json: suspend_schedule, status: :ok
     else
@@ -33,6 +33,6 @@ class Kuroko2::JobSuspendSchedulesController < Kuroko2::ApplicationController
   end
 
   def set_definition
-    @definition = JobDefinition.find(params[:job_definition_id])
+    @definition = Kuroko2::JobDefinition.find(params[:job_definition_id])
   end
 end

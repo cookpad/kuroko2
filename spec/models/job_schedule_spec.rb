@@ -1,16 +1,16 @@
 require 'rails_helper'
 
-describe JobSchedule do
+describe Kuroko2::JobSchedule do
 
   describe '#valid?' do
     it 'accepts only CRON notation' do
-      expect(JobSchedule.new(cron: '* * * * *')).to be_valid
-      expect(JobSchedule.new(cron: '1,2-3,*,*/4,5-6/7 1,2-3,*,*/4,5-6/7 1,2-3,*,*/4,5-6/7 1,2-3,*,*/4,5-6/7 1,2-3,*,*/4,1-3/5')).to be_valid
-      expect(JobSchedule.new(cron: '* * * *')).not_to be_valid
+      expect(Kuroko2::JobSchedule.new(cron: '* * * * *')).to be_valid
+      expect(Kuroko2::JobSchedule.new(cron: '1,2-3,*,*/4,5-6/7 1,2-3,*,*/4,5-6/7 1,2-3,*,*/4,5-6/7 1,2-3,*,*/4,5-6/7 1,2-3,*,*/4,1-3/5')).to be_valid
+      expect(Kuroko2::JobSchedule.new(cron: '* * * *')).not_to be_valid
     end
 
     it 'accepts only valid CRON notation' do
-      expect(JobSchedule.new(cron: '5-0 * * * *')).not_to be_valid
+      expect(Kuroko2::JobSchedule.new(cron: '5-0 * * * *')).not_to be_valid
     end
   end
 
@@ -67,8 +67,8 @@ describe JobSchedule do
       let(:time_to) { Time.new(2016, 1, 1, 9, 58, 0) }
 
       it 'does not launch jobs' do
-        expect { JobSchedule.launch_scheduled_jobs!(time_from, time_to) }.
-          not_to change { JobInstance.count }
+        expect { Kuroko2::JobSchedule.launch_scheduled_jobs!(time_from, time_to) }.
+          not_to change { Kuroko2::JobInstance.count }
       end
     end
 
@@ -76,8 +76,8 @@ describe JobSchedule do
       let(:time_to) { Time.new(2016, 1, 1, 10, 1, 0) }
 
       it 'launches jobs' do
-        expect { JobSchedule.launch_scheduled_jobs!(time_from, time_to) }.
-          to change { JobInstance.count }.from(0).to(1)
+        expect { Kuroko2::JobSchedule.launch_scheduled_jobs!(time_from, time_to) }.
+          to change { Kuroko2::JobInstance.count }.from(0).to(1)
       end
 
       context 'With suspended option' do
@@ -86,8 +86,8 @@ describe JobSchedule do
         end
 
         it 'does not launch jobs' do
-          expect { JobSchedule.launch_scheduled_jobs!(time_from, time_to) }.
-            not_to change { JobInstance.count }
+          expect { Kuroko2::JobSchedule.launch_scheduled_jobs!(time_from, time_to) }.
+            not_to change { Kuroko2::JobInstance.count }
         end
       end
     end
@@ -103,8 +103,8 @@ describe JobSchedule do
         let(:time_to)   { Time.new(2016, 1, 1, 10, 1, 0) }
 
         it 'does not launch jobs' do
-          expect { JobSchedule.launch_scheduled_jobs!(time_from, time_to) }.
-            not_to change { JobInstance.count }
+          expect { Kuroko2::JobSchedule.launch_scheduled_jobs!(time_from, time_to) }.
+            not_to change { Kuroko2::JobInstance.count }
         end
       end
 
@@ -112,8 +112,8 @@ describe JobSchedule do
         let(:time_from) { Time.new(2016, 1, 1, 10, 30, 0) }
         let(:time_to)   { Time.new(2016, 1, 1, 10, 31, 0) }
         it 'launches jobs' do
-          expect { JobSchedule.launch_scheduled_jobs!(time_from, time_to) }.
-            to change { JobInstance.count }.from(0).to(1)
+          expect { Kuroko2::JobSchedule.launch_scheduled_jobs!(time_from, time_to) }.
+            to change { Kuroko2::JobInstance.count }.from(0).to(1)
         end
       end
     end

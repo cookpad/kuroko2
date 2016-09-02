@@ -1,7 +1,7 @@
 class Kuroko2::LogsController < Kuroko2::ApplicationController
   def index
-    @definition = JobDefinition.find(logs_params[:job_definition_id])
-    @instance   = JobInstance.find(logs_params[:job_instance_id])
+    @definition = Kuroko2::JobDefinition.find(logs_params[:job_definition_id])
+    @instance   = Kuroko2::JobInstance.find(logs_params[:job_instance_id])
     @logs       = @instance.logs
 
     render layout: false

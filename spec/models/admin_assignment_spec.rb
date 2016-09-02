@@ -1,4 +1,4 @@
 require 'rails_helper'
 
-describe AdminAssignment do
+describe Kuroko2::AdminAssignment do
 end

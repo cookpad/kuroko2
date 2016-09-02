@@ -1,4 +1,6 @@
-class Worker < ActiveRecord::Base
+class Kuroko2::Worker < Kuroko2::ApplicationRecord
+  include Kuroko2::TableNameCustomizable
+
   belongs_to :execution
 
   scope :on, -> (hostname) { where(hostname: hostname) }

@@ -1,15 +1,15 @@
 require 'rails_helper'
 
-describe JobSuspendSchedule do
+describe Kuroko2::JobSuspendSchedule do
   describe '#valid?' do
     it 'accepts only CRON notation' do
-      expect(JobSuspendSchedule.new(cron: '* * * * *')).to be_valid
-      expect(JobSuspendSchedule.new(cron: '1,2-3,*,*/4,5-6/7 1,2-3,*,*/4,5-6/7 1,2-3,*,*/4,5-6/7 1,2-3,*,*/4,5-6/7 1,2-3,*,*/4,1-3/5')).to be_valid
-      expect(JobSuspendSchedule.new(cron: '* * * *')).not_to be_valid
+      expect(Kuroko2::JobSuspendSchedule.new(cron: '* * * * *')).to be_valid
+      expect(Kuroko2::JobSuspendSchedule.new(cron: '1,2-3,*,*/4,5-6/7 1,2-3,*,*/4,5-6/7 1,2-3,*,*/4,5-6/7 1,2-3,*,*/4,5-6/7 1,2-3,*,*/4,1-3/5')).to be_valid
+      expect(Kuroko2::JobSuspendSchedule.new(cron: '* * * *')).not_to be_valid
     end
 
     it 'accepts only valid CRON notation' do
-      expect(JobSuspendSchedule.new(cron: '5-0 * * * *')).not_to be_valid
+      expect(Kuroko2::JobSuspendSchedule.new(cron: '5-0 * * * *')).not_to be_valid
     end
   end
 

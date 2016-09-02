@@ -1,4 +1,6 @@
-class JobDefinition < ActiveRecord::Base
+class Kuroko2::JobDefinition < Kuroko2::ApplicationRecord
+  include Kuroko2::TableNameCustomizable
+
   module PreventMultiStatus
     NONE = 0
     WORKING_OR_ERROR = 1
@@ -9,12 +11,12 @@ class JobDefinition < ActiveRecord::Base
   PREVENT_TOKEN_STATUSES = {
     PreventMultiStatus::NONE => [],
     PreventMultiStatus::WORKING_OR_ERROR => [
-      Token::WORKING,
-      Token::FAILURE,
-      Token::CRITICAL
+      Kuroko2::Token::WORKING,
+      Kuroko2::Token::FAILURE,
+      Kuroko2::Token::CRITICAL
     ],
-    PreventMultiStatus::WORKING => [Token::WORKING],
-    PreventMultiStatus::ERROR => [Token::FAILURE, Token::CRITICAL],
+    PreventMultiStatus::WORKING => [Kuroko2::Token::WORKING],
+    PreventMultiStatus::ERROR => [Kuroko2::Token::FAILURE, Kuroko2::Token::CRITICAL],
   }
 
   self.locking_column = :version
@@ -43,8 +45,8 @@ class JobDefinition < ActiveRecord::Base
   scope :ordered, -> { order(:id) }
   scope :tagged_by, ->(tags) {
     where(
-      id: JobDefinitionTag.
-        where(tag_id: Tag.where(name: tags).pluck(:id)).
+      id: Kuroko2::JobDefinitionTag.
+        where(tag_id: Kuroko2::Tag.where(name: tags).pluck(:id)).
         group(:job_definition_id).
         having('COUNT(1) >= ?', tags.size).
         pluck(:job_definition_id)
@@ -54,7 +56,7 @@ class JobDefinition < ActiveRecord::Base
     column = arel_table
     or_query = column[:name].matches("%#{query}%").or(column[:script].matches("%#{query}%"))
 
-    search_by_tag_definition_ids = JobDefinitionTag.joins(:tag).
+    search_by_tag_definition_ids = Kuroko2::JobDefinitionTag.joins(:tag).
       where('tags.name LIKE ?', "%#{query}%").distinct.pluck(:job_definition_id)
 
     if search_by_tag_definition_ids.present?
@@ -77,7 +79,7 @@ class JobDefinition < ActiveRecord::Base
   }
 
   def proceed_multi_instance?
-    tokens = Token.where(job_definition_id: self.id)
+    tokens = Kuroko2::Token.where(job_definition_id: self.id)
     (tokens.map(&:status) & PREVENT_TOKEN_STATUSES[self.prevent_multi]).empty?
   end
 
@@ -87,7 +89,7 @@ class JobDefinition < ActiveRecord::Base
 
   def text_tags=(text_tags)
     self.tags = text_tags.gsub(/[[:blank:]]+/, '').split(/[,、]/).uniq.map do |name|
-      Tag.find_or_create_by(name: name)
+      Kuroko2::Tag.find_or_create_by(name: name)
     end
   end
 

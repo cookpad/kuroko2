@@ -8,7 +8,7 @@ module Kuroko2::Workflow::Task
     let(:node) { Kuroko2::Workflow::Node.new(:execute, shell) }
 
     let(:token) { create(:token, path: '/', script: 'execute:', context: context, job_definition: definition, job_instance: instance) }
-    let(:execution) { Execution.take }
+    let(:execution) { Kuroko2::Execution.take }
     let(:definition) { create(:job_definition, script: "execute: echo HELLO\n") }
     let(:instance) do
       create(:job_instance, job_definition: definition).tap do |instance|
@@ -22,7 +22,7 @@ module Kuroko2::Workflow::Task
       specify do
         is_expected.to eq :pass
 
-        expect(Execution.all.size).to eq 1
+        expect(Kuroko2::Execution.all.size).to eq 1
         expect(execution.token).to eql token
         expect(execution.shell).to eq shell
         expect(execution.context['ENV']).to eq context['ENV']
@@ -39,8 +39,8 @@ module Kuroko2::Workflow::Task
       specify do
         is_expected.to eq :next
 
-        expect(Execution.all.size).to eq 0
-        expect(Log.all.count).to eq 1
+        expect(Kuroko2::Execution.all.size).to eq 0
+        expect(Kuroko2::Log.all.count).to eq 1
       end
     end
 
@@ -52,7 +52,7 @@ module Kuroko2::Workflow::Task
       around do |example|
         Execute.new(node, token).execute
 
-        execution = Execution.of(token).take
+        execution = Kuroko2::Execution.of(token).take
         execution.update!(pid: pid)
         create(:worker, hostname: hostname, execution_id: execution.id)
 
@@ -61,7 +61,7 @@ module Kuroko2::Workflow::Task
       end
 
       it 'creates ProcessSignal' do
-        expect { Execute.new(node, token).execute }.to change { ProcessSignal.where(pid: execution.pid, hostname: hostname).count }.from(0).to(1)
+        expect { Execute.new(node, token).execute }.to change { Kuroko2::ProcessSignal.where(pid: execution.pid, hostname: hostname).count }.from(0).to(1)
       end
     end
 
@@ -71,7 +71,7 @@ module Kuroko2::Workflow::Task
       context 'Without EXPECTED_TIME_NOTIFIED_AT' do
         around do |example|
           Execute.new(node, token).execute
-          Execution.of(token).take.update!(pid: 1)
+          Kuroko2::Execution.of(token).take.update!(pid: 1)
 
           Timecop.travel((24.hours + 1.second).since) { example.run }
         end
@@ -89,7 +89,7 @@ module Kuroko2::Workflow::Task
       context 'With EXPECTED_TIME_NOTIFIED_AT' do
         around do |example|
           Execute.new(node, token).execute
-          Execution.of(token).take.update!(pid: 1)
+          Kuroko2::Execution.of(token).take.update!(pid: 1)
 
           Timecop.travel((24.hours + 1.second).since) do
             token.context['EXPECTED_TIME_NOTIFIED_AT'] = notified_time

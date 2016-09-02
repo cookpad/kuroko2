@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :execution do
+  factory :execution, class: Kuroko2::Execution do
     shell 'echo $NAME'
     exit_status 0
 

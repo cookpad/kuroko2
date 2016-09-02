@@ -7,7 +7,7 @@ class Kuroko2::DashboardController < Kuroko2::ApplicationController
       @definitions = @definitions.tagged_by(@input_tags)
     end
 
-    @instances    = JobInstance.working.where(job_definition: @definitions)
+    @instances    = Kuroko2::JobInstance.working.where(job_definition: @definitions)
     @related_tags = @definitions.includes(:tags).map(&:tags).flatten.uniq
 
   end

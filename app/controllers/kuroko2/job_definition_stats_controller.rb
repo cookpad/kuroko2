@@ -7,7 +7,7 @@ class Kuroko2::JobDefinitionStatsController < Kuroko2::ApplicationController
     set_definition
     set_period
 
-    @logs = JobInstance.where(job_definition_id: params[:job_definition_id]).
+    @logs = Kuroko2::JobInstance.where(job_definition_id: params[:job_definition_id]).
       order(created_at: :desc)
     if @start_at
       @logs = @logs.where(created_at: @start_at..@end_at)
@@ -20,12 +20,12 @@ class Kuroko2::JobDefinitionStatsController < Kuroko2::ApplicationController
     set_definition
     set_period
 
-    target_instance = JobInstance.where(job_definition_id: params[:job_definition_id])
+    target_instance = Kuroko2::JobInstance.where(job_definition_id: params[:job_definition_id])
     if @start_at
       target_instance = target_instance.where(created_at: @start_at..@end_at)
     end
 
-    @logs = MemoryConsumptionLog.joins(:job_instance).
+    @logs = Kuroko2::MemoryConsumptionLog.joins(:job_instance).
       merge(target_instance).order(created_at: :desc)
     @logs = @logs.limit(10) unless @start_at
   end
@@ -49,6 +49,6 @@ class Kuroko2::JobDefinitionStatsController < Kuroko2::ApplicationController
   end
 
   def set_definition
-    @definition = JobDefinition.find(params[:job_definition_id])
+    @definition =  Kuroko2::JobDefinition.find(params[:job_definition_id])
   end
 end

@@ -10,7 +10,7 @@ describe Kuroko2::JobDefinitionStatsController do
     create(
       :job_definition_with_instances,
       job_instances_count: instance_num,
-      job_instances_token_status: Token::FINISHED
+      job_instances_token_status: Kuroko2::Token::FINISHED
     )
   end
 
@@ -18,7 +18,7 @@ describe Kuroko2::JobDefinitionStatsController do
     definition.job_instances.first.update!(created_at: 2.months.ago)
 
     definition.job_instances.each do |instance|
-      MemoryConsumptionLog.create!(job_instance_id: instance.id, value: 1000 + rand(10))
+      Kuroko2::MemoryConsumptionLog.create!(job_instance_id: instance.id, value: 1000 + rand(10))
     end
   end
 

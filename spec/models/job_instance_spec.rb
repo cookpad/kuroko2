@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-describe JobInstance do
-  let(:log) { Log.take }
+describe Kuroko2::JobInstance do
+  let(:log) { Kuroko2::Log.take }
 
   describe '#logs' do
     let(:definition) { create(:job_definition) }

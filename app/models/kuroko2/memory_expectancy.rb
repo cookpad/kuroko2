@@ -1,4 +1,6 @@
-class MemoryExpectancy < ActiveRecord::Base
+class Kuroko2::MemoryExpectancy < Kuroko2::ApplicationRecord
+  include Kuroko2::TableNameCustomizable
+
   DEFAULT_VALUE = 0
 
   belongs_to :job_definition
@@ -6,7 +8,8 @@ class MemoryExpectancy < ActiveRecord::Base
   validates :expected_value, presence: true
 
   def memory_consumption_logs
-    MemoryConsumptionLog.joins(:job_instance).merge(JobInstance.where(job_definition_id: job_definition_id))
+    Kuroko2::MemoryConsumptionLog.joins(:job_instance).
+      merge(Kuroko2::JobInstance.where(job_definition_id: job_definition_id))
   end
 
   # Calculates expected_value with latest consumption logs, then stores it,

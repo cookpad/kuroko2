@@ -7,7 +7,7 @@ module Kuroko2::Workflow::Task
     let(:instance) { create(:job_instance, job_definition: definition) }
 
     let(:token) do
-      Token.create(uuid: SecureRandom.uuid, path: '/0-fork', job_definition: definition, job_instance: instance, script: <<-EOF)
+      Kuroko2::Token.create(uuid: SecureRandom.uuid, path: '/0-fork', job_definition: definition, job_instance: instance, script: <<-EOF)
 fork:
   noop: noop1
   noop: noop2

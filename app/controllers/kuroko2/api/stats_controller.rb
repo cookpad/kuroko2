@@ -14,10 +14,10 @@ class Kuroko2::Api::StatsController < Kuroko2::Api::ApplicationController
   end
 
   def waiting_execution
-    waiting_executions_count = Execution.select('queue, COUNT(1) AS `count`').
+    waiting_executions_count = Kuroko2::Execution.select('queue, COUNT(1) AS `count`').
       where('started_at IS NULL AND created_at < ?', 3.minutes.ago).group(:queue)
 
-    render json: Worker.pluck(:queue).uniq.inject({}) { |result, queue|
+    render json: Kuroko2::Worker.pluck(:queue).uniq.inject({}) { |result, queue|
       result.merge(
         "kuroko2.executions.waiting.#{queue}" => waiting_executions_count.find { |count|
           count.queue == queue

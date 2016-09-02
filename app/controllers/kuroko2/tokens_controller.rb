@@ -4,8 +4,8 @@ class Kuroko2::TokensController < Kuroko2::ApplicationController
   before_action :set_engine, only: %i(update)
 
   def index
-    @definition = JobDefinition.find(tokens_params[:job_definition_id])
-    @instance   = JobInstance.find(tokens_params[:job_instance_id])
+    @definition = Kuroko2::JobDefinition.find(tokens_params[:job_definition_id])
+    @instance   = Kuroko2::JobInstance.find(tokens_params[:job_instance_id])
     @tokens     = @instance.tokens
 
     render layout: false
@@ -33,11 +33,11 @@ class Kuroko2::TokensController < Kuroko2::ApplicationController
   private
 
   def set_engine
-    @engine = Workflow::Engine.new
+    @engine = Kuroko2::Workflow::Engine.new
   end
 
   def set_token
-    @token = Token.where(job_definition_id: params[:job_definition_id], job_instance_id: params[:job_instance_id]).find(params[:id])
+    @token = Kuroko2::Token.where(job_definition_id: params[:job_definition_id], job_instance_id: params[:job_instance_id]).find(params[:id])
   end
 
   def tokens_params

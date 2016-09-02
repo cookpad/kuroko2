@@ -16,7 +16,7 @@ class Kuroko2::ApplicationController < ActionController::Base
   def current_user
     @_current_user ||= begin
       if (id = session[:user_id])
-        User.active.find(id)
+        Kuroko2::User.active.find(id)
       end
     end
   rescue ActiveRecord::RecordNotFound

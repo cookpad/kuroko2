@@ -2,7 +2,7 @@ class Kuroko2::JobDefinitionsController < Kuroko2::ApplicationController
   before_action :set_definition, only: [:show, :edit, :update, :destroy]
 
   def index
-    rel = JobDefinition
+    rel = Kuroko2::JobDefinition
     query = query_params[:q]
 
     if query.present?
@@ -17,7 +17,7 @@ class Kuroko2::JobDefinitionsController < Kuroko2::ApplicationController
     if query.present? || @input_tags.present?
       @related_tags = rel.includes(:tags).map(&:tags).flatten.uniq
     else
-      @related_tags = Tag.all
+      @related_tags = Kuroko2::Tag.all
     end
 
     @definitions = rel.ordered.page(page_params[:page])
@@ -28,16 +28,16 @@ class Kuroko2::JobDefinitionsController < Kuroko2::ApplicationController
     @schedules = @definition.job_schedules
     @suspend_schedules = @definition.job_suspend_schedules
 
-    @schedule  = JobSchedule.new(job_definition: @definitions)
-    @suspend_schedule = JobSuspendSchedule.new(job_definition: @definitions)
+    @schedule  = Kuroko2::JobSchedule.new(job_definition: @definitions)
+    @suspend_schedule = Kuroko2::JobSuspendSchedule.new(job_definition: @definitions)
   end
 
   def new
-    @definition = JobDefinition.new
+    @definition = Kuroko2::JobDefinition.new
   end
 
   def create
-    @definition = JobDefinition.new(definition_params)
+    @definition = Kuroko2::JobDefinition.new(definition_params)
     @definition.admins << current_user
 
     if @definition.save
@@ -55,7 +55,7 @@ class Kuroko2::JobDefinitionsController < Kuroko2::ApplicationController
   def update
     success = ActiveRecord::Base.transaction do
       @definition.attributes = definition_params
-      @definition.admins     = User.active.with(admin_id_params)
+      @definition.admins     = Kuroko2::User.active.with(admin_id_params)
 
       @definition.save
     end
@@ -95,6 +95,6 @@ class Kuroko2::JobDefinitionsController < Kuroko2::ApplicationController
   end
 
   def set_definition
-    @definition = JobDefinition.find(params[:id])
+    @definition = Kuroko2::JobDefinition.find(params[:id])
   end
 end

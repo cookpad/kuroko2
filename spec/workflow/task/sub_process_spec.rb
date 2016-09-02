@@ -21,7 +21,7 @@ module Kuroko2::Workflow::Task
 
       it do
         expect(task.execute).to eq :pass
-        expect(Token.count).to eq 2
+        expect(Kuroko2::Token.count).to eq 2
         expect(task.execute).to eq :pass
 
         sub_instance.touch(:finished_at)

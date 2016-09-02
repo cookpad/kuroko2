@@ -1,4 +1,6 @@
-class User < ActiveRecord::Base
+class Kuroko2::User < Kuroko2::ApplicationRecord
+  include Kuroko2::TableNameCustomizable
+
   GRAVATAR_URL = '//www.gravatar.com/avatar/%s?s=90&d=mm'
   GOOGLE_OAUTH2_PROVIDER = 'google_oauth2'
   GROUP_PROVIDER = 'group_mail'

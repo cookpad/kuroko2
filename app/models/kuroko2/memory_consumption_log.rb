@@ -1,4 +1,6 @@
-class MemoryConsumptionLog < ActiveRecord::Base
+class Kuroko2::MemoryConsumptionLog < Kuroko2::ApplicationRecord
+  include Kuroko2::TableNameCustomizable
+
   belongs_to :job_instance
 
   validates :value, presence: true

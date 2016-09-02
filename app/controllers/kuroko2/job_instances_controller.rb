@@ -50,7 +50,7 @@ class Kuroko2::JobInstancesController < Kuroko2::ApplicationController
   def force_destroy
     ActiveRecord::Base.transaction do
       @instance.executions.each do |execution|
-        execution = Worker.executing(execution.id)
+        execution = Kuroko2::Worker.executing(execution.id)
         execution.update_column(:execution_id, nil) if execution
       end
 
@@ -65,7 +65,7 @@ class Kuroko2::JobInstancesController < Kuroko2::ApplicationController
   end
 
   def working
-    @instances = JobInstance.working.order(id: :desc)
+    @instances = Kuroko2::JobInstance.working.order(id: :desc)
   end
 
   private
@@ -78,7 +78,7 @@ class Kuroko2::JobInstancesController < Kuroko2::ApplicationController
   end
 
   def set_definition
-    @definition = JobDefinition.find(job_instance_params[:job_definition_id])
+    @definition = Kuroko2::JobDefinition.find(job_instance_params[:job_definition_id])
   end
 
   def set_instance

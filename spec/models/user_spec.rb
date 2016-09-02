@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe User do
+describe Kuroko2::User do
   describe '#google_account?' do
     subject { user.google_account? }
 

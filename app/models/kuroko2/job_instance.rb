@@ -1,4 +1,6 @@
-class JobInstance < ActiveRecord::Base
+class Kuroko2::JobInstance < Kuroko2::ApplicationRecord
+  include Kuroko2::TableNameCustomizable
+
   belongs_to :job_definition
 
   has_many :logs, dependent: :delete_all do
@@ -88,7 +90,7 @@ class JobInstance < ActiveRecord::Base
     end
 
     if job_definition.proceed_multi_instance?
-      self.tokens << Token.new do |token|
+      self.tokens << Kuroko2::Token.new do |token|
         definition = self.job_definition
 
         token.job_definition         = definition

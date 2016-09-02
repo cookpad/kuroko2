@@ -1,4 +1,4 @@
-class Api::ApplicationResource
+class Kuroko2::Api::ApplicationResource
   include Garage::Representer
   include Garage::Authorizable
 

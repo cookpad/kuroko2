@@ -1,4 +1,6 @@
-class ProcessSignal < ActiveRecord::Base
+class Kuroko2::ProcessSignal < Kuroko2::ApplicationRecord
+  include Kuroko2::TableNameCustomizable
+
   scope :unstarted, -> { where(started_at: nil) }
   scope :on, ->(hostname) { where(hostname: hostname) }
 

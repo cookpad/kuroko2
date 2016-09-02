@@ -45,7 +45,7 @@ describe Kuroko2::UsersController do
 
     it do
       expect(response).to redirect_to(users_path)
-      expect(User.exists?(user.id)).to be_falsey
+      expect(Kuroko2::User.exists?(user.id)).to be_falsey
     end
   end
 end

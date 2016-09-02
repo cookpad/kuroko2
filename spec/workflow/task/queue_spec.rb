@@ -6,10 +6,10 @@ module Kuroko2::Workflow::Task
       subject { token.context['QUEUE'] }
 
       let(:token) { build(:token, script: 'queue:') }
-      let(:queue) { Execution::DEFAULT_QUEUE }
+      let(:queue) { Kuroko2::Execution::DEFAULT_QUEUE }
 
       before do
-        Worker.create!(hostname: 'test', worker_id: 1, queue: queue, working: true)
+        Kuroko2::Worker.create!(hostname: 'test', worker_id: 1, queue: queue, working: true)
       end
 
       context 'valid case' do

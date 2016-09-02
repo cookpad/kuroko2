@@ -8,7 +8,7 @@ describe Kuroko2::JobTimelinesController do
     create(
       :job_definition_with_instances,
       job_instances_count: instance_num,
-      job_instances_token_status: Token::FINISHED
+      job_instances_token_status: Kuroko2::Token::FINISHED
     )
   end
 
@@ -17,7 +17,7 @@ describe Kuroko2::JobTimelinesController do
   before do
     sign_in
     definition.job_instances.first.update!(created_at: 1.week.ago)
-    Star.create!(job_definition: definition, user: target_user)
+    Kuroko2::Star.create!(job_definition: definition, user: target_user)
     definition.text_tags = 'test'
     definition.save!
   end
@@ -76,7 +76,7 @@ describe Kuroko2::JobTimelinesController do
         let(:group_user) { create(:user) }
 
         before do
-          AdminAssignment.create!(job_definition: definition, user: group_user)
+          Kuroko2::AdminAssignment.create!(job_definition: definition, user: group_user)
           xhr :get, :dataset, user_id: group_user.id
         end
 

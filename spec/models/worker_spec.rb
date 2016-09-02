@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-describe Worker do
+describe Kuroko2::Worker do
 
 end

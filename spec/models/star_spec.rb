@@ -1,4 +1,4 @@
 require 'rails_helper'
 
-describe Star do
+describe Kuroko2::Star do
 end

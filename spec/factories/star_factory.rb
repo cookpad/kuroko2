@@ -1,4 +1,4 @@
 FactoryGirl.define do
-  factory :star do
+  factory :star, class: Kuroko2::Star do
   end
 end

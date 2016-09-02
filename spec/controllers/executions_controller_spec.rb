@@ -16,7 +16,7 @@ describe Kuroko2::ExecutionsController do
 
     it do
       expect(response).to redirect_to(job_definition_job_instance_path(job_definition_id: definition.id, id: instance.id))
-      expect(ProcessSignal.count).to eq 1
+      expect(Kuroko2::ProcessSignal.count).to eq 1
     end
   end
 

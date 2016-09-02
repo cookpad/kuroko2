@@ -2,16 +2,16 @@ class Kuroko2::UsersController < Kuroko2::ApplicationController
   before_action :set_user, only: [:destroy]
 
   def index
-    @user  = User.new
+    @user  = Kuroko2::User.new
     if params[:target] == 'group'
-      @users = User.group_user.all.page(page_params[:page])
+      @users = Kuroko2::User.group_user.all.page(page_params[:page])
     else
-      @users = User.all.page(page_params[:page])
+      @users = Kuroko2::User.all.page(page_params[:page])
     end
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = Kuroko2::User.find(params[:id])
     @input_tags  = params[:tag] || []
 
     @definitions = @user.assigned_job_definitions
@@ -19,19 +19,19 @@ class Kuroko2::UsersController < Kuroko2::ApplicationController
       @definitions = @definitions.tagged_by(@input_tags)
     end
 
-    @instances    = JobInstance.working.where(job_definition: @definitions)
+    @instances    = Kuroko2::JobInstance.working.where(job_definition: @definitions)
     @related_tags = @definitions.includes(:tags).map(&:tags).flatten.uniq
   end
 
   def create
-    @user = User.new(user_params)
-    @user.provider = User::GROUP_PROVIDER
+    @user = Kuroko2::User.new(user_params)
+    @user.provider = Kuroko2::User::GROUP_PROVIDER
     @user.uid      = @user.email
 
     if @user.save
       redirect_to users_path
     else
-      @users = User.all
+      @users = Kuroko2::User.all
 
       render action: :index
     end
@@ -41,7 +41,7 @@ class Kuroko2::UsersController < Kuroko2::ApplicationController
     if @user.destroy
       redirect_to users_url
     else
-      @users = User.all
+      @users = Kuroko2::User.all
 
       render :index
     end
@@ -49,7 +49,7 @@ class Kuroko2::UsersController < Kuroko2::ApplicationController
 
   private
   def set_user
-    @user = User.find(params[:id])
+    @user = Kuroko2::User.find(params[:id])
   end
 
   def user_params

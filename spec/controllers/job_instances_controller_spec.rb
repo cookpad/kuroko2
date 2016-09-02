@@ -42,7 +42,7 @@ describe Kuroko2::JobInstancesController do
   describe '#destroy' do
     before do
       instance.tokens.each do |token|
-        token.update_column(:status, Token::FAILURE)
+        token.update_column(:status, Kuroko2::Token::FAILURE)
       end
 
       delete :destroy, job_definition_id: definition, id: instance

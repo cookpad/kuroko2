@@ -3,7 +3,7 @@ class Kuroko2::JobSchedulesController < Kuroko2::ApplicationController
 
   def index
     @schedules = @definition.job_schedules
-    @schedule  = JobSchedule.new
+    @schedule  = Kuroko2::JobSchedule.new
 
     render layout: false
   end
@@ -19,7 +19,7 @@ class Kuroko2::JobSchedulesController < Kuroko2::ApplicationController
   end
 
   def destroy
-    schedule = JobSchedule.find(params[:id])
+    schedule = Kuroko2::JobSchedule.find(params[:id])
     if schedule.destroy
       render json: schedule, status: :ok
     else
@@ -34,6 +34,6 @@ class Kuroko2::JobSchedulesController < Kuroko2::ApplicationController
   end
 
   def set_definition
-    @definition = JobDefinition.find(params[:job_definition_id])
+    @definition = Kuroko2::JobDefinition.find(params[:job_definition_id])
   end
 end

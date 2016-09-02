@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe MemoryExpectancy do
+RSpec.describe Kuroko2::MemoryExpectancy do
   let!(:definition) { create(:job_definition) }
   let!(:instance) { create(:job_instance, job_definition: definition) }
   let!(:expectancy) { described_class.create!(job_definition: definition) }

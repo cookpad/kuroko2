@@ -21,7 +21,7 @@ describe Kuroko2::StarsController do
 
     it do
       expect(response).to have_http_status(:ok)
-      expect(Star.exists?(star.id)).to be_falsey
+      expect(Kuroko2::Star.exists?(star.id)).to be_falsey
     end
   end
 
