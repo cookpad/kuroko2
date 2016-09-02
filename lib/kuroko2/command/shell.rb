@@ -1,6 +1,6 @@
 require 'open3'
 
-module Command
+module Kuroko2::Command
   class Shell
     MAX_OUTPUT_LENGTH = 60_000
     MAX_READ_LENGTH   = 1024

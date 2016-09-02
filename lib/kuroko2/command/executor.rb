@@ -1,4 +1,4 @@
-module Command
+module Kuroko2::Command
   module Executor
     DEFAULT_NUM_WORKERS = 4
     NUM_SYSTEM_WORKERS = 2   # master and monitor

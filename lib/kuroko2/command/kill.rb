@@ -1,4 +1,4 @@
-module Command
+module Kuroko2::Command
   class Kill
     def initialize(host, process = nil)
       @hostname = host

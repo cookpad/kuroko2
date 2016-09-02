@@ -1,6 +1,6 @@
 require 'open3'
 
-module Command
+module Kuroko2::Command
   class Monitor
     NUM_FAILURES = 15
 
