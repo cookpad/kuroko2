@@ -17,7 +17,7 @@
             .media-body
               = current_user.name
       - else
-        = collection_select(:admin_assignments, :user_id, User.active.order(:name).all, :id, :name,
+        = collection_select(:admin_assignments, :user_id, Kuroko2::User.active.order(:name).all, :id, :name,
                             { selected: @definition.admins.map(&:id), include_blank: false },
                             { multiple: true, class: 'form-control' })
 
