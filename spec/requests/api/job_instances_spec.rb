@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'job_instances' do
-  let(:service_name) { :test_clinet_name }
+  let(:service_name) { :test_client_name }
   let(:secret_key)   { 'secret_key' }
   let(:result) { JSON.parse(response.body) }
   let(:env) do
@@ -12,11 +12,6 @@ describe 'job_instances' do
   end
   let(:definition) do
     create(:job_definition, script: 'execute: bundle exec rake test:execute', api_allowed: true)
-  end
-
-  before do
-    allow(Kuroko2.config.api_basic_authentication_applications).to receive(service_name).
-      and_return(secret_key)
   end
 
   describe 'GET /v1/definitions/:job_definition_name/instances/:job_instance_id' do

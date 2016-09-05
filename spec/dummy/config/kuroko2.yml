@@ -15,7 +15,7 @@ default: &default
     hipchat:
       api_token: 'token'
   api_basic_authentication_applications:
-    test_app: 'api_key'
+    test_client_name: 'secret_key'
   app_authentication:
     google_oauth2:
       client_id: '<%= ENV["GOOGLE_CLIENT_ID"] %>'
