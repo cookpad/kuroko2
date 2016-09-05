@@ -20,7 +20,7 @@ ul class="nav nav-pills" role="tablist"
               td= labeled_log_level(log.level)
               td.nowrap= l(log.created_at, format: :short)
               td.log= rinku_auto_link(log.message, :urls)
-      = javascript_include_tag 'instance_linker'
+      = javascript_include_tag 'kuroko2/instance_linker'
 
     div class="tab-pane" role="tabpanel" id="execution_logs" data-api-path="#{job_definition_job_instance_execution_logs_path(@definition, @instance)}" data-logger="#{Kuroko2.config.execution_logger.try!(:type)}"
       table.table.table-condensed.table-hover
