@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'webmock/rspec'
 
 module Kuroko2::Workflow
   describe Notifier::Slack do
