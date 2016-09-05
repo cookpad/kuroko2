@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 module Kuroko2::Workflow
   describe Notifier::Hipchat do

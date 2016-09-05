@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe Kuroko2::MemorySampler do
   describe 'get_by_pgid' do
