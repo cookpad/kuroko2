@@ -7,6 +7,7 @@ require 'html/pipeline'
 
 require "kuroko2/engine"
 require "kuroko2/configuration"
+require "kuroko2/util/logger"
 
 module Kuroko2
   class << self
