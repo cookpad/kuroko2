@@ -7,7 +7,7 @@ end
 
 options = {
   worker_type: 'process',
-  workers:     Command::Executor.num_workers,
+  workers:     Kuroko2::Command::Executor.num_workers,
   daemonize:   Rails.env.production?,
   log:         Rails.env.production? ? Rails.root.join("log/command-executor.log").to_s : $stdout,
   log_level:   Rails.env.production? ? :info : :debug,
@@ -17,5 +17,5 @@ options = {
   worker_graceful_kill_timeout: -1,
 }
 
-server = ServerEngine.create(nil, Command::Executor, options)
+server = ServerEngine.create(nil, Kuroko2::Command::Executor, options)
 server.run

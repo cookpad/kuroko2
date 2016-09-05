@@ -14,5 +14,5 @@ options = {
   supervisor:  Rails.env.production?,
 }
 
-server = ServerEngine.create(nil, Workflow::Scheduler, options)
+server = ServerEngine.create(nil, Kuroko2::Workflow::Scheduler, options)
 server.run
