@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    kuroko2 (0.1.4)
+    kuroko2 (0.1.5)
       addressable
       aws-sdk (~> 2)
       chrono
