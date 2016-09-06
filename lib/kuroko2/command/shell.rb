@@ -119,7 +119,8 @@ module Kuroko2
               rescue EOFError
                 # do nothing
               rescue => e
-                warn e
+                Kuroko2.logger.
+                  error("[#{@hostname}-#{@worker_id}] #{e.message}\n    " + e.backtrace.join("\n    "))
               ensure
                 next output
               end

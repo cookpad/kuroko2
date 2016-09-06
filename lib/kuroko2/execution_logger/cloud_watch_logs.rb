@@ -24,9 +24,16 @@ module Kuroko2
 
     def put_logs(events)
       exception_cb = lambda do |exception|
+        Kuroko2.logger.warn("#{exception.class} #{exception.message} #{events}")
+
         case exception
         when Aws::CloudWatchLogs::Errors::InvalidSequenceTokenException
-          @put_log_token = exception.message.match(%r{\AThe given sequenceToken is invalid. The next expected sequenceToken is:\s*(\w+)\z})[1]
+          old_token = @put_log_token
+          new_token = exception.message.match(%r{\AThe given sequenceToken is invalid. The next expected sequenceToken is:\s*(\w+)\z})[1]
+          if new_token
+            @put_log_token = new_token
+            Kuroko2.logger.warn("Refreshed sequenceToken from '#{old_token}' to '#{@put_log_token}'")
+          end
         when Aws::CloudWatchLogs::Errors::ResourceNotFoundException
           create_log_stream
         when Aws::CloudWatchLogs::Errors::ThrottlingException
@@ -50,6 +57,7 @@ module Kuroko2
         )
         @put_log_token = response.data[:next_sequence_token]
 
+        Kuroko2.logger.debug("Put logs: #{@group_name} #{@stream_name} / #{response.data}")
         response
       end
     end
@@ -75,6 +83,7 @@ module Kuroko2
     end
 
     def create_log_stream
+      Kuroko2.logger.info("Create log stream: #{@group_name} #{@stream_name}")
       client.create_log_stream(log_group_name: @group_name, log_stream_name: @stream_name)
     rescue Aws::CloudWatchLogs::Errors::ResourceAlreadyExistsException
       warn "Log stream '#{@stream_name}' already exists"
