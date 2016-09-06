@@ -107,20 +107,23 @@ module Kuroko2
                 output = ''
                 stdout_and_stderr.each do |data|
                   output << data
-                  execution_logger.send_log(
-                    {
-                      uuid: execution.uuid,
-                      pid: pid,
-                      level: 'NOTICE',
-                      message: truncate_and_escape(data.chomp),
-                    }
-                  )
+
+                  begin
+                    execution_logger.send_log(
+                      {
+                        uuid: execution.uuid,
+                        pid: pid,
+                        level: 'NOTICE',
+                        message: truncate_and_escape(data.chomp),
+                      }
+                    )
+                  rescue => e
+                    Kuroko2.logger.error(
+                      "[#{@hostname}-#{@worker_id}] #{e.message}\n    " + e.backtrace.join("\n    "))
+                  end
                 end
               rescue EOFError
                 # do nothing
-              rescue => e
-                Kuroko2.logger.
-                  error("[#{@hostname}-#{@worker_id}] #{e.message}\n    " + e.backtrace.join("\n    "))
               ensure
                 next output
               end
