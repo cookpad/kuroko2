@@ -13,7 +13,7 @@ require 'timecop'
 Timecop.safe_mode = true
 
 require 'webmock/rspec'
-WebMock.disable_net_connect!
+WebMock.disable_net_connect!(allow_localhost: true)
 
 require 'capybara/rspec'
 require 'capybara/poltergeist'
@@ -37,6 +37,8 @@ ActiveRecord::Migration.maintain_test_schema!
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include SignInHelper, type: :controller
+  config.include FeatureSignInHelper, type: :feature
+  config.include WaitForAjax, type: :feature
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
