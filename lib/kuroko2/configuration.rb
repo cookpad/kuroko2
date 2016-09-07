@@ -8,7 +8,7 @@ module Kuroko2
       end
 
       def build_config
-        filename = Rails.root.join('config', 'settings.yml')
+        filename = Rails.root.join('config', 'kuroko2.yml')
         yaml = YAML::load(ERB.new(File.read(filename)).result)
         Hashie::Mash.new(yaml[Rails.env])
       end
