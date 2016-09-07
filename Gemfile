@@ -17,4 +17,5 @@ group :test do
   gem 'pry-byebug'
   gem 'timecop'
   gem 'webmock'
+  gem 'database_rewinder'
 end
