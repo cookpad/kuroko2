@@ -58,7 +58,7 @@ RSpec.describe "Launches a job instace and Management job instances on the web c
 
       click_on('Skip')
 
-      sleep(2) # wait for setInterval, 200
+      sleep(2) # wait for setInterval, 2000
       expect(page).to have_selector('#instance-status .label', text: 'SUCCESS')
     end
 
@@ -74,7 +74,7 @@ RSpec.describe "Launches a job instace and Management job instances on the web c
         workflow.process(token)
       end
 
-      sleep(2) # wait for setInterval, 200
+      sleep(2) # wait for setInterval, 2000
       expect(page).to have_selector('#instance-status .label', text: 'SUCCESS')
     end
 
@@ -86,7 +86,7 @@ RSpec.describe "Launches a job instace and Management job instances on the web c
         click_on('Cancel')
       end
 
-      sleep(2) # wait for setInterval, 200
+      sleep(2) # wait for setInterval, 2000
       expect(page).to have_selector('#instance-status .label', text: 'CANCEL')
     end
   end
