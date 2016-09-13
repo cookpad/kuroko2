@@ -79,9 +79,9 @@
       .box-footer
         .row
           .col-md-6
-            = link_to 'Edit Job Definition', edit_job_definition_path(@definition), class: 'btn btn-default btn-block', role: 'button'
+            = link_to 'Edit Job definition', edit_job_definition_path(@definition), class: 'btn btn-default btn-block', role: 'button'
           .col-md-6
-            = link_to 'Destroy Job Definition', @definition, method: :delete, class: 'btn btn-default btn-block', role: 'button', data: { confirm: 'Are you sure?' }
+            = link_to 'Destroy Job definition', @definition, method: :delete, class: 'btn btn-default btn-block', role: 'button', data: { confirm: 'Are you sure?' }
   .col-md-5#schedules-holder
     = render template: 'kuroko2/job_schedules/index'
   .col-md-5#suspend-schedules-holder
