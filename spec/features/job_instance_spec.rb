@@ -52,7 +52,7 @@ RSpec.describe "Launches a job instace and Management job instances on the web c
       token.save!
     end
 
-    it 'skipable the token', js: true do
+    it 'skips the token', js: true do
       visit kuroko2.job_definition_job_instance_path(job_definition, job_definition.job_instances.first)
       expect(page).to have_selector('#instance-status .label', text: 'ERROR')
 
@@ -63,7 +63,7 @@ RSpec.describe "Launches a job instace and Management job instances on the web c
     end
 
 
-    it 'retriable the token', js: true do
+    it 'retries the token', js: true do
       visit kuroko2.job_definition_job_instance_path(job_definition, job_definition.job_instances.first)
       expect(page).to have_selector('#instance-status .label', text: 'ERROR')
 
@@ -78,7 +78,7 @@ RSpec.describe "Launches a job instace and Management job instances on the web c
       expect(page).to have_selector('#instance-status .label', text: 'SUCCESS')
     end
 
-    it 'cancelable the instance', js: true do
+    it 'cancels the instance', js: true do
       visit kuroko2.job_definition_job_instance_path(job_definition, job_definition.job_instances.first)
       expect(page).to have_selector('#instance-status .label', text: 'ERROR')
 
