@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "JobDefinition", type: :feature do
+RSpec.describe "Management job definitions", type: :feature do
   let(:user) { create(:user) }
 
   before do
