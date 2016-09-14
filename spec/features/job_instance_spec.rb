@@ -40,6 +40,7 @@ RSpec.describe "Launches a job instace and Management job instances on the web c
       workflow.process(token)
     end
 
+    wait_for_ajax
     expect(page).to have_selector('#instance-status .label', text: 'SUCCESS')
   end
 
