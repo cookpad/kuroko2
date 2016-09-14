@@ -1,21 +1,13 @@
 class CreateJobDefinitionTags < ActiveRecord::Migration
-  def up
-    execute <<-SQL
-      CREATE TABLE job_definition_tags (
-        id                INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-        job_definition_id INTEGER UNSIGNED NOT NULL,
-        tag_id            INTEGER UNSIGNED NOT NULL,
-        created_at        DATETIME NOT NULL,
-        updated_at        DATETIME NOT NULL,
-        PRIMARY KEY (id),
-        UNIQUE KEY (job_definition_id, tag_id)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
-    SQL
-  end
+  def change
+    create_table "job_definition_tags", force: :cascade, options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC' do |t|
+      t.integer  "job_definition_id", limit: 4, null: false
+      t.integer  "tag_id",            limit: 4, null: false
+      t.datetime "created_at",                  null: false
+      t.datetime "updated_at",                  null: false
+    end
 
-  def down
-    execute <<-SQL
-      DROP TABLE IF EXISTS job_definition_tags;
-    SQL
+    add_index "job_definition_tags", ["job_definition_id", "tag_id"], name: "job_definition_id", unique: true, using: :btree
+    add_index "job_definition_tags", ["tag_id"], name: "job_definition_tags_tag_id", using: :btree
   end
 end

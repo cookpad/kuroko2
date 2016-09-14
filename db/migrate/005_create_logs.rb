@@ -1,26 +1,13 @@
 class CreateLogs < ActiveRecord::Migration
-  def up
-    execute <<-SQL
-      CREATE TABLE logs (
-        id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  def change
+    create_table "logs", force: :cascade, options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC' do |t|
+      t.integer  "job_instance_id", limit: 4
+      t.string   "level",           limit: 10
+      t.text     "message",         limit: 4294967295
+      t.datetime "created_at"
+      t.datetime "updated_at"
+    end
 
-        job_instance_id INTEGER UNSIGNED,
-
-        level   VARCHAR(10),
-        message LONGTEXT,
-
-        created_at DATETIME,
-        updated_at DATETIME,
-
-        PRIMARY KEY (id),
-        KEY(job_instance_id)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
-    SQL
-  end
-
-  def down
-    execute <<-SQL
-      DROP TABLE IF EXISTS logs;
-    SQL
+    add_index "logs", ["job_instance_id"], name: "job_instance_id", using: :btree
   end
 end

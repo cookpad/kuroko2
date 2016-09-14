@@ -1,33 +1,20 @@
 class CreateUsers < ActiveRecord::Migration
-  def up
-    execute <<-SQL
-      CREATE TABLE users (
-        id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  def change
+    create_table "users", force: :cascade, options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC' do |t|
+      t.string   "provider",     limit: 180, default: "google_oauth2", null: false
+      t.string   "uid",          limit: 180,                           null: false
+      t.string   "name",         limit: 180, default: "",              null: false
+      t.string   "email",        limit: 180,                           null: false
+      t.string   "first_name",   limit: 180, default: "",              null: false
+      t.string   "last_name",    limit: 180, default: "",              null: false
+      t.string   "image",        limit: 180, default: "",              null: false
+      t.datetime "suspended_at"
+      t.datetime "created_at"
+      t.datetime "updated_at"
+    end
 
-        provider VARCHAR(180) NOT NULL DEFAULT 'google_oauth2',
-        uid      VARCHAR(180) NOT NULL,
-
-        name       VARCHAR(180) NOT NULL DEFAULT '',
-        email      VARCHAR(180) NOT NULL,
-        first_name VARCHAR(180) NOT NULL DEFAULT '',
-        last_name  VARCHAR(180) NOT NULL DEFAULT '',
-        image      VARCHAR(180) NOT NULL DEFAULT '',
-
-        suspended_at DATETIME,
-        created_at   DATETIME,
-        updated_at   DATETIME,
-
-        PRIMARY KEY(id),
-        UNIQUE(uid),
-        UNIQUE(email),
-        KEY(uid, suspended_at)
-      )
-    SQL
-  end
-
-  def down
-    execute <<-SQL
-      DROP TABLE IF EXISTS users;
-    SQL
+    add_index "users", ["email"], name: "email", unique: true, using: :btree
+    add_index "users", ["uid", "suspended_at"], name: "uid_2", using: :btree
+    add_index "users", ["uid"], name: "uid", unique: true, using: :btree
   end
 end

@@ -1,20 +1,11 @@
 class CreateTags < ActiveRecord::Migration
-  def up
-    execute <<-SQL
-      CREATE TABLE tags (
-        id         INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-        name       VARCHAR(100) NOT NULL,
-        created_at DATETIME NOT NULL,
-        updated_at DATETIME NOT NULL,
-        PRIMARY KEY (id),
-        UNIQUE KEY(name)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
-    SQL
-  end
+  def change
+    create_table "tags", force: :cascade, options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC' do |t|
+      t.string   "name",       limit: 100, null: false
+      t.datetime "created_at",             null: false
+      t.datetime "updated_at",             null: false
+    end
 
-  def down
-    execute <<-SQL
-      DROP TABLE IF EXISTS tags;
-    SQL
+    add_index "tags", ["name"], name: "name", unique: true, using: :btree
   end
 end

@@ -1,31 +1,17 @@
 class CreateJobInstances < ActiveRecord::Migration
-  def up
-    execute <<-SQL
-      CREATE TABLE job_instances (
-        id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  def change
+    create_table "job_instances", force: :cascade, options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC' do |t|
+      t.integer  "job_definition_id",      limit: 4
+      t.integer  "job_definition_version", limit: 4
+      t.text     "script",                 limit: 65535
+      t.datetime "finished_at"
+      t.datetime "canceled_at"
+      t.datetime "error_at"
+      t.datetime "created_at"
+      t.datetime "updated_at"
+    end
 
-        job_definition_id      INTEGER UNSIGNED,
-        job_definition_version INTEGER UNSIGNED,
-
-        script TEXT,
-
-        finished_at DATETIME,
-        canceled_at DATETIME,
-        error_at    DATETIME,
-
-        created_at DATETIME,
-        updated_at DATETIME,
-
-        PRIMARY KEY (id),
-        KEY(job_definition_id),
-        KEY(finished_at, canceled_at, job_definition_id)
-      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
-    SQL
-  end
-
-  def down
-    execute <<-SQL
-      DROP TABLE IF EXISTS job_instances;
-    SQL
+    add_index "job_instances", ["finished_at", "canceled_at", "job_definition_id"], name: "finished_at", using: :btree
+    add_index "job_instances", ["job_definition_id"], name: "job_definition_id", using: :btree
   end
 end

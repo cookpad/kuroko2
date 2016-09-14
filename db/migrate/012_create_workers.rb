@@ -1,28 +1,15 @@
 class CreateWorkers < ActiveRecord::Migration
-  def up
-    execute <<-SQL
-      CREATE TABLE workers (
-        id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  def change
+    create_table "workers", force: :cascade do |t|
+      t.string   "hostname",     limit: 180,                      null: false
+      t.integer  "worker_id",    limit: 1,                        null: false
+      t.string   "queue",        limit: 180, default: "@default", null: false
+      t.boolean  "working",                  default: false,      null: false
+      t.integer  "execution_id", limit: 4
+      t.datetime "created_at"
+      t.datetime "updated_at"
+    end
 
-        hostname     VARCHAR(180) NOT NULL,
-        worker_id    TINYINT      NOT NULL,
-        queue        VARCHAR(180) NOT NULL DEFAULT '@default',
-        working      BOOLEAN      NOT NULL DEFAULT false,
-
-        execution_id INTEGER UNSIGNED,
-
-        created_at   DATETIME,
-        updated_at   DATETIME,
-
-        PRIMARY KEY(id),
-        UNIQUE(hostname, worker_id)
-      )
-    SQL
-  end
-
-  def down
-    execute <<-SQL
-      DROP TABLE IF EXISTS workers;
-    SQL
+    add_index "workers", ["hostname", "worker_id"], name: "hostname", unique: true, using: :btree
   end
 end
