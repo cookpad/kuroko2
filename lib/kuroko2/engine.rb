@@ -27,6 +27,8 @@ module Kuroko2
         Kuroko2.config.url_port   = url.port
       end
 
+      config.active_record.table_name_prefix = Kuroko2.config.try!(:table_name_prefix) || 'kuroko2_'
+
       if Kuroko2.config.custom_tasks
         Kuroko2.config.custom_tasks.each do |key, klass|
           unless Workflow::Node::TASK_REGISTORY.has_key?(key)
