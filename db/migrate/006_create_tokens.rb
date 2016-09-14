@@ -1,6 +1,6 @@
 class CreateTokens < ActiveRecord::Migration
   def change
-    create_table "tokens", force: :cascade, options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC' do |t|
+    create_table "tokens", options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC' do |t|
       t.string   "uuid",                   limit: 36,                  null: false
       t.integer  "job_definition_id",      limit: 4
       t.integer  "job_definition_version", limit: 4

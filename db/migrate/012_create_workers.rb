@@ -1,6 +1,6 @@
 class CreateWorkers < ActiveRecord::Migration
   def change
-    create_table "workers", force: :cascade do |t|
+    create_table "workers" do |t|
       t.string   "hostname",     limit: 180,                      null: false
       t.integer  "worker_id",    limit: 1,                        null: false
       t.string   "queue",        limit: 180, default: "@default", null: false

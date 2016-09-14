@@ -1,6 +1,6 @@
 class CreateStars < ActiveRecord::Migration
   def change
-    create_table "stars", force: :cascade, options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC' do |t|
+    create_table "stars", options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC' do |t|
       t.integer  "user_id",           limit: 4, null: false
       t.integer  "job_definition_id", limit: 4, null: false
       t.datetime "created_at"
