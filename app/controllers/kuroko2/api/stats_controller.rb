@@ -4,7 +4,7 @@ class Kuroko2::Api::StatsController < Kuroko2::Api::ApplicationController
   COUNT_INSTANCES_SQL = <<-SQL
     SELECT COUNT(error_at IS NULL OR NULL)     AS `kuroko2.job_instances.working`,
            COUNT(error_at IS NOT NULL OR NULL) AS `kuroko2.job_instances.error`
-    FROM job_instances
+    FROM #{Kuroko2::JobInstance.table_name}
     WHERE finished_at IS NULL
       AND canceled_at IS NULL
   SQL
