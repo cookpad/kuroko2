@@ -11,7 +11,7 @@ class CreateJobInstances < ActiveRecord::Migration
       t.datetime "updated_at"
     end
 
-    add_index "job_instances", ["finished_at", "canceled_at", "job_definition_id"], name: "finished_at", using: :btree
-    add_index "job_instances", ["job_definition_id"], name: "job_definition_id", using: :btree
+    add_index "job_instances", ["finished_at", "canceled_at", "job_definition_id"], name: "job_instance_idx", using: :btree
+    add_index "job_instances", ["job_definition_id"], using: :btree
   end
 end

@@ -7,6 +7,6 @@ class CreateJobSchedules < ActiveRecord::Migration
       t.datetime "updated_at"
     end
 
-    add_index "job_schedules", ["job_definition_id", "cron"], name: "job_definition_id", unique: true, using: :btree
+    add_index "job_schedules", ["job_definition_id", "cron"], unique: true, using: :btree
   end
 end

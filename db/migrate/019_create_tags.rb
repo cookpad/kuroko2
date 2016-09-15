@@ -6,6 +6,6 @@ class CreateTags < ActiveRecord::Migration
       t.datetime "updated_at",             null: false
     end
 
-    add_index "tags", ["name"], name: "name", unique: true, using: :btree
+    add_index "tags", ["name"], unique: true, using: :btree
   end
 end

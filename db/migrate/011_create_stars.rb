@@ -7,6 +7,6 @@ class CreateStars < ActiveRecord::Migration
       t.datetime "updated_at"
     end
 
-    add_index "stars", ["user_id", "job_definition_id"], name: "user_id", unique: true, using: :btree
+    add_index "stars", ["user_id", "job_definition_id"], unique: true, using: :btree
   end
 end
