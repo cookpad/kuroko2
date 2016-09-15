@@ -1,6 +1,6 @@
 class CreateLogs < ActiveRecord::Migration
   def change
-    create_table "logs", options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC' do |t|
+    create_table "logs" do |t|
       t.integer  "job_instance_id", limit: 4
       t.string   "level",           limit: 10
       t.text     "message",         limit: 4294967295

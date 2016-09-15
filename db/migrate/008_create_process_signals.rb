@@ -1,6 +1,6 @@
 class CreateProcessSignals < ActiveRecord::Migration
   def change
-    create_table "process_signals", options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC' do |t|
+    create_table "process_signals" do |t|
       t.string   "hostname",   limit: 180,   default: "", null: false
       t.integer  "pid",        limit: 4,                  null: false
       t.integer  "number",     limit: 1,     default: 15, null: false

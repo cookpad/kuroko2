@@ -1,6 +1,6 @@
 class CreateUsers < ActiveRecord::Migration
   def change
-    create_table "users", options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC' do |t|
+    create_table "users" do |t|
       t.string   "provider",     limit: 180, default: "google_oauth2", null: false
       t.string   "uid",          limit: 180,                           null: false
       t.string   "name",         limit: 180, default: "",              null: false

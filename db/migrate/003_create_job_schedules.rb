@@ -1,6 +1,6 @@
 class CreateJobSchedules < ActiveRecord::Migration
   def change
-    create_table "job_schedules", options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC' do |t|
+    create_table "job_schedules" do |t|
       t.integer  "job_definition_id", limit: 4
       t.string   "cron",              limit: 180
       t.datetime "created_at"

@@ -1,6 +1,6 @@
 class CreateJobDefinitions < ActiveRecord::Migration
   def change
-    create_table "job_definitions", options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC' do |t|
+    create_table "job_definitions" do |t|
       t.integer  "version",                 limit: 4,     default: 0,     null: false
       t.string   "name",                    limit: 180,                   null: false
       t.text     "description",             limit: 65535,                 null: false

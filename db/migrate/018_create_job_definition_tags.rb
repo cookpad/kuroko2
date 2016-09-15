@@ -1,6 +1,6 @@
 class CreateJobDefinitionTags < ActiveRecord::Migration
   def change
-    create_table "job_definition_tags", options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC' do |t|
+    create_table "job_definition_tags" do |t|
       t.integer  "job_definition_id", limit: 4, null: false
       t.integer  "tag_id",            limit: 4, null: false
       t.datetime "created_at",                  null: false
