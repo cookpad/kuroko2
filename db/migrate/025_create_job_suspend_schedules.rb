@@ -7,6 +7,6 @@ class CreateJobSuspendSchedules < ActiveRecord::Migration
       t.datetime "updated_at",                    null: false
     end
 
-    add_index "job_suspend_schedules", ["job_definition_id", "cron"], unique: true, using: :btree
+    add_index "job_suspend_schedules", ["job_definition_id", "cron"], name: 'kuroko2_suspend_schedules_definition_id_cron_idx', unique: true, using: :btree
   end
 end
