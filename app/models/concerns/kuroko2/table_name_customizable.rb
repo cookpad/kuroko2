@@ -8,7 +8,7 @@ module Kuroko2
 
     module ClassMethods
       def kuroko2_table_name
-        (Kuroko2.config.table_name_prefix || 'kuroko2_') +
+        Kuroko2.config.table_name_prefix +
           self.name.gsub(/^Kuroko2::/, '').underscore.pluralize
       end
     end
