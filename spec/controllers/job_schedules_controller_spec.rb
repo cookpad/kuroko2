@@ -10,7 +10,7 @@ describe Kuroko2::JobSchedulesController do
 
   describe '#index' do
     it do
-      get :index, job_definition_id: definition.id
+      get :index, params: { job_definition_id: definition.id }
 
       expect(response).to have_http_status(:ok)
       expect(assigns(:schedule)).to be_new_record
@@ -20,7 +20,7 @@ describe Kuroko2::JobSchedulesController do
 
   describe '#create' do
     it do
-      post :create, job_definition_id: definition.id, job_schedule: { cron: '* * * * *' }
+      post :create, params: { job_definition_id: definition.id, job_schedule: { cron: '* * * * *' } }
 
       expect(response).to have_http_status(:created)
     end
@@ -29,7 +29,7 @@ describe Kuroko2::JobSchedulesController do
   describe '#destroy' do
 
     it do
-      delete :destroy, job_definition_id: definition.id, id: schedules.first.id
+      delete :destroy, params: { job_definition_id: definition.id, id: schedules.first.id }
       definition.reload
 
       expect(response).to have_http_status(:ok)

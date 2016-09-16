@@ -34,7 +34,7 @@ describe Kuroko2::JobTimelinesController do
 
   describe '#dataset' do
     context 'without parameters' do
-      before { xhr :get, :dataset }
+      before { get :dataset, xhr: true }
 
       it do
         expect(response).to have_http_status(:ok)
@@ -44,7 +44,7 @@ describe Kuroko2::JobTimelinesController do
     end
 
     context 'with period parameter' do
-      before { xhr :get, :dataset, period: period }
+      before { get :dataset, params: { period: period }, xhr: true }
 
       context 'with period is 1 hour' do
         let(:period) { '1h' }
@@ -64,7 +64,7 @@ describe Kuroko2::JobTimelinesController do
 
     context 'with user_id parameter' do
       let(:target_user) { create(:user) }
-      before { xhr :get, :dataset, user_id: target_user.id }
+      before { get :dataset, params: { user_id: target_user.id }, xhr: true }
 
       it do
         expect(response).to have_http_status(:ok)
@@ -77,7 +77,7 @@ describe Kuroko2::JobTimelinesController do
 
         before do
           Kuroko2::AdminAssignment.create!(job_definition: definition, user: group_user)
-          xhr :get, :dataset, user_id: group_user.id
+          get :dataset, params: { user_id: group_user.id }, xhr: true
         end
 
         it do
@@ -91,7 +91,7 @@ describe Kuroko2::JobTimelinesController do
     context 'with tag parameter' do
       let(:target_user) { create(:user) }
       before do
-        xhr :get, :dataset, user_id: target_user.id, period: '2w', tag: ['test']
+        get :dataset, params: { user_id: target_user.id, period: '2w', tag: ['test'] }, xhr: true
       end
 
       it do
@@ -101,7 +101,7 @@ describe Kuroko2::JobTimelinesController do
 
       context 'when tag does not exist' do
         before do
-          xhr :get, :dataset, user_id: target_user.id, period: '2w', tag: ['test2']
+          get :dataset, params: { user_id: target_user.id, period: '2w', tag: ['test2'] }, xhr: true
         end
 
         it do

@@ -23,7 +23,7 @@ describe Kuroko2::SessionsController do
       request.env['omniauth.auth'] = auth_hash
     end
 
-    subject { get :create, provider: :google_oauth2 }
+    subject { get :create, params: { provider: :google_oauth2 } }
 
     context 'without user' do
       it 'creates new user and redirect to root_url' do

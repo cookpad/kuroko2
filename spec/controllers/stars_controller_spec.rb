@@ -6,7 +6,7 @@ describe Kuroko2::StarsController do
   before { sign_in }
 
   describe '#create' do
-    subject! { xhr :post, :create, { job_definition_id: definition.id } }
+    subject! { post :create,  params: { job_definition_id: definition.id }, xhr: true }
     let(:definition) { create :job_definition }
 
     it do
@@ -15,7 +15,7 @@ describe Kuroko2::StarsController do
   end
 
   describe '#destroy' do
-    subject! { xhr :delete, :destroy, { job_definition_id: definition.id, id: star.id } }
+    subject! { delete :destroy,  params: { job_definition_id: definition.id, id: star.id }, xhr: true }
     let(:star) { create :star, user: controller.current_user, job_definition: definition }
     let(:definition) { create :job_definition }
 

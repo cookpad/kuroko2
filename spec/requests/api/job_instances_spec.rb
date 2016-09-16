@@ -19,7 +19,7 @@ describe 'job_instances' do
       let(:instance) { create(:job_instance, job_definition: definition, finished_at: nil, error_at: nil, canceled_at: nil) }
 
       it 'returns "working" as status' do
-        get "/v1/definitions/#{definition.id}/instances/#{instance.id}", {}, env
+        get "/v1/definitions/#{definition.id}/instances/#{instance.id}", params: {}, env: env
         expect(response.status).to eq(200)
         expect(result).to eq({
           'id'     => instance.id,
@@ -32,7 +32,7 @@ describe 'job_instances' do
       let(:instance) { create(:job_instance, job_definition: definition, finished_at: Time.now, error_at: nil, canceled_at: nil) }
 
       it 'returns "success" as status' do
-        get "/v1/definitions/#{definition.id}/instances/#{instance.id}", {}, env
+        get "/v1/definitions/#{definition.id}/instances/#{instance.id}", params: {}, env: env
         expect(response.status).to eq(200)
         expect(result).to eq({
           'id'     => instance.id,
@@ -47,7 +47,7 @@ describe 'job_instances' do
 
     it 'creates a job_instance' do
       expect {
-        post "/v1/definitions/#{definition.id}/instances", params, env
+        post "/v1/definitions/#{definition.id}/instances", params: params, env: env
       }.to change {
         definition.job_instances.count
       }.by(1)
@@ -66,7 +66,7 @@ describe 'job_instances' do
 
       it 'creates a job_instance with env task' do
         expect {
-          post "/v1/definitions/#{definition.id}/instances", params, env
+          post "/v1/definitions/#{definition.id}/instances", params: params, env: env
         }.to change {
           definition.job_instances.count
         }.by(1)
@@ -85,7 +85,7 @@ describe 'job_instances' do
 
       it 'does not create a job_instance' do
         expect {
-          post "/v1/definitions/#{definition.id}/instances", params, env
+          post "/v1/definitions/#{definition.id}/instances", params: params, env: env
         }.to_not change {
           definition.job_instances.count
         }

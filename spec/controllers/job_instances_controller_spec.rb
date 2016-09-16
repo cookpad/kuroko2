@@ -9,7 +9,7 @@ describe Kuroko2::JobInstancesController do
 
   describe '#index' do
     let(:num_instances) { 2 }
-    before { get :index, job_definition_id: definition.id }
+    before { get :index, params: { job_definition_id: definition.id } }
 
     it do
       expect(response).to have_http_status(:ok)
@@ -22,7 +22,7 @@ describe Kuroko2::JobInstancesController do
 
   describe '#create' do
     let(:num_instances) { 2 }
-    before { xhr :post, :create, job_definition_id: definition.id }
+    before { post :create, params: { job_definition_id: definition.id }, xhr: true }
 
     it do
       expect(response).to redirect_to(job_definition_job_instance_path(definition, assigns(:instance)))
@@ -32,7 +32,7 @@ describe Kuroko2::JobInstancesController do
 
     context 'with Ad-Hoc `script` parameter' do
       let(:script) { "execute: echo 1" }
-      before { xhr :post, :create, job_definition_id: definition.id, job_definition: { script: script } }
+      before { post :create, params: { job_definition_id: definition.id, job_definition: { script: script } }, xhr: true }
       it 'creates instance in Ad-Hoc script' do
         expect(assigns(:instance).script).to eq script
       end
@@ -45,7 +45,7 @@ describe Kuroko2::JobInstancesController do
         token.update_column(:status, Kuroko2::Token::FAILURE)
       end
 
-      delete :destroy, job_definition_id: definition, id: instance
+      delete :destroy, params: { job_definition_id: definition, id: instance }
     end
 
     let(:num_instances) { 1 }

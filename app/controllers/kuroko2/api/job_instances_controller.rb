@@ -3,7 +3,7 @@ class Kuroko2::Api::JobInstancesController < Kuroko2::Api::ApplicationController
 
   validates :create do
     hash :env, description: 'Env variables to launch an instance' do |env|
-      env.all? { |_, v| v.is_a?(String) }
+      env.to_h.all? { |_, v| v.is_a?(String) }
     end
   end
 
@@ -34,7 +34,7 @@ class Kuroko2::Api::JobInstancesController < Kuroko2::Api::ApplicationController
   def env_script
     return '' unless params[:env]
 
-    params[:env].map { |key, value|
+    params[:env].permit("JOB_NAME", "MESSAGE").to_h.map { |key, value|
       "env: #{key}='#{value.gsub("'", "\\\\'")}'"
     }.join("\n").concat("\n")
   end

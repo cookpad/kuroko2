@@ -23,7 +23,7 @@ describe Kuroko2::JobDefinitionStatsController do
   end
 
   describe '#index' do
-    before { get :index, job_definition_id: definition.id }
+    before { get :index, params: { job_definition_id: definition.id } }
 
     it do
       expect(response).to have_http_status(:ok)
@@ -34,7 +34,7 @@ describe Kuroko2::JobDefinitionStatsController do
 
   describe '#memory' do
     context 'without parameters' do
-      before { xhr :get, :memory, job_definition_id: definition.id }
+      before { get :memory, params: { job_definition_id: definition.id }, xhr: true }
 
       it do
         expect(response).to have_http_status(:ok)
@@ -44,7 +44,7 @@ describe Kuroko2::JobDefinitionStatsController do
     end
 
     context 'with period parameter' do
-      before { xhr :get, :memory, job_definition_id: definition.id, period: period }
+      before { get :memory, params: { job_definition_id: definition.id, period: period }, xhr: true }
 
       context 'with period is 1d' do
         let(:period) { '1d' }
@@ -65,7 +65,7 @@ describe Kuroko2::JobDefinitionStatsController do
 
   describe '#execution_time' do
     context 'without parameters' do
-      before { xhr :get, :execution_time, job_definition_id: definition.id }
+      before { get :execution_time, params: { job_definition_id: definition.id }, xhr: true }
       it do
         expect(response).to have_http_status(:ok)
         expect(assigns(:definition)).to eq definition
@@ -74,7 +74,7 @@ describe Kuroko2::JobDefinitionStatsController do
     end
 
     context 'with peripd parameter' do
-      before { xhr :get, :execution_time, job_definition_id: definition.id, period: period }
+      before { get :execution_time, params: { job_definition_id: definition.id, period: period }, xhr: true }
 
       context 'with period is 1d' do
         let(:period) { '1d' }

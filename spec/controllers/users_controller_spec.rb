@@ -22,7 +22,7 @@ describe Kuroko2::UsersController do
     let(:user) { job_definition.admins.first }
     let(:job_definition) { create(:job_definition) }
 
-    subject! { get :show, id: user.id }
+    subject! { get :show, params: { id: user.id } }
 
     it do
       expect(assigns(:user)).to eq user
@@ -34,14 +34,14 @@ describe Kuroko2::UsersController do
     let(:name) { 'Test Users' }
     let(:email) { 'test@example.com' }
 
-    subject! { post(:create, user: { name: name, email: email }) }
+    subject! { post(:create,  params: { user: { name: name, email: email } }) }
 
     it { expect(response).to redirect_to(users_path) }
   end
 
   describe '#destroy' do
     let(:user) { users.last }
-    subject! { delete(:destroy, id: user.id) }
+    subject! { delete(:destroy, params: { id: user.id }) }
 
     it do
       expect(response).to redirect_to(users_path)

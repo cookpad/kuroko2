@@ -20,7 +20,7 @@ describe Kuroko2::JobDefinitionsController do
   end
 
   describe '#show' do
-    subject! { get :show, id: definition.id }
+    subject! { get :show, params: { id: definition.id } }
 
     it do
       expect(response).to have_http_status(:ok)
@@ -42,7 +42,7 @@ describe Kuroko2::JobDefinitionsController do
 
   describe '#create' do
     subject! do
-      post :create, job_definition: { name: 'Job Definition', description: 'This is description', script: "noop:\n" }
+      post :create, params: { job_definition: { name: 'Job Definition', description: 'This is description', script: "noop:\n" } }
     end
 
     it do
@@ -55,7 +55,7 @@ describe Kuroko2::JobDefinitionsController do
   end
 
   describe '#edit' do
-    subject! { get :edit, id: definition.id }
+    subject! { get :edit, params: { id: definition.id } }
 
     it do
       expect(response).to have_http_status(:ok)
@@ -66,7 +66,7 @@ describe Kuroko2::JobDefinitionsController do
   describe '#update' do
     let(:admin) { create(:user) }
     subject! do
-      patch :update, id: definition.id, job_definition: { name: 'Job Definition', description: 'This is description', script: "noop:\n" }, admin_assignments: { user_id: ["", admin.id] }
+      patch :update, params: { id: definition.id, job_definition: { name: 'Job Definition', description: 'This is description', script: "noop:\n" }, admin_assignments: { user_id: ["", admin.id] } }
     end
 
     it do
@@ -77,7 +77,7 @@ describe Kuroko2::JobDefinitionsController do
   end
 
   describe '#destroy' do
-    subject! { delete :destroy, id: definition.id }
+    subject! { delete :destroy, params: { id: definition.id } }
 
     it do
       expect(response).to redirect_to(job_definitions_path)
