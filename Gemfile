@@ -18,4 +18,5 @@ group :test do
   gem 'timecop'
   gem 'webmock'
   gem 'database_rewinder'
+  gem 'rails-controller-testing'
 end
