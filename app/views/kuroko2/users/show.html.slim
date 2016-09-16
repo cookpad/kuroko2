@@ -40,7 +40,7 @@
               - if @input_tags.present?
                 'tagged by #{@input_tags.join(',')}
           .col-md-3.right-button
-            = link_to raw('<i class="fa fa-clock-o"></i> Show Timeline'), job_timelines_path({ user_id: @user.id }.merge(params.permit(tag: []))), class: 'btn btn-default btn-small btn-block js-to-timeline'
+            = link_to raw('<i class="fa fa-clock-o"></i> Show Timeline'), job_timelines_path({ user_id: @user.id }.merge(params.permit(tag: []).to_h)), class: 'btn btn-default btn-small btn-block js-to-timeline'
 
       .box-body.table-responsive#definitions_list
         = render 'kuroko2/job_definitions/list', { definitions: @definitions }
