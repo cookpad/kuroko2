@@ -31,12 +31,12 @@ describe Kuroko2::JobDefinitionsHelper do
     let(:text) do
       <<-EOF.strip_heredoc
         # Title
-        LGTM :+1:
+        LGTM
       EOF
     end
 
     it { is_expected.to match %r(<h1>Title</h1>) }
-    it { is_expected.to match %r(LGTM <img class="emoji") }
+    it { is_expected.to match %r(LGTM) }
   end
 
 end

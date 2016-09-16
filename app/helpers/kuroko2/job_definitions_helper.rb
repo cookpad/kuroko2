@@ -5,7 +5,7 @@ module Kuroko2
     end
 
     def markdown_format(text)
-      pipeline = HTML::Pipeline.new([HTML::Pipeline::MarkdownFilter, HTML::Pipeline::EmojiFilter], asset_root: '/images/')
+      pipeline = HTML::Pipeline.new([HTML::Pipeline::MarkdownFilter])
       raw(pipeline.call(text)[:output].to_s)
     end
 

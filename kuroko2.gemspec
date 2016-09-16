@@ -43,7 +43,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'serverengine', '~> 1.5.7'
   s.add_dependency 'omniauth-google-oauth2', '~> 0.2.4'
 
-  s.add_dependency 'gemoji', '~> 2.1.0'
   s.add_dependency 'html-pipeline', '~> 1.11.0'
   s.add_dependency 'github-markdown', '~> 0.6.8'
   s.add_dependency 'font-awesome-rails'
