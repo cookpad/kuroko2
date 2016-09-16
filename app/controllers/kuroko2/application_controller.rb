@@ -37,7 +37,7 @@ class Kuroko2::ApplicationController < ActionController::Base
 
   def require_sign_in
     unless signed_in?
-      redirect_to sign_in_path(return_to: url_for(params.merge(only_path: true)))
+      redirect_to sign_in_path(return_to: url_for(params.permit!.to_h.merge(only_path: true)))
     end
   end
 end
