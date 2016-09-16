@@ -1,7 +1,7 @@
 class Kuroko2::Worker < Kuroko2::ApplicationRecord
   include Kuroko2::TableNameCustomizable
 
-  belongs_to :execution
+  belongs_to :execution, optional: true
 
   scope :on, -> (hostname) { where(hostname: hostname) }
   scope :ordered, -> { order(:hostname, :worker_id) }

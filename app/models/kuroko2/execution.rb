@@ -12,7 +12,7 @@ class Kuroko2::Execution < Kuroko2::ApplicationRecord
 
   belongs_to :job_definition
   belongs_to :job_instance
-  belongs_to :token
+  belongs_to :token, optional: true
 
   has_one :worker
 

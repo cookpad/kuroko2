@@ -21,7 +21,7 @@ class Kuroko2::Token < Kuroko2::ApplicationRecord
   belongs_to :job_instance
 
   has_many :children, class_name: 'Token', foreign_key: 'parent_id', dependent: :destroy
-  belongs_to :parent, class_name: 'Token'
+  belongs_to :parent, class_name: 'Token', optional: true
 
   has_one :execution
 
