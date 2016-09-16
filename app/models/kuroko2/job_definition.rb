@@ -98,10 +98,7 @@ class Kuroko2::JobDefinition < Kuroko2::ApplicationRecord
   def confirm_active_instances
     if job_instances.any_token?
       errors.add(:base, I18n.t('model.job_definition.confirm_active_instances'))
-
-      false
-    else
-      true
+      throw :abort
     end
   end
 
