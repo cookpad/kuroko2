@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md", "bin/*.rb"]
   s.test_files = Dir["spec/**/*"]
 
-  s.add_dependency "rails", ">= 4.2.7.1", '< 5.0'
+  s.add_dependency "rails", ">= 5.0.0.1"
   s.add_dependency "mysql2"
   s.add_dependency "kaminari"
   s.add_dependency "chrono"
@@ -26,15 +26,15 @@ Gem::Specification.new do |s|
   s.add_dependency 'aws-sdk', '~> 2'
   s.add_dependency 'retryable'
   s.add_dependency 'faraday'
-  s.add_dependency 'sprockets', '~> 2.12.3'
-  s.add_dependency 'slim-rails', '~> 3.0.1'
+  s.add_dependency 'sprockets'
+  s.add_dependency 'slim-rails'
   s.add_dependency 'sass', '~> 3.4.5'
   s.add_dependency 'sass-rails'
   s.add_dependency 'uglifier', '~> 2.7.1'
-  s.add_dependency 'jbuilder', '~> 2.2.12'
+  s.add_dependency 'jbuilder'
   s.add_dependency 'coffee-script', '~> 2.3.0'
 
-  s.add_dependency 'jquery-rails', '~> 4.0.3'
+  s.add_dependency 'jquery-rails'
   s.add_dependency 'momentjs-rails'
   s.add_dependency 'rails_bootstrap_sortable'
   s.add_dependency "select2-rails"
@@ -43,7 +43,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'serverengine', '~> 1.5.7'
   s.add_dependency 'omniauth-google-oauth2', '~> 0.2.4'
 
-  s.add_dependency 'html-pipeline', '~> 1.11.0'
+  s.add_dependency 'html-pipeline'
   s.add_dependency 'github-markdown', '~> 0.6.8'
   s.add_dependency 'font-awesome-rails'
   s.add_dependency 'rinku'
