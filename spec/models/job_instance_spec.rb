@@ -15,16 +15,17 @@ describe Kuroko2::JobInstance do
 
   describe '#initialize' do
     let(:definition) { create(:job_definition) }
-    let(:instance) { create(:job_instance, job_definition: definition) }
+    let(:instance) { definition.job_instances.create! }
 
     it do
       expect(instance.tokens.count).to eq 1
+      expect(instance.reload.tokens.count).to eq 1
       expect(instance.tokens.first.script).to eq instance.job_definition.script
     end
 
     context 'Overwrite script on creating' do
       let(:script) { 'env: ALTERNATIVE=1' }
-      let(:instance) { create(:job_instance, job_definition: definition, script: script) }
+      let(:instance) { definition.job_instances.create!(script: script) }
 
       it 'Inject alternative script to the instance' do
         expect(instance.tokens.count).to eq 1
@@ -34,10 +35,8 @@ describe Kuroko2::JobInstance do
   end
 
   describe '#cancel' do
-    let!(:definition) { create(:job_definition) }
-    let!(:instance) { create(:job_instance, job_definition: definition) }
-    let!(:token) { create(:token, job_definition: definition, job_instance: instance) }
-    let!(:execution) { create(:execution, job_definition: definition, job_instance: instance, started_at: nil) }
+    let(:definition) { create(:job_definition) }
+    let(:instance) { definition.job_instances.create! }
 
     subject! { instance.cancel }
 
