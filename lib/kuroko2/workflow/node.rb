@@ -18,6 +18,7 @@ module Kuroko2
         wait:                  Task::Wait,
         sleep:                 Task::Sleep,
         rails_env:             Task::RailsEnv,
+        kuroko_runner:         Task::KurokoRunner,
       }
 
       attr_reader :type, :option, :children
