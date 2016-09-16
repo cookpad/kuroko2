@@ -14,7 +14,7 @@ module Kuroko2
               attributes = token.attributes.except('id', 'uuid', 'script', 'path', 'message', 'created_at', 'updated_at')
               attributes = attributes.merge(uuid: SecureRandom.uuid, parent: token, script: child.to_script, path: '/')
 
-              Token.create(attributes).tap do |created|
+              Token.create!(attributes).tap do |created|
                 message = "(token #{created.uuid}) New token are created for #{node.path}"
                 created.job_instance.logs.info(message)
 
