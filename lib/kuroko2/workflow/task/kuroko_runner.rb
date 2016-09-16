@@ -15,8 +15,8 @@ module Kuroko2
 
         def shell
           rails = Rails.root.join('bin/rails').to_s
-
-          "bundle exec #{rails} runner -e #{Rails.env} bin/#{option}.rb "
+          kuroko_script = Kuroko2::Engine.root.join("bin/#{option}.rb")
+          "bundle exec #{rails} runner -e #{Rails.env} #{kuroko_script}"
         end
       end
     end
