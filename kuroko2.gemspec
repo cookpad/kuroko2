@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.description = "Kuroko2 is a web-based job scheduler/workflow manager created at Cookpad inc."
   s.license     = "MIT"
 
-  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
+  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md", "bin/*.rb"]
   s.test_files = Dir["spec/**/*"]
 
   s.add_dependency "rails", ">= 4.2.7.1", '< 5.0'
