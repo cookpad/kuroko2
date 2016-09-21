@@ -2,6 +2,10 @@ class Kuroko2::ExecutionsController < Kuroko2::ApplicationController
 
   before_action :set_execution, only: %i(destroy)
 
+  def working
+    @executions = Kuroko2::Execution.where(finished_at: nil).order(created_at: :desc).includes(job_instance: :job_definition)
+  end
+
   def destroy
     if @execution.try(:pid)
       hostname = Kuroko2::Worker.executing(@execution.id).try(:hostname)

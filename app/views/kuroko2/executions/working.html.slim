@@ -1,0 +1,35 @@
+- @title = 'Working Executions'
+- @content_title = '<i class="fa fa-tasks"></i> Working Executions'
+
+.box
+  .box-header
+    .row
+      .col-md-4
+        h3.box-title Executions
+  - if @executions.empty?
+    .box-body
+      .text-muted.well.well-sm.no-shadow There are no working executions.
+  - else
+    .box-body.table-responsive
+      table.table.table-hover
+        thead
+          tr
+            th Status
+            th Queue
+            th Job Name
+            th Job Description
+            th Created at
+            th Started at
+            th
+        tbody
+          - @executions.each do |execution|
+            tr
+              td= content_tag(:span, execution.started_at? ? 'running' : 'waiting', class: "label label-#{execution.started_at? ? 'info' : 'warning'}")
+              td= execution.queue
+              td= execution.job_instance.job_definition.name
+              td= first_line(execution.job_definition.description)
+              td= l(execution.created_at, format: :short)
+              td= execution.started_at.try! { |at| l(at, format: :short) }
+              td= link_to(job_definition_job_instance_path(job_definition_id: execution.job_instance.job_definition.id, id: execution.job_instance.id), class: 'btn btn-default btn-xs') do
+                i.fa.fa-chevron-right
+                |Details

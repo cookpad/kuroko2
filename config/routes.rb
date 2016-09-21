@@ -26,6 +26,11 @@ Kuroko2::Engine.routes.draw do
   resources :job_instances, path: 'instances', only: %w() do
     get :working, action: :working, on: :collection
   end
+  resources :executions, only: %w() do
+    collection do
+      get :working
+    end
+  end
 
   resources :job_timelines, only: :index do
     get :dataset, action: :dataset, on: :collection, defaults: { format: 'json' }
