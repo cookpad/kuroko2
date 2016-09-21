@@ -65,7 +65,7 @@ class Kuroko2::JobInstancesController < Kuroko2::ApplicationController
   end
 
   def working
-    @instances = Kuroko2::JobInstance.working.order(id: :desc)
+    @instances = Kuroko2::JobInstance.working.order(id: :desc).joins(job_definition: :admins).includes(job_definition: :admins)
   end
 
   private
