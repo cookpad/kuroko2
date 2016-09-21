@@ -45,10 +45,10 @@ html
                   = link_to raw('<i class="fa fa-angle-double-right"></i> Create New'), new_job_definition_path
             li class=('active' if controller_name == 'job_instances' && action_name == 'working')
               = link_to raw('<i class="fa fa-spinner"></i> Working Jobs'), working_job_instances_path
-            li class=('active' if controller_name == 'executions' && action_name == 'working')
-              = link_to working_executions_path do
+            li class=('active' if controller_name == 'executions' && action_name == 'index')
+              = link_to executions_path do
                 i.fa.fa-tasks
-                |Working Executions
+                |Executions
             li class=('active' if controller_name == 'workers')
               = link_to raw('<i class="fa fa-rocket"></i> Kuroko Workers'), workers_path
             li
