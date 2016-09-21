@@ -34,7 +34,7 @@ class Kuroko2::Api::JobInstancesController < Kuroko2::Api::ApplicationController
   def env_script
     return '' unless params[:env]
 
-    params[:env].permit("JOB_NAME", "MESSAGE").to_h.map { |key, value|
+    params[:env].permit!.to_h.map { |key, value|
       "env: #{key}='#{value.gsub("'", "\\\\'")}'"
     }.join("\n").concat("\n")
   end
