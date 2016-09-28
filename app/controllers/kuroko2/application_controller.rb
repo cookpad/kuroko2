@@ -21,7 +21,7 @@ class Kuroko2::ApplicationController < ActionController::Base
     end
   rescue ActiveRecord::RecordNotFound
     reset_session
-    redirect_to sign_in_path(return_to: url_for(params.merge(only_path: true)))
+    redirect_to sign_in_path(return_to: url_for(params.permit!.to_h.merge(only_path: true)))
   end
 
   private
