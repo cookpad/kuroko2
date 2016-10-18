@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.email       = ["eisuke-oishi@cookpad.com"]
   s.homepage    = "https://github.com/cookpad/kuroko2"
   s.summary     = "Kuroko2 is a web-based job scheduler/workflow manager."
-  s.description = "Kuroko2 is a web-based job scheduler/workflow manager created at Cookpad inc."
+  s.description = "Kuroko2 is a web-based job scheduler/workflow manager created at Cookpad Inc."
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md", "bin/*.rb"]
