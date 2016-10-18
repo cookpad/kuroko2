@@ -4,6 +4,10 @@ describe Kuroko2::ExecutionLogger::CloudWatchLogs do
   let(:stream_name) { 'test' }
   let(:object) { described_class.new(stream_name: stream_name, group_name: 'kuroko') }
 
+  before do
+    allow(Aws::CloudWatchLogs::Client).to receive(:new).and_return(double('CloudWatchLogsClient'))
+  end
+
   describe '#put_logs' do
     let(:events) { [{ timestamp: Time.now.to_i * 1000, message: 'hello' }] }
     let(:response) { double('Response', data: { next_sequence_token: 'abc' })}
