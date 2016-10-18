@@ -1,28 +1,15 @@
 # Kuroko2
-Short description and motivation.
+![](app/assets/images/kuroko2/kuroko-logo-horizontal.png)
 
-## Usage
-How to use my plugin.
+Kuroko2 is a web-based job scheduler / workflow engine.
 
 ## Installation
-Add this line to your application's Gemfile:
 
-```ruby
-gem 'kuroko2'
-```
-
-And then execute:
 ```bash
-$ bundle
+$ rails new your_kuroko2_application --database=mysql --skip-turbolinks --skip-javascript -m https://raw.githubusercontent.com/cookpad/kuroko2/master/app_template.rb
 ```
 
-Or install it yourself as:
-```bash
-$ gem install kuroko2
-```
-
-## Contributing
-Contribution directions go here.
+And edits "config/kuroko2.yml"
 
 ## License
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
