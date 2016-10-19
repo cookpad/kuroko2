@@ -7,7 +7,7 @@ require "kuroko2/version"
 Gem::Specification.new do |s|
   s.name        = "kuroko2"
   s.version     = Kuroko2::VERSION
-  s.authors     = ["Eisuke Oishi"]
+  s.authors     = ["Naoto Takai", "Eisuke Oishi"]
   s.email       = ["eisuke-oishi@cookpad.com"]
   s.homepage    = "https://github.com/cookpad/kuroko2"
   s.summary     = "Kuroko2 is a web-based job scheduler/workflow manager."
