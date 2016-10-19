@@ -13,5 +13,13 @@ $ rails new your_kuroko2_application --database=mysql --skip-turbolinks --skip-j
 
 And edits "config/kuroko2.yml"
 
+## Authors
+
+- Naoto Takai
+- Eisuke Oishi
+- Kohei Suzuki
+- Taiki Ono
+- Takashi Kokubun
+
 ## License
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
