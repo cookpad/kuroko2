@@ -43,10 +43,15 @@ class Kuroko2::JobInstance < Kuroko2::ApplicationRecord
     tokens.first.try(:cancelable?)
   end
 
-  def cancel
+  def cancel(by:)
     self.tokens.destroy(*self.tokens)
     self.executions.destroy(*self.executions)
     self.touch(:canceled_at)
+
+    message = "This job was canceled by #{by}."
+    self.logs.warn(message)
+    Kuroko2.logger.warn(message)
+    Kuroko2::Workflow::Notifier.notify(:cancellation, self)
   end
 
   # Log given value if it is greater than stored one.

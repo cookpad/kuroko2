@@ -37,11 +37,7 @@ class Kuroko2::JobInstancesController < Kuroko2::ApplicationController
 
   def destroy
     if @instance.cancelable?
-      ActiveRecord::Base.transaction { @instance.cancel }
-
-      message = "This job was canceled by #{current_user.name}."
-      @instance.logs.warn(message)
-      Kuroko2.logger.warn(message)
+      ActiveRecord::Base.transaction { @instance.cancel(by: current_user.name) }
     end
 
     redirect_to job_definition_job_instance_path(@definition, @instance)
@@ -54,7 +50,7 @@ class Kuroko2::JobInstancesController < Kuroko2::ApplicationController
         execution.update_column(:execution_id, nil) if execution
       end
 
-      @instance.cancel
+      @instance.cancel(by: current_user.name)
     end
 
     message = "Force canceled by #{current_user.name}."

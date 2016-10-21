@@ -38,7 +38,7 @@ describe Kuroko2::JobInstance do
     let(:definition) { create(:job_definition) }
     let(:instance) { definition.job_instances.create! }
 
-    subject! { instance.cancel }
+    subject! { instance.cancel(by: 'test') }
 
     it do
       expect(instance).to be_canceled_at
