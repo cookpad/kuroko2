@@ -30,7 +30,7 @@ module Kuroko2
 
           Kuroko2.logger.info(message)
 
-          Notifier.notify(:working, token.job_instance)
+          Notifier.notify(:retring, token.job_instance)
         end
       end
 
@@ -49,7 +49,7 @@ module Kuroko2
 
           Kuroko2.logger.info(message)
 
-          Notifier.notify(:working, token.job_instance)
+          Notifier.notify(:skipping, token.job_instance)
         end
       end
 

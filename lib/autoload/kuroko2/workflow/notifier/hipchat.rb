@@ -13,8 +13,24 @@ module Kuroko2
           @message_builder = Workflow::Notifier::Concerns::ChatMessageBuilder.new(instance)
         end
 
-        def notify_working
-          # do nothing
+        def notify_retring
+          if @definition.hipchat_notify_finished
+            message = build_message(level: 'SUCCESS', text: message_builder.retring_text)
+            message << "<br>"
+            message << @instance.logs.last(2).first.message
+
+            send_to_hipchat(message, color: 'yellow')
+          end
+        end
+
+        def notify_skipping
+          if @definition.hipchat_notify_finished
+            message = build_message(level: 'SUCCESS', text: message_builder.skipping_text)
+            message << "<br>"
+            message << @instance.logs.last(2).first.message
+
+            send_to_hipchat(message, color: 'yellow')
+          end
         end
 
         def notify_cancellation

@@ -103,6 +103,66 @@ module Kuroko2::Workflow
       end
     end
 
+    describe '#notify_retring' do
+      context 'with notify_finished' do
+        before do
+          instance.job_definition.hipchat_notify_finished = true
+          instance.save!
+        end
+
+        it 'sends retring mesasge' do
+          expect(hipchat_room_object).to receive(:send) do |_, message, option|
+            expect(message).to include('SUCCESS')
+            expect(option[:color]).to eq('yellow')
+          end
+
+          notifier.notify_retring
+        end
+      end
+
+      context 'without notify_finished' do
+        before do
+          instance.job_definition.hipchat_notify_finished = false
+          instance.save!
+        end
+
+        it 'sends retring mesasge' do
+          expect(hipchat_room_object).not_to receive(:send)
+          notifier.notify_retring
+        end
+      end
+    end
+
+    describe '#notify_skipping' do
+      context 'with notify_finished' do
+        before do
+          instance.job_definition.hipchat_notify_finished = true
+          instance.save!
+        end
+
+        it 'sends retring mesasge' do
+          expect(hipchat_room_object).to receive(:send) do |_, message, option|
+            expect(message).to include('SUCCESS')
+            expect(option[:color]).to eq('yellow')
+          end
+
+          notifier.notify_skipping
+        end
+      end
+
+      context 'without notify_finished' do
+        before do
+          instance.job_definition.hipchat_notify_finished = false
+          instance.save!
+        end
+
+        it 'sends retring mesasge' do
+          expect(hipchat_room_object).not_to receive(:send)
+          notifier.notify_skipping
+        end
+      end
+    end
+
     describe '#notify_long_elapsed_time' do
       it 'sends warning mesasge' do
         expect(hipchat_room_object).to receive(:send) do |_, message, option|
