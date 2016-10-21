@@ -83,7 +83,7 @@ describe Kuroko2::JobInstance do
     let(:definition) { create(:job_definition) }
 
     context 'with finished_at present' do
-      let(:finished_at) { Time.now }
+      let(:finished_at) { Time.current }
 
       it 'returns "success"' do
         expect(instance.status).to eq('success')
@@ -91,7 +91,7 @@ describe Kuroko2::JobInstance do
     end
 
     context 'with canceled_at present' do
-      let(:canceled_at) { Time.now }
+      let(:canceled_at) { Time.current }
 
       it 'returns "canceled"' do
         expect(instance.status).to eq('canceled')
@@ -99,7 +99,7 @@ describe Kuroko2::JobInstance do
     end
 
     context 'with error_at present' do
-      let(:error_at) { Time.now }
+      let(:error_at) { Time.current }
 
       it 'returns "error"' do
         expect(instance.status).to eq('error')

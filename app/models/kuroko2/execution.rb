@@ -37,12 +37,12 @@ class Kuroko2::Execution < Kuroko2::ApplicationRecord
   end
 
   def finish(output:, exit_status:)
-    update!(output: output, exit_status: exit_status, finished_at: Time.now)
+    update!(output: output, exit_status: exit_status, finished_at: Time.current)
     job_definition.memory_expectancy.calculate!
   end
 
   def finish_by_signal(output:, term_signal:)
-    update!(output: output, term_signal: term_signal, finished_at: Time.now)
+    update!(output: output, term_signal: term_signal, finished_at: Time.current)
     job_definition.memory_expectancy.calculate!
   end
 

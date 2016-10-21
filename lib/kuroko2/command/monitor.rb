@@ -68,9 +68,9 @@ module Kuroko2
 
       def log_memory_consumption?(execution)
         if @intervals[execution.id]
-          @intervals[execution.id].reached?(Time.now)
+          @intervals[execution.id].reached?(Time.current)
         else # first time
-          @intervals[execution.id] = MemoryConsumptionLog::Interval.new(Time.now)
+          @intervals[execution.id] = MemoryConsumptionLog::Interval.new(Time.current)
           true
         end
       end

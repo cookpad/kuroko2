@@ -9,7 +9,7 @@ describe Kuroko2::ExecutionLogger::CloudWatchLogs do
   end
 
   describe '#put_logs' do
-    let(:events) { [{ timestamp: Time.now.to_i * 1000, message: 'hello' }] }
+    let(:events) { [{ timestamp: Time.current.to_i * 1000, message: 'hello' }] }
     let(:response) { double('Response', data: { next_sequence_token: 'abc' })}
 
     let(:send_parameters) do

@@ -63,7 +63,7 @@ class Kuroko2::JobInstance < Kuroko2::ApplicationRecord
   end
 
   def execution_minutes
-    (((error_at || canceled_at || finished_at || Time.now) - created_at).to_f / 60).round(2)
+    (((error_at || canceled_at || finished_at || Time.current) - created_at).to_f / 60).round(2)
   end
 
   def status
@@ -98,7 +98,7 @@ class Kuroko2::JobInstance < Kuroko2::ApplicationRecord
         token.script                 = self.script
         token.context                = {
           meta: {
-            launched_time:       Time.now,
+            launched_time:       Time.current,
             job_definition_id:   definition.id,
             job_definition_name: definition.name,
             job_instance_id:     id,

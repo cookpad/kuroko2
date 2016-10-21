@@ -61,7 +61,7 @@ module Kuroko2
         private
 
         # ex. wait: 100/daily 200/daily
-        def parse_option(option, start_at: Time.now)
+        def parse_option(option, start_at: Time.current)
           raise_assertion_error unless option
 
           wait_option = { "jobs" => [], "timeout" => 60.minutes.to_i / 1.minute }
@@ -113,7 +113,7 @@ module Kuroko2
           end
         end
 
-        def period_to_time(period, at: Time.now)
+        def period_to_time(period, at: Time.current)
           case period
           when "hourly"
             [at.beginning_of_hour, at.end_of_hour]

@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Kuroko2::MemoryConsumptionLog do
-  around {|example| Timecop.freeze(Time.now) { example.run } }
+  around {|example| Timecop.freeze(Time.current) { example.run } }
 
   describe described_class::Interval do
     describe '#reached?' do
       let(:interval) { described_class.new(base, count) }
-      let(:base) { Time.now }
+      let(:base) { Time.current }
 
       context 'count = 0 and 2 seconds since' do
         let(:count) { 0 }
@@ -29,7 +29,7 @@ RSpec.describe Kuroko2::MemoryConsumptionLog do
 
     describe '#next' do
       it 'returns count-up-ed Interval' do
-        a = described_class.new(Time.now)
+        a = described_class.new(Time.current)
         b = a.next
         expect(b).to be_a(described_class)
 
@@ -39,7 +39,7 @@ RSpec.describe Kuroko2::MemoryConsumptionLog do
     end
 
     it 'behaves as certain period interval with #reached? and #next' do
-      a = described_class.new(Time.now, 100)
+      a = described_class.new(Time.current, 100)
       expect(a.reached?(29.minutes.since.to_time)).to be_falsy
       expect(a.reached?(31.minutes.since.to_time)).to be_truthy
       b = a.next

@@ -98,7 +98,7 @@ module Kuroko2::Workflow::Task
         end
 
         context 'When EXPECTED_TIME_NOTIFIED_AT is now' do
-          let(:notified_time) { Time.now }
+          let(:notified_time) { Time.current }
 
           it 'does not alert warnings' do
             expect(Kuroko2::Workflow::Notifier).not_to receive(:notify)

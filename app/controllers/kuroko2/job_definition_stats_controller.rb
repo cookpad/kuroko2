@@ -33,7 +33,7 @@ class Kuroko2::JobDefinitionStatsController < Kuroko2::ApplicationController
   private
 
   def set_period
-    @end_at   = Time.now
+    @end_at   = Time.current
 
     @start_at =
       case params[:period]

@@ -15,7 +15,7 @@ module Kuroko2::Command
       let(:sent_mail) { ActionMailer::Base.deliveries.last }
 
       context 'not running process' do
-        let!(:execution) { create(:execution, token: token, worker: worker, started_at: Time.now, finished_at: nil, pid: pid) }
+        let!(:execution) { create(:execution, token: token, worker: worker, started_at: Time.current, finished_at: nil, pid: pid) }
         let(:monitor) { Kuroko2::Command::Monitor.new(hostname: hostname, worker_id: 1) }
 
         subject! { 15.times { monitor.execute } }
@@ -44,7 +44,7 @@ module Kuroko2::Command
     end
 
     describe 'memory consumption monitoring' do
-      let!(:execution) { create(:execution, token: token, worker: worker, started_at: Time.now, finished_at: nil, pid: pid) }
+      let!(:execution) { create(:execution, token: token, worker: worker, started_at: Time.current, finished_at: nil, pid: pid) }
       let(:monitor) { Kuroko2::Command::Monitor.new(hostname: hostname, worker_id: 1) }
       before do
         allow(monitor).to receive(:check_process_absence).and_return(true)
