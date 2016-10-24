@@ -17,8 +17,8 @@ module Kuroko2
       require 'weak_parameters'
     end
 
-    config.autoload_paths << root.join('lib')
-    config.eager_load_paths << root.join('lib')
+    config.autoload_paths << root.join('lib/autoload').to_s
+    config.eager_load_paths << root.join('lib/autoload').to_s
 
     initializer "kuroko2.configuration" do |app|
       URI.parse(Kuroko2.config.url).tap do |url|
