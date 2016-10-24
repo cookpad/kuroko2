@@ -78,7 +78,7 @@ module Kuroko2
         def process_timeout_if_needed(execution)
           timeout = token.context['TIMEOUT'].to_i
 
-          if timeout > 0 && ((execution.created_at + timeout.minutes) < Time.now) && execution.pid
+          if timeout > 0 && ((execution.created_at + timeout.minutes) < Time.current) && execution.pid
             hostname = Worker.executing(execution.id).try(:hostname)
             if hostname
               ProcessSignal.create!(pid: execution.pid, hostname: hostname)
@@ -114,7 +114,7 @@ module Kuroko2
 
         def notify_long_elapsed_time_if_needed(execution)
           if available_notify_long_elapsed_time?(execution) && elapsed_expected_time?(execution)
-            token.context['EXPECTED_TIME_NOTIFIED_AT'] = Time.now
+            token.context['EXPECTED_TIME_NOTIFIED_AT'] = Time.current
             Notifier.notify(:long_elapsed_time, token.job_instance)
 
             message = "(token #{token.uuid}) The running time is longer than #{expected_time} minutes!"

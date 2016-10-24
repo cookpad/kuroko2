@@ -4,7 +4,7 @@ module Kuroko2
       class Sleep < Base
         def execute
           if (time = token.context['SLEEP'])
-            if Time.now.to_i > time
+            if Time.current.to_i > time
               token.context.delete('SLEEP')
 
               :next
@@ -12,7 +12,7 @@ module Kuroko2
               :pass
             end
           else
-            token.context['SLEEP'] = Time.now.to_i + option.to_i
+            token.context['SLEEP'] = Time.current.to_i + option.to_i
 
             :pass
           end

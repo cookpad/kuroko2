@@ -18,7 +18,7 @@ class Kuroko2::JobSchedule < Kuroko2::ApplicationRecord
   validates :cron, format: { with: CRON_FORMAT }, uniqueness: { scope: :job_definition_id }
   validate :validate_cron_schedule
 
-  def next(now = Time.now)
+  def next(now = Time.current)
     if 1.month.ago(now).future?
       Kuroko2.logger.warn("Exceeds the time of criteria #{now}. (Up to 1 month since)")
       return

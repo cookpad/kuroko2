@@ -17,7 +17,7 @@ module Kuroko2
             begin
               @processing.set!
               JobSchedule.transaction do
-                now = Time.now
+                now = Time.current
                 last_scheduled_time = Tick.fetch_then_update(now)
                 JobSchedule.launch_scheduled_jobs!(last_scheduled_time, now)
               end

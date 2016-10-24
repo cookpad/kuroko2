@@ -7,7 +7,7 @@ FactoryGirl.define do
     job_instance { token.job_instance if token }
     context { token.context if token }
 
-    started_at { Time.now }
-    finished_at { Time.now }
+    started_at { Time.current }
+    finished_at { Time.current }
   end
 end

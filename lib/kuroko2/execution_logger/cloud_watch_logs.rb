@@ -79,7 +79,7 @@ module Kuroko2
     private
 
     def timestamp_now
-      (Time.now.to_f * 1000).to_i # milliseconds
+      (Time.current.to_f * 1000).to_i # milliseconds
     end
 
     def create_log_stream

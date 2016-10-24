@@ -29,7 +29,7 @@ describe 'job_instances' do
     end
 
     context 'with job_instance succeeded' do
-      let(:instance) { create(:job_instance, job_definition: definition, finished_at: Time.now, error_at: nil, canceled_at: nil) }
+      let(:instance) { create(:job_instance, job_definition: definition, finished_at: Time.current, error_at: nil, canceled_at: nil) }
 
       it 'returns "success" as status' do
         get "/v1/definitions/#{definition.id}/instances/#{instance.id}", params: {}, env: env

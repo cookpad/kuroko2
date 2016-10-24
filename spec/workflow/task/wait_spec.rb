@@ -13,7 +13,7 @@ module Kuroko2::Workflow::Task
       context 'with valid syntax' do
         let(:definition) { create(:job_definition, script: "wait: #{option}") }
         let(:instance) do
-          create(:job_instance, job_definition: definition, created_at: Time.now).tap do |instance|
+          create(:job_instance, job_definition: definition, created_at: Time.current).tap do |instance|
             instance.tokens.destroy
           end
         end
@@ -123,7 +123,7 @@ module Kuroko2::Workflow::Task
       end
 
       context 'with invalid syntax' do
-        let(:token) { build(:token, job_instance: build(:job_instance, created_at: Time.now)) }
+        let(:token) { build(:token, job_instance: build(:job_instance, created_at: Time.current)) }
 
         context 'with invalid job_definition_id' do
           let(:option) { 'AAA/daily' }
