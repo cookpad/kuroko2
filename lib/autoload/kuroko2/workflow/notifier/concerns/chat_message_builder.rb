@@ -16,6 +16,10 @@ module Kuroko2
             "Finished to execute '#{@definition.name}'"
           end
 
+          def launched_text
+            "Launched '#{@definition.name}'"
+          end
+
           def retring_text
             "Retring the current task in '#{@definition.name}'"
           end

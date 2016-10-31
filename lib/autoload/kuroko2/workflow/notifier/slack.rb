@@ -19,6 +19,16 @@ module Kuroko2
           @webhook_url = Kuroko2.config.notifiers.slack.webhook_url
         end
 
+        def notify_launch
+          if @definition.hipchat_notify_finished?
+            send_attachment_message_to_slack(
+              level: 'INFO',
+              text: message_builder.launched_text,
+              body: @instance.logs.last(2).first.message,
+            )
+          end
+        end
+
         def notify_retring
           if @definition.hipchat_notify_finished?
             send_attachment_message_to_slack(

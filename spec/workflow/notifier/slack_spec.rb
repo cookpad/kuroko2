@@ -145,6 +145,34 @@ module Kuroko2::Workflow
       end
     end
 
+    describe '#notify_launch' do
+      context 'with notify_finished' do
+        before do
+          instance.job_definition.hipchat_notify_finished = true
+          instance.save!
+        end
+
+        it 'sends retring mesasge' do
+          expect(notifier).to receive(:send_to_slack).
+            with(hash_including(channel: slack_channel)).and_call_original
+
+          notifier.notify_launch
+        end
+      end
+
+      context 'without notify_finished' do
+        before do
+          instance.job_definition.hipchat_notify_finished = false
+          instance.save!
+        end
+
+        it 'sends retring mesasge' do
+          expect(notifier).not_to receive(:send_to_slack)
+          notifier.notify_launch
+        end
+      end
+    end
+
     describe '#notify_long_elapsed_time' do
       it 'sends warning mesasge' do
         expect(notifier).to receive(:send_to_slack).

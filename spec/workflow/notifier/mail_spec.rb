@@ -90,5 +90,13 @@ module Kuroko2::Workflow
         }
       end
     end
+
+    describe '#notify_launch' do
+      it 'does not send mail' do
+        expect { notifier.notify_launch }.not_to change {
+          ActionMailer::Base.deliveries.size
+        }
+      end
+    end
   end
 end

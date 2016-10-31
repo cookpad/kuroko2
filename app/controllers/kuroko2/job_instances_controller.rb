@@ -9,19 +9,13 @@ class Kuroko2::JobInstancesController < Kuroko2::ApplicationController
   end
 
   def create
+    creation_params = { launched_by: current_user.name }
     if params[:job_definition].present?
-      @instance = @definition.job_instances.create(params.require(:job_definition).permit(:script))
-    else
-      @instance = @definition.job_instances.create
+      creation_params.merge!(params.require(:job_definition).permit(:script).to_h.symbolize_keys)
     end
 
-    if @instance
-      @instance.logs.info("Launched by #{current_user.name}.")
-
-      redirect_to job_definition_job_instance_path(@definition, @instance)
-    else
-      raise HTTP::BadRequest
-    end
+    @instance = @definition.create_instance(creation_params)
+    redirect_to job_definition_job_instance_path(@definition, @instance)
   end
 
   def show

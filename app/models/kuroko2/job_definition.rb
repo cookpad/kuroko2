@@ -93,6 +93,16 @@ class Kuroko2::JobDefinition < Kuroko2::ApplicationRecord
     end
   end
 
+  def create_instance(script: nil, launched_by:, token: nil )
+    message = "Launched by #{launched_by}"
+
+    if token.present?
+      message = "(token #{token.uuid}) #{message}"
+    end
+
+    job_instances.create!(script: script, log_message: message)
+  end
+
   private
 
   def confirm_active_instances

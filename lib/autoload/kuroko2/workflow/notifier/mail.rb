@@ -7,6 +7,10 @@ module Kuroko2
           @definition   = job_instance.job_definition
         end
 
+        def notify_launch
+          # do nothing
+        end
+
         def notify_retring
           # do nothing
         end

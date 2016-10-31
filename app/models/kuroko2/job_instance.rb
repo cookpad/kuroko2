@@ -3,6 +3,8 @@ class Kuroko2::JobInstance < Kuroko2::ApplicationRecord
 
   belongs_to :job_definition
 
+  attr_accessor :log_message
+
   has_many :logs, dependent: :delete_all do
     def info(message)
       add('INFO', message)
@@ -26,6 +28,7 @@ class Kuroko2::JobInstance < Kuroko2::ApplicationRecord
   has_one :memory_consumption_log, dependent: :destroy
 
   before_create :copy_script
+  after_create :notify_launch
   after_create :generate_token
 
   scope :working, -> { where(finished_at: nil, canceled_at: nil) }
@@ -87,6 +90,14 @@ class Kuroko2::JobInstance < Kuroko2::ApplicationRecord
 
   def copy_script
     self.script = job_definition.try(:script) if self.script.blank?
+  end
+
+  def notify_launch
+    if log_message
+      Kuroko2.logger.info(log_message)
+      self.logs.info(log_message)
+      Kuroko2::Workflow::Notifier.notify(:launch, self)
+    end
   end
 
   def generate_token
