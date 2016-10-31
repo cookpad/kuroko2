@@ -89,18 +89,18 @@ module Kuroko2::Workflow
       end
     end
 
-    describe '#notify_retring' do
+    describe '#notify_retrying' do
       context 'with notify_finished' do
         before do
           instance.job_definition.hipchat_notify_finished = true
           instance.save!
         end
 
-        it 'sends retring mesasge' do
+        it 'sends retrying mesasge' do
           expect(notifier).to receive(:send_to_slack).
             with(hash_including(channel: slack_channel)).and_call_original
 
-          notifier.notify_retring
+          notifier.notify_retrying
         end
       end
 
@@ -110,9 +110,9 @@ module Kuroko2::Workflow
           instance.save!
         end
 
-        it 'sends retring mesasge' do
+        it 'sends retrying mesasge' do
           expect(notifier).not_to receive(:send_to_slack)
-          notifier.notify_retring
+          notifier.notify_retrying
         end
       end
     end
@@ -124,7 +124,7 @@ module Kuroko2::Workflow
           instance.save!
         end
 
-        it 'sends retring mesasge' do
+        it 'sends skipping mesasge' do
           expect(notifier).to receive(:send_to_slack).
             with(hash_including(channel: slack_channel)).and_call_original
 
@@ -138,7 +138,7 @@ module Kuroko2::Workflow
           instance.save!
         end
 
-        it 'sends retring mesasge' do
+        it 'sends skipping mesasge' do
           expect(notifier).not_to receive(:send_to_slack)
           notifier.notify_skipping
         end
@@ -152,7 +152,7 @@ module Kuroko2::Workflow
           instance.save!
         end
 
-        it 'sends retring mesasge' do
+        it 'sends launch mesasge' do
           expect(notifier).to receive(:send_to_slack).
             with(hash_including(channel: slack_channel)).and_call_original
 
@@ -166,7 +166,7 @@ module Kuroko2::Workflow
           instance.save!
         end
 
-        it 'sends retring mesasge' do
+        it 'sends launch mesasge' do
           expect(notifier).not_to receive(:send_to_slack)
           notifier.notify_launch
         end

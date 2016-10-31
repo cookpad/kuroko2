@@ -103,20 +103,20 @@ module Kuroko2::Workflow
       end
     end
 
-    describe '#notify_retring' do
+    describe '#notify_retrying' do
       context 'with notify_finished' do
         before do
           instance.job_definition.hipchat_notify_finished = true
           instance.save!
         end
 
-        it 'sends retring mesasge' do
+        it 'sends retrying mesasge' do
           expect(hipchat_room_object).to receive(:send) do |_, message, option|
             expect(message).to include('SUCCESS')
             expect(option[:color]).to eq('yellow')
           end
 
-          notifier.notify_retring
+          notifier.notify_retrying
         end
       end
 
@@ -126,9 +126,9 @@ module Kuroko2::Workflow
           instance.save!
         end
 
-        it 'sends retring mesasge' do
+        it 'sends retrying mesasge' do
           expect(hipchat_room_object).not_to receive(:send)
-          notifier.notify_retring
+          notifier.notify_retrying
         end
       end
     end
@@ -140,7 +140,7 @@ module Kuroko2::Workflow
           instance.save!
         end
 
-        it 'sends retring mesasge' do
+        it 'sends skipping mesasge' do
           expect(hipchat_room_object).to receive(:send) do |_, message, option|
             expect(message).to include('SUCCESS')
             expect(option[:color]).to eq('yellow')
@@ -156,7 +156,7 @@ module Kuroko2::Workflow
           instance.save!
         end
 
-        it 'sends retring mesasge' do
+        it 'sends skipping mesasge' do
           expect(hipchat_room_object).not_to receive(:send)
           notifier.notify_skipping
         end
@@ -170,7 +170,7 @@ module Kuroko2::Workflow
           instance.save!
         end
 
-        it 'sends retring mesasge' do
+        it 'sends launch mesasge' do
           expect(hipchat_room_object).to receive(:send) do |_, message, option|
             expect(message).to include('SUCCESS')
             expect(option[:color]).to eq('yellow')
@@ -186,7 +186,7 @@ module Kuroko2::Workflow
           instance.save!
         end
 
-        it 'sends retring mesasge' do
+        it 'sends launch mesasge' do
           expect(hipchat_room_object).not_to receive(:send)
           notifier.notify_launch
         end

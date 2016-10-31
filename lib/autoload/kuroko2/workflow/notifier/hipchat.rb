@@ -23,9 +23,9 @@ module Kuroko2
           end
         end
 
-        def notify_retring
+        def notify_retrying
           if @definition.hipchat_notify_finished
-            message = build_message(level: 'SUCCESS', text: message_builder.retring_text)
+            message = build_message(level: 'SUCCESS', text: message_builder.retrying_text)
             message << "<br>"
             message << @instance.logs.last(2).first.message
 

@@ -20,8 +20,8 @@ module Kuroko2
             "Launched '#{@definition.name}'"
           end
 
-          def retring_text
-            "Retring the current task in '#{@definition.name}'"
+          def retrying_text
+            "Retrying the current task in '#{@definition.name}'"
           end
 
           def skipping_text

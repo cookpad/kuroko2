@@ -29,11 +29,11 @@ module Kuroko2
           end
         end
 
-        def notify_retring
+        def notify_retrying
           if @definition.hipchat_notify_finished?
             send_attachment_message_to_slack(
               level: 'INFO',
-              text: message_builder.retring_text,
+              text: message_builder.retrying_text,
               body: @instance.logs.last(2).first.message,
             )
           end

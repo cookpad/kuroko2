@@ -30,7 +30,7 @@ module Kuroko2
 
           Kuroko2.logger.info(message)
 
-          Notifier.notify(:retring, token.job_instance)
+          Notifier.notify(:retrying, token.job_instance)
         end
       end
 

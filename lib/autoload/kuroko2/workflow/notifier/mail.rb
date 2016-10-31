@@ -11,7 +11,7 @@ module Kuroko2
           # do nothing
         end
 
-        def notify_retring
+        def notify_retrying
           # do nothing
         end
 
