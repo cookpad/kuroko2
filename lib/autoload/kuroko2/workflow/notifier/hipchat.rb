@@ -17,7 +17,7 @@ module Kuroko2
           if @definition.hipchat_notify_finished?
             message = build_message(level: 'SUCCESS', text: message_builder.launched_text)
             message << "<br>"
-            message << @instance.logs.last(2).first.message
+            message << @instance.logs.select{ |log| log.level == 'INFO' }.last.try!(:message)
 
             send_to_hipchat(message, color: 'yellow')
           end
@@ -47,7 +47,7 @@ module Kuroko2
           if @definition.notify_cancellation
             message = build_message(level: 'WARNING', text: message_builder.failure_text)
             message << "<br>"
-            message << @instance.logs.last(2).first.message
+            message << @instance.logs.select{ |log| log.level == 'WARN' }.last.try!(:message)
 
             send_to_hipchat(message, color: 'yellow')
           end
