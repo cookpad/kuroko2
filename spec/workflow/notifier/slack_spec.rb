@@ -45,6 +45,7 @@ module Kuroko2::Workflow
 
     describe '#notify_cancellation' do
       before do
+        instance.logs.warn('warn')
         instance.job_definition.notify_cancellation = true
         instance.save!
       end
