@@ -9,6 +9,11 @@ class Kuroko2::SessionsController < Kuroko2::ApplicationController
     return_to = params[:state]
     reset_session
 
+    unless valid_google_hosted_domain?
+      render :invalid_hd, status: 403, layout: false
+      return
+    end
+
     self.current_user = Kuroko2::User.find_or_create_user(auth_hash[:uid], auth_hash[:info])
 
     unless Kuroko2::ReturnToValidator.valid?(return_to)
@@ -29,4 +34,12 @@ class Kuroko2::SessionsController < Kuroko2::ApplicationController
     request.env['omniauth.auth']
   end
 
+  def valid_google_hosted_domain?
+    hd = Kuroko2.config.app_authentication.google_oauth2.options.hd
+    if hd.present?
+      hd == auth_hash.extra.id_info.hd
+    else
+      true
+    end
+  end
 end

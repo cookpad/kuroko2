@@ -1,0 +1,15 @@
+- @title = 'Sign in failure'
+
+doctype html
+html.bg-black
+  head
+    title #{@title} « Kuroko 2
+    meta charset='UTF-8'
+    meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'
+    = stylesheet_link_tag 'kuroko2/application'
+    = javascript_include_tag 'kuroko2/application'
+  body.bg-black
+    .form-box
+      .header Sign In failure
+      .body
+        p.lead You have to sign in with Google account of #{Kuroko2.config.app_authentication.google_oauth2.options.hd}.
