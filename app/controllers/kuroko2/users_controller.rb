@@ -1,5 +1,6 @@
 class Kuroko2::UsersController < Kuroko2::ApplicationController
-  before_action :set_user, only: [:destroy]
+  before_action :set_user, only: [:edit, :update, :destroy]
+  before_action :require_group_user, only: [:edit, :update, :destroy]
 
   def index
     @user  = Kuroko2::User.new
@@ -21,6 +22,17 @@ class Kuroko2::UsersController < Kuroko2::ApplicationController
 
     @instances    = Kuroko2::JobInstance.working.where(job_definition: @definitions)
     @related_tags = @definitions.includes(:tags).map(&:tags).flatten.uniq
+  end
+
+  def edit
+  end
+
+  def update
+    if @user.update(user_params)
+      redirect_to user_path(@user)
+    else
+      render action: :edit
+    end
   end
 
   def create
@@ -58,5 +70,9 @@ class Kuroko2::UsersController < Kuroko2::ApplicationController
 
   def page_params
     params.permit(:page)
+  end
+
+  def require_group_user
+    head :bad_request if @user.google_account?
   end
 end
