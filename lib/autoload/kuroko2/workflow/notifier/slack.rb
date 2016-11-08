@@ -50,7 +50,7 @@ module Kuroko2
         end
 
         def notify_cancellation
-          if @definition.notify_cancellation
+          if @definition.notify_cancellation || @definition.hipchat_notify_finished?
             send_attachment_message_to_slack(
               level: 'WARNING',
               text: message_builder.failure_text,

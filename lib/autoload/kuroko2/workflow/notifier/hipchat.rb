@@ -44,7 +44,7 @@ module Kuroko2
         end
 
         def notify_cancellation
-          if @definition.notify_cancellation
+          if @definition.notify_cancellation || @definition.hipchat_notify_finished?
             message = build_message(level: 'WARNING', text: message_builder.failure_text)
             message << "<br>"
             message << @instance.logs.select{ |log| log.level == 'WARN' }.last.try!(:message)
