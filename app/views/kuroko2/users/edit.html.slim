@@ -1,4 +1,4 @@
-- @title = "#{@user_name} « Users"
+- @title = "#{@user.name_was} « Users"
 - @content_title = "Edit User"
 
 - content_for :breadcrumb do
@@ -12,11 +12,11 @@
     .box
       = form_for @user, method: :put do |form|
         .box-header
-          h2.box-title ##{@user.id} #{@user_name}
+          h2.box-title ##{@user.id} #{@user.name_was}
         .box-body.table-responsive
           .row
             .col-md-2.visible-lg-block.visible-md-block
-              img.img-circle src='#{@user.image}' alt="#{@user_name}"
+              img.img-circle src='#{@user.image}' alt="#{@user.name_was}"
             .col-md-10
               div class="form-group #{@user.errors.has_key?(:name) ? 'has-error' : ''}"
                 = form.label :name
