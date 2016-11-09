@@ -1,0 +1,13 @@
+[Unit]
+Description=Kuroko2 scheduler
+
+[Service]
+Environment=LANG=en_US.UTF-8
+Environment=RAILS_ENV=production
+User=kuroko2
+WorkingDirectory=/home/kuroko2/kuroko2/current
+ExecStart=/usr/bin/bundle exec rails runner 'Kuroko2::Servers::JobScheduler.new(log: nil, daemonize: false).run'
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
