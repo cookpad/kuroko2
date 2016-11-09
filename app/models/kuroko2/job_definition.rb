@@ -57,7 +57,7 @@ class Kuroko2::JobDefinition < Kuroko2::ApplicationRecord
     or_query = column[:name].matches("%#{query}%").or(column[:script].matches("%#{query}%"))
 
     search_by_tag_definition_ids = Kuroko2::JobDefinitionTag.joins(:tag).
-      where('tags.name LIKE ?', "%#{query}%").distinct.pluck(:job_definition_id)
+      where("#{Kuroko2::Tag.table_name}.name LIKE ?", "%#{query}%").distinct.pluck(:job_definition_id)
 
     if search_by_tag_definition_ids.present?
       or_query = or_query.or(column[:id].in(search_by_tag_definition_ids))
