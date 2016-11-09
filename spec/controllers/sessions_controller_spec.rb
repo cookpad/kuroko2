@@ -5,7 +5,7 @@ describe Kuroko2::SessionsController do
 
   describe '#create' do
     let(:auth_hash) do
-      {
+      OmniAuth::AuthHash.new(
         provider: 'google_oauth2',
         uid:      uid,
         info:     {
@@ -14,8 +14,11 @@ describe Kuroko2::SessionsController do
           first_name: 'John',
           last_name:  'Doe',
           image:      'https://lh3.googleusercontent.com/url/photo.jpg'
-        }
-      }
+        },
+        extra: {
+          id_info: {},
+        },
+      )
     end
     let(:uid) { '123456789' }
 
@@ -39,6 +42,38 @@ describe Kuroko2::SessionsController do
         is_expected.to redirect_to root_path
         expect(controller.current_user.id).to eq user.id
         expect(controller.current_user.uid).to eq uid
+      end
+    end
+
+    context 'with hd configured' do
+      let(:configured_hd) { 'example.com' }
+
+      before do
+        allow(Kuroko2.config.app_authentication.google_oauth2.options).to receive_messages(hd: configured_hd)
+      end
+
+      context 'with valid hd' do
+        before do
+          auth_hash.extra.id_info.hd = configured_hd
+        end
+
+        it 'creates a new session' do
+          get :create, params: { provider: :google_oauth2 }
+          expect(response).to redirect_to(root_path)
+          expect(controller.current_user.uid).to eq(uid)
+        end
+      end
+
+      context 'with invalid hd' do
+        before do
+          auth_hash.extra.id_info.hd = 'example.net'
+        end
+
+        it 'rejects' do
+          get :create, params: { provider: :google_oauth2 }
+          expect(response).to have_http_status(403)
+          expect(controller.current_user).to be_nil
+        end
       end
     end
   end
