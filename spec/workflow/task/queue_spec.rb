@@ -29,6 +29,17 @@ module Kuroko2::Workflow::Task
         end
       end
 
+      context 'with default queue' do
+        let(:node) { Kuroko2::Workflow::Node.new(:queue, '@default') }
+        it { expect { Kuroko2::Workflow::Task::Queue.new(node, token).validate }.not_to raise_error }
+      end
+
+      context 'with valid queue' do
+        before { create(:worker, queue: 'myqueue') }
+        let(:node) { Kuroko2::Workflow::Node.new(:queue, 'myqueue') }
+        it { expect { Kuroko2::Workflow::Task::Queue.new(node, token).validate }.not_to raise_error }
+      end
+
       context 'with invalid queue' do
         let(:node) { Kuroko2::Workflow::Node.new(:queue, '!invalid!') }
 
