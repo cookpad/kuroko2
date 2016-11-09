@@ -1,0 +1,37 @@
+- @title = "#{@user.name_was} « Users"
+- @content_title = "Edit User"
+
+- content_for :breadcrumb do
+  ol.breadcrumb
+    li= link_to raw('<i class="fa fa-users"></i> Users'), users_path
+    li= link_to 'Details', user_path(@user)
+    li.active Edit User
+
+.row
+  .col-md-12
+    .box
+      = form_for @user, method: :put do |form|
+        .box-header
+          h2.box-title ##{@user.id} #{@user.name_was}
+        .box-body.table-responsive
+          - if @user.errors.present?
+            .row
+              ul.alert.alert-danger
+                - @user.errors.full_messages.each do |message|
+                  li #{message}
+
+          .row
+            .col-md-2.visible-lg-block.visible-md-block
+              img.img-circle src='#{@user.image}' alt="#{@user.name_was}"
+            .col-md-10
+              div class="form-group #{@user.errors.has_key?(:name) ? 'has-error' : ''}"
+                = form.label :name
+                = form.text_field :name, class: 'form-control', placeholder: 'Group Name'
+              div class="form-group #{@user.errors.has_key?(:email) ? 'has-error' : ''}"
+                = form.label :email
+                = form.text_field :email, class: 'form-control', placeholder: 'group@example.com'
+        .box-footer
+          .row
+            .col-md-3.col-md-offset-9
+              .form-group
+                = form.submit 'Update', class: 'btn btn-default btn-block'

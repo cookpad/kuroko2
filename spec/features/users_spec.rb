@@ -16,7 +16,7 @@ RSpec.describe "Users management", type: :feature do
     expect(page).to have_content("##{user.id} #{user.name}")
   end
 
-  it 'creates group users' do
+  it 'creates and edits group users' do
     visit kuroko2.users_path
     fill_in 'Name', with: 'Test Group User'
     fill_in 'Email', with: 'test_group_user@example.com'
@@ -32,6 +32,16 @@ RSpec.describe "Users management", type: :feature do
 
     expect(page).to have_selector('#users tbody tr', count: 1)
     expect(page).to have_content('Test Group User')
+
+    visit kuroko2.users_path(target: 'group')
+    click_on('View Details')
+    click_on('Edit User')
+
+    fill_in 'Name', with: 'Test Group User v2'
+    fill_in 'Email', with: 'test_group_userv2@example.com'
+    click_on('Update')
+
+    expect(page).to have_content('Test Group User v2')
   end
 
   context 'A user has some tagged job_definitions', js: true do
