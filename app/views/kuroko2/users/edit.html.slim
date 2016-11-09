@@ -14,6 +14,12 @@
         .box-header
           h2.box-title ##{@user.id} #{@user.name_was}
         .box-body.table-responsive
+          - if @user.errors.present?
+            .row
+              ul.alert.alert-danger
+                - @user.errors.full_messages.each do |message|
+                  li #{message}
+
           .row
             .col-md-2.visible-lg-block.visible-md-block
               img.img-circle src='#{@user.image}' alt="#{@user.name_was}"
