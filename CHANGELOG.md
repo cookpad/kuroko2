@@ -1,3 +1,7 @@
+## v0.2.3
+- Fix Kuroko2::JobDefinition.search_by https://github.com/cookpad/kuroko2/pull/11
+- Validate hd parameter if configured https://github.com/cookpad/kuroko2/pull/10
+
 ## v0.2.2
 - s/Time.now/Time.current/ https://github.com/cookpad/kuroko2/pull/4
 - Splitting the autoload directory https://github.com/cookpad/kuroko2/pull/5
