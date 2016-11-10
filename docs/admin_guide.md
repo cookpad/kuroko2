@@ -13,6 +13,8 @@ The Web UI (Web Console) is a rails application.
 
 All kuroko2 daemons backend is [serverengine gem](https://github.com/fluent/serverengine).
 
+Example systemd unit files are available [here](systemd).
+
 
 #### job-scheduler
 
