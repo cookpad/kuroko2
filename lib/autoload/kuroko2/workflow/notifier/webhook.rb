@@ -17,7 +17,7 @@ module Kuroko2
         def notify_launch
           if @definition.hipchat_notify_finished?
             request(
-              build_body(
+              build_payload(
                 action: 'notify_launch',
                 level: 'INFO',
                 subject: message_builder.launched_text,
@@ -30,7 +30,7 @@ module Kuroko2
         def notify_retrying
           if @definition.hipchat_notify_finished?
             request(
-              build_body(
+              build_payload(
                 action: 'notify_retrying',
                 level: 'INFO',
                 subject: message_builder.retrying_text,
@@ -43,7 +43,7 @@ module Kuroko2
         def notify_skipping
           if @definition.hipchat_notify_finished?
             request(
-              build_body(
+              build_payload(
                 action: 'notify_skipping',
                 level: 'INFO',
                 subject: message_builder.skipping_text,
@@ -56,7 +56,7 @@ module Kuroko2
         def notify_cancellation
           if @definition.notify_cancellation || @definition.hipchat_notify_finished?
             request(
-              build_body(
+              build_payload(
                 action: 'notify_cancellation',
                 level: 'WARNING',
                 subject: message_builder.failure_text,
@@ -68,7 +68,7 @@ module Kuroko2
 
         def notify_failure
           request(
-            build_body(
+            build_payload(
               action: 'notify_failure',
               level: 'FAILURE',
               subject: message_builder.failure_text,
@@ -79,7 +79,7 @@ module Kuroko2
 
         def notify_critical
           request(
-            build_body(
+            build_payload(
               action: 'notify_critical',
               level: 'CRITICAL',
               subject: message_builder.failure_text,
@@ -91,7 +91,7 @@ module Kuroko2
         def notify_finished
           if @definition.hipchat_notify_finished?
             request(
-              build_body(
+              build_payload(
                 action: 'notify_finished',
                 level: 'SUCCESS',
                 subject: message_builder.finished_text,
@@ -102,7 +102,7 @@ module Kuroko2
 
         def notify_long_elapsed_time
           request(
-            build_body(
+            build_payload(
               action: 'notify_long_elapsed_time',
               level: 'WARNING',
               subject: message_builder.long_elapsed_time_text,
@@ -139,7 +139,7 @@ module Kuroko2
           end
         end
 
-        def build_body(action:, level:, subject:, message: nil)
+        def build_payload(action:, level:, subject:, message: nil)
           {
             action: action,
             level: level,
