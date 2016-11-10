@@ -3,6 +3,8 @@ class Kuroko2::JobInstance < Kuroko2::ApplicationRecord
 
   belongs_to :job_definition
 
+  attr_accessor :log_message
+
   has_many :logs, dependent: :delete_all do
     def info(message)
       add('INFO', message)
@@ -26,6 +28,7 @@ class Kuroko2::JobInstance < Kuroko2::ApplicationRecord
   has_one :memory_consumption_log, dependent: :destroy
 
   before_create :copy_script
+  after_create :notify_launch
   after_create :generate_token
 
   scope :working, -> { where(finished_at: nil, canceled_at: nil) }
@@ -43,10 +46,16 @@ class Kuroko2::JobInstance < Kuroko2::ApplicationRecord
     tokens.first.try(:cancelable?)
   end
 
-  def cancel
+  def cancel(by:)
     self.tokens.destroy(*self.tokens)
     self.executions.destroy(*self.executions)
     self.touch(:canceled_at)
+
+    message = "This job was canceled by #{by}."
+    self.logs.warn(message)
+    Kuroko2.logger.warn(message)
+
+    Kuroko2::Workflow::Notifier.notify(:cancellation, self) if job_definition.hipchat_notify_finished?
   end
 
   # Log given value if it is greater than stored one.
@@ -84,6 +93,14 @@ class Kuroko2::JobInstance < Kuroko2::ApplicationRecord
     self.script = job_definition.try(:script) if self.script.blank?
   end
 
+  def notify_launch
+    if log_message
+      Kuroko2.logger.info(log_message)
+      self.logs.info(log_message)
+      Kuroko2::Workflow::Notifier.notify(:launch, self)
+    end
+  end
+
   def generate_token
     unless self.job_definition
       raise 'No parent association is found'
@@ -112,7 +129,7 @@ class Kuroko2::JobInstance < Kuroko2::ApplicationRecord
       self.logs.warn(message)
       Kuroko2.logger.warn(message)
 
-      Kuroko2::Workflow::Notifier.notify(:cancellation, self)
+      Kuroko2::Workflow::Notifier.notify(:cancellation, self) if job_definition.notify_cancellation
     end
   end
 end

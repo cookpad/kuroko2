@@ -75,9 +75,25 @@ module Kuroko2::Workflow
       end
     end
 
-    describe '#notify_working' do
+    describe '#notify_retrying' do
       it 'does not send mail' do
-        expect { notifier.notify_working }.not_to change {
+        expect { notifier.notify_retrying }.not_to change {
+          ActionMailer::Base.deliveries.size
+        }
+      end
+    end
+
+    describe '#notify_skipping' do
+      it 'does not send mail' do
+        expect { notifier.notify_skipping }.not_to change {
+          ActionMailer::Base.deliveries.size
+        }
+      end
+    end
+
+    describe '#notify_launch' do
+      it 'does not send mail' do
+        expect { notifier.notify_launch }.not_to change {
           ActionMailer::Base.deliveries.size
         }
       end

@@ -50,6 +50,7 @@ module Kuroko2::Workflow
 
     describe '#notify_cancellation' do
       before do
+        instance.logs.warn('warn')
         instance.job_definition.notify_cancellation = true
         instance.save!
       end
@@ -100,6 +101,96 @@ module Kuroko2::Workflow
         end
 
         notifier.notify_finished
+      end
+    end
+
+    describe '#notify_retrying' do
+      context 'with notify_finished' do
+        before do
+          instance.job_definition.hipchat_notify_finished = true
+          instance.save!
+        end
+
+        it 'sends retrying mesasge' do
+          expect(hipchat_room_object).to receive(:send) do |_, message, option|
+            expect(message).to include('SUCCESS')
+            expect(option[:color]).to eq('yellow')
+          end
+
+          notifier.notify_retrying
+        end
+      end
+
+      context 'without notify_finished' do
+        before do
+          instance.job_definition.hipchat_notify_finished = false
+          instance.save!
+        end
+
+        it 'sends retrying mesasge' do
+          expect(hipchat_room_object).not_to receive(:send)
+          notifier.notify_retrying
+        end
+      end
+    end
+
+    describe '#notify_skipping' do
+      context 'with notify_finished' do
+        before do
+          instance.job_definition.hipchat_notify_finished = true
+          instance.save!
+        end
+
+        it 'sends skipping mesasge' do
+          expect(hipchat_room_object).to receive(:send) do |_, message, option|
+            expect(message).to include('SUCCESS')
+            expect(option[:color]).to eq('yellow')
+          end
+
+          notifier.notify_skipping
+        end
+      end
+
+      context 'without notify_finished' do
+        before do
+          instance.job_definition.hipchat_notify_finished = false
+          instance.save!
+        end
+
+        it 'sends skipping mesasge' do
+          expect(hipchat_room_object).not_to receive(:send)
+          notifier.notify_skipping
+        end
+      end
+    end
+
+    describe '#notify_launch' do
+      context 'with notify_finished' do
+        before do
+          instance.job_definition.hipchat_notify_finished = true
+          instance.save!
+        end
+
+        it 'sends launch mesasge' do
+          expect(hipchat_room_object).to receive(:send) do |_, message, option|
+            expect(message).to include('SUCCESS')
+            expect(option[:color]).to eq('yellow')
+          end
+
+          notifier.notify_launch
+        end
+      end
+
+      context 'without notify_finished' do
+        before do
+          instance.job_definition.hipchat_notify_finished = false
+          instance.save!
+        end
+
+        it 'sends launch mesasge' do
+          expect(hipchat_room_object).not_to receive(:send)
+          notifier.notify_launch
+        end
       end
     end
 

@@ -81,11 +81,8 @@ class Kuroko2::JobSchedule < Kuroko2::ApplicationRecord
         elsif suspend_times.include?(time)
           Kuroko2.logger.info("Skipped schedule suspended \"##{definition.id} #{definition.name}\" that is scheduled at #{I18n.l(time, format: :short)} by `#{schedule.cron}`")
         else
-          message = "Launched \"##{definition.id} #{definition.name}\" that is scheduled at #{I18n.l(time, format: :short)} by `#{schedule.cron}`"
-          Kuroko2.logger.info(message)
-
-          instance = definition.job_instances.create
-          instance.logs.info(message)
+          launched_by = "\"##{definition.id} #{definition.name}\" that is scheduled at #{I18n.l(time, format: :short)} by `#{schedule.cron}`"
+          definition.create_instance(launched_by: launched_by)
         end
       end
     end

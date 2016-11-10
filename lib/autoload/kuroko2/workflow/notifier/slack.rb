@@ -9,6 +9,7 @@ module Kuroko2
           FAILURE  = 'danger'
           CRITICAL = 'danger'
           SUCCESS  = 'good'
+          INFO     = '#439FE0'
         end
 
         def initialize(instance)
@@ -18,16 +19,42 @@ module Kuroko2
           @webhook_url = Kuroko2.config.notifiers.slack.webhook_url
         end
 
-        def notify_working
-          # do nothing
+        def notify_launch
+          if @definition.hipchat_notify_finished?
+            send_attachment_message_to_slack(
+              level: 'INFO',
+              text: message_builder.launched_text,
+              body: @instance.logs.select{ |log| log.level == 'INFO' }.last.try!(:message),
+            )
+          end
+        end
+
+        def notify_retrying
+          if @definition.hipchat_notify_finished?
+            send_attachment_message_to_slack(
+              level: 'INFO',
+              text: message_builder.retrying_text,
+              body: @instance.logs.last(2).first.message,
+            )
+          end
+        end
+
+        def notify_skipping
+          if @definition.hipchat_notify_finished?
+            send_attachment_message_to_slack(
+              level: 'INFO',
+              text: message_builder.skipping_text,
+              body: @instance.logs.last(2).first.message,
+            )
+          end
         end
 
         def notify_cancellation
-          if @definition.notify_cancellation
+          if @definition.notify_cancellation || @definition.hipchat_notify_finished?
             send_attachment_message_to_slack(
               level: 'WARNING',
               text: message_builder.failure_text,
-              body: @instance.logs.last(2).first.message,
+              body: @instance.logs.select{ |log| log.level == 'WARN' }.last.try!(:message),
             )
           end
         end

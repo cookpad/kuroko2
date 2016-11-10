@@ -16,6 +16,18 @@ module Kuroko2
             "Finished to execute '#{@definition.name}'"
           end
 
+          def launched_text
+            "Launched '#{@definition.name}'"
+          end
+
+          def retrying_text
+            "Retrying the current task in '#{@definition.name}'"
+          end
+
+          def skipping_text
+            "Skipping the current task in '#{@definition.name}'"
+          end
+
           def long_elapsed_time_text
             "The running time is longer than expected '#{@definition.name}'."
           end

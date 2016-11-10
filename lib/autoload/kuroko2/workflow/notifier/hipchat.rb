@@ -13,15 +13,41 @@ module Kuroko2
           @message_builder = Workflow::Notifier::Concerns::ChatMessageBuilder.new(instance)
         end
 
-        def notify_working
-          # do nothing
+        def notify_launch
+          if @definition.hipchat_notify_finished?
+            message = build_message(level: 'SUCCESS', text: message_builder.launched_text)
+            message << "<br>"
+            message << @instance.logs.select{ |log| log.level == 'INFO' }.last.try!(:message)
+
+            send_to_hipchat(message, color: 'yellow')
+          end
+        end
+
+        def notify_retrying
+          if @definition.hipchat_notify_finished
+            message = build_message(level: 'SUCCESS', text: message_builder.retrying_text)
+            message << "<br>"
+            message << @instance.logs.last(2).first.message
+
+            send_to_hipchat(message, color: 'yellow')
+          end
+        end
+
+        def notify_skipping
+          if @definition.hipchat_notify_finished
+            message = build_message(level: 'SUCCESS', text: message_builder.skipping_text)
+            message << "<br>"
+            message << @instance.logs.last(2).first.message
+
+            send_to_hipchat(message, color: 'yellow')
+          end
         end
 
         def notify_cancellation
-          if @definition.notify_cancellation
+          if @definition.notify_cancellation || @definition.hipchat_notify_finished?
             message = build_message(level: 'WARNING', text: message_builder.failure_text)
             message << "<br>"
-            message << @instance.logs.last(2).first.message
+            message << @instance.logs.select{ |log| log.level == 'WARN' }.last.try!(:message)
 
             send_to_hipchat(message, color: 'yellow')
           end

@@ -45,6 +45,7 @@ module Kuroko2::Workflow
 
     describe '#notify_cancellation' do
       before do
+        instance.logs.warn('warn')
         instance.job_definition.notify_cancellation = true
         instance.save!
       end
@@ -86,6 +87,90 @@ module Kuroko2::Workflow
           with(hash_including(channel: slack_channel)).and_call_original
 
         notifier.notify_finished
+      end
+    end
+
+    describe '#notify_retrying' do
+      context 'with notify_finished' do
+        before do
+          instance.job_definition.hipchat_notify_finished = true
+          instance.save!
+        end
+
+        it 'sends retrying mesasge' do
+          expect(notifier).to receive(:send_to_slack).
+            with(hash_including(channel: slack_channel)).and_call_original
+
+          notifier.notify_retrying
+        end
+      end
+
+      context 'without notify_finished' do
+        before do
+          instance.job_definition.hipchat_notify_finished = false
+          instance.save!
+        end
+
+        it 'sends retrying mesasge' do
+          expect(notifier).not_to receive(:send_to_slack)
+          notifier.notify_retrying
+        end
+      end
+    end
+
+    describe '#notify_skipping' do
+      context 'with notify_finished' do
+        before do
+          instance.job_definition.hipchat_notify_finished = true
+          instance.save!
+        end
+
+        it 'sends skipping mesasge' do
+          expect(notifier).to receive(:send_to_slack).
+            with(hash_including(channel: slack_channel)).and_call_original
+
+          notifier.notify_skipping
+        end
+      end
+
+      context 'without notify_finished' do
+        before do
+          instance.job_definition.hipchat_notify_finished = false
+          instance.save!
+        end
+
+        it 'sends skipping mesasge' do
+          expect(notifier).not_to receive(:send_to_slack)
+          notifier.notify_skipping
+        end
+      end
+    end
+
+    describe '#notify_launch' do
+      context 'with notify_finished' do
+        before do
+          instance.job_definition.hipchat_notify_finished = true
+          instance.save!
+        end
+
+        it 'sends launch mesasge' do
+          expect(notifier).to receive(:send_to_slack).
+            with(hash_including(channel: slack_channel)).and_call_original
+
+          notifier.notify_launch
+        end
+      end
+
+      context 'without notify_finished' do
+        before do
+          instance.job_definition.hipchat_notify_finished = false
+          instance.save!
+        end
+
+        it 'sends launch mesasge' do
+          expect(notifier).not_to receive(:send_to_slack)
+          notifier.notify_launch
+        end
       end
     end
 

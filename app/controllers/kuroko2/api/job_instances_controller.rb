@@ -19,10 +19,11 @@ class Kuroko2::Api::JobInstancesController < Kuroko2::Api::ApplicationController
       raise HTTP::Forbidden.new("#{definition.name} is not allowed to be executed via API")
     end
 
-    instance = definition.job_instances.create(
+    instance = definition.create_instance(
       script: definition.script.prepend(env_script),
+      launched_by: "instances API (#{basic_user_name})"
     )
-    instance.logs.info("Launched by instances API (#{basic_user_name})")
+
     Kuroko2::Api::JobInstanceResource.new(instance)
   end
 
