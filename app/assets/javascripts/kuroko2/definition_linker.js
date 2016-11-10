@@ -1,6 +1,6 @@
 jQuery(function ($) {
   function setDeifinitionLink(script) {
-    script = script.replace(/sub_process:\s+(\d+)\s*\n/, function(match, jobId) {
+    script = script.replace(/sub_process:\s+(\d+)\s*$/gm, function(match, jobId) {
       return '<a href="/definitions/' + jobId + '">' + match + '</a>';
     });
 
