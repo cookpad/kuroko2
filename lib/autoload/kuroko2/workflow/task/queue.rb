@@ -13,8 +13,8 @@ module Kuroko2
         end
 
         def validate
-          unless /\A[\w_-]{1,180}\z/ === option
-            raise Workflow::AssertionError, "Queue name must be match with /\A[\w_-]{1,255}\z/: #{option}"
+          unless /\A\@?[\w_-]{1,180}\z/ === option
+            raise Workflow::AssertionError, "Queue name must be match with /\A\@?[\w_-]{1,255}\z/: #{option}"
           end
 
           unless Worker.where(queue: option, working: true).exists?
