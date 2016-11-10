@@ -47,7 +47,7 @@ class Kuroko2::JobSchedule < Kuroko2::ApplicationRecord
       end
     end
 
-    scheduled_times
+    scheduled_times.map(&:in_time_zone)
   end
 
   def suspend_times(time_from, time_to)

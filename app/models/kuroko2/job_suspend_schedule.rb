@@ -19,7 +19,7 @@ class Kuroko2::JobSuspendSchedule < Kuroko2::ApplicationRecord
       end
     end
 
-    suspend_times
+    suspend_times.map(&:in_time_zone)
   end
 
   private
