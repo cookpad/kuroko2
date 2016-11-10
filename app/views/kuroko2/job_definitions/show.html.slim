@@ -43,16 +43,18 @@
           - if @definition.hipchat_room.present? || @definition.slack_channel.present?
             - if @definition.hipchat_notify_finished?
               li
-                'Notify all event to Slack/Hipchat
+                'Notify all event to Slack/Hipchat/Webhook
                 ul
+                  li webhook url: #{@definition.webhook_url}
                   li hipchat room: #{@definition.hipchat_room}
                   li slack channel: #{@definition.slack_channel}
                   - if @definition.hipchat_additional_text
                     li Failure notification text: #{@definition.hipchat_additional_text}
             - else
               li
-                'Notify failure event to Slack/Hipchat
+                'Notify failure event to Slack/Hipchat/Webhook
                 ul
+                  li webhook url: #{@definition.webhook_url}
                   li hipchat room: #{@definition.hipchat_room}
                   li slack channel: #{@definition.slack_channel}
                   - if @definition.hipchat_additional_text
