@@ -113,10 +113,6 @@ module Kuroko2
         private
 
         def request(body)
-          # X-Kuroko2-Id: Unique ID for this delivery.
-          # X-Kuroko2-Signature:
-          # Content-Type: application/json
-
           json = body.to_json
 
           url = URI.parse(@definition.webhook_url)

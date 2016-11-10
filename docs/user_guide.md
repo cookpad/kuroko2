@@ -88,7 +88,106 @@ CANCEL  | Press the cancel button or prevent running by kuroko2 system. (final s
 
 ## Notification
 
-TODO
+Kuroko2 notifies job statuses by below methods.
+
+- Mail
+- Slack
+- Hipchat
+- Webhook
+
+### Notifications Frequency Options
+
+You can configurable notifications frequency.
+
+#### Notify all event to Slack/Hipchat/Webhook
+
+If you enable this option, Kuroko2 notifies all events by Slack/Hipchat/Webhook (except Email) that jobs state is changed,
+Events is below.
+
+- The job is launched
+- The tasks is skipped.
+- The tasks is retried.
+- The job becomes error state.
+- The job is canceled.
+- The job is finished successfully.
+
+If you disable this option, Kuroko2 notifies only the error or critical situation.
+
+#### Notify administrators when the job is cancelled by system.
+
+If you enable this option, Kuroko2 notifies messages that the scheduled job prevented by Kuroko2 in accordance with the "Next Job Execution" options.
+
+### Webhook
+
+Kuroko2 includes additional HTTP headers with webhook POST request.
+
+ Request header       | description
+----------------------|-----------------------------------------------------------
+ X-Kuroko2-Id         | Unique ID for the event.
+ X-Kuroko2-Signature  | HMAC hex digest using secret_token (if configured)
+
+
+#### Request Example
+
+```json
+POST /webhook_endpoint_you_configured HTTP/1.1
+
+Host: localhost:4567
+X-Kuroko2-Id: dd03409e-135c-4de4-8bcb-b6ca09c64624
+X-Kuroko2-Signature: sha256=48969b34a3d9979d83a9a13b74d20575b03a12f16e7071e3db2148fe182c8b7e
+User-Agent: Kuroko2-Webhook
+Content-Type: application/json
+Content-Length: 537
+
+
+{
+  "action":"notify_finished",
+  "level":"SUCCESS",
+  "subject":"Finished to execute 'Test Job1'",
+  "message":null,
+  "job_instance":{
+    "url":"http://localhost/definitions/1/instances/100",
+    "id":4472,
+    "script":"noop:\r\n",
+    "finished_at":"2016-11-10T15:39:10+09:00",
+    "canceled_at":null,
+    "error_at":null,
+    "created_at":"2016-11-10T15:38:38+09:00"
+  },
+  "job_definition":{
+    "url":"http://localhost/definitions/1",
+    "id":128,
+    "name":"noop job1",
+    "description":"noop"
+  }
+}
+```
+
+
+#### Verifying Request Signatures
+
+To verify a webhook request, compare that to the value of the X-Kuroko2-Signature header.
+
+Ruby and Sinatra example is below.
+
+```ruby
+require 'openssl'
+
+post '/' do
+  body = request.body.read
+  if valid_signature?(body)
+    'ok'
+  else
+    'ng'
+  end
+end
+
+
+def valid_signature?(body)
+  algorithm, signature = request.env['HTTP_X_KUROKO2_SIGNATURE'].split('=')
+  Rack::Utils.secure_compare(signature, OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new(algorithm), ENV['KUROKO2_SECRET_TOKEN'], body))
+end
+```
 
 ## Environment Variables
 

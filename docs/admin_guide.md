@@ -84,6 +84,8 @@ notifiers:
     mail_to: "kuroko+<%= Socket.gethostname %>@example.com"
   slack:
     webhook_url: 'https://localhost/test/slack'
+  webhook:
+    secret_token: '<%= ENV["KUROKO2_WEBHOOK_SECRET_TOKEN"] %>'
 ```
 
 ### execution_logger
