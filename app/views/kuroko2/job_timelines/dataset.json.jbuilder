@@ -5,7 +5,7 @@ json.data do
     json.id instance.id
     json.content "<a href='#{job_definition_job_instance_path(instance.job_definition, instance)}'>##{instance.job_definition.id} #{instance.job_definition.name}</a>"
     json.start instance.created_at.strftime('%Y-%m-%d %H:%M:%S')
-    json.end (instance.error_at || instance.canceled_at || instance.finished_at).try!(:strftime, '%Y-%m-%d %H:%M:%S')
+    json.end (instance.error_at || instance.canceled_at || instance.finished_at || Time.current).try!(:strftime, '%Y-%m-%d %H:%M:%S')
     json.group instance.job_definition.id
   end
 end
