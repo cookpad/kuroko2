@@ -18,7 +18,7 @@ ul class="nav nav-pills" role="tablist"
           - for log in @logs
             tr
               td= labeled_log_level(log.level)
-              td.nowrap= l(log.created_at, format: :short)
+              td.nowrap= log.created_at
               td.log= rinku_auto_link(log.message, :urls)
       = javascript_include_tag 'kuroko2/instance_linker'
 
