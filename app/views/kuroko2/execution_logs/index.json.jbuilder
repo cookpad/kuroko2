@@ -1,7 +1,7 @@
 json.token @response.next_forward_token
 json.events do
   json.array! @response.events do |event|
-    json.timestamp l(Time.at(event.timestamp/1000), format: :short)
+    json.timestamp Time.at(event.timestamp/1000).in_time_zone
     begin
       log = JSON.parse(event.message)
       json.message rinku_auto_link(html_escape(log['message']), :urls)

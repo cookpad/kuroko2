@@ -12,13 +12,13 @@ ul class="nav nav-pills" role="tablist"
       table.table.table-condensed.table-hover data-reload="#{@instance.working? && !@instance.error?}"
         thead
           tr
-            th.col-md-1 &nbsp;
+            th &nbsp;
             th.col-md-1 Time
             th.col-md-10 Message
           - for log in @logs
             tr
               td= labeled_log_level(log.level)
-              td.nowrap= l(log.created_at, format: :short)
+              td.nowrap= log.created_at
               td.log= rinku_auto_link(log.message, :urls)
       = javascript_include_tag 'kuroko2/instance_linker'
 
@@ -26,8 +26,8 @@ ul class="nav nav-pills" role="tablist"
       table.table.table-condensed.table-hover
         thead
           tr
-            th.col-md-1 Time
-            th.col-md-1 PID
-            th.col-md-2 Token
-            th.col-md-8 Message
+            th Time
+            th PID
+            th Token
+            th.col-md-7 Message
         tbody#execution_log_body
