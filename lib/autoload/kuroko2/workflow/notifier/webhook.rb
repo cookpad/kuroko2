@@ -113,7 +113,7 @@ module Kuroko2
         private
 
         def request(body)
-          json = body.to_json
+          return unless @definition.webhook_url.present?
 
           url = URI.parse(@definition.webhook_url)
           conn = Faraday.new(url: "#{url.scheme}://#{url.host}") do |faraday|
@@ -121,6 +121,7 @@ module Kuroko2
             faraday.adapter Faraday.default_adapter
           end
 
+          json = body.to_json
           response = conn.post do |req|
             req.url(url.path)
 
