@@ -21,7 +21,7 @@ module Kuroko2
                 action: 'notify_launch',
                 level: 'INFO',
                 subject: message_builder.launched_text,
-                message: @instance.logs.select{ |log| log.level == 'INFO' }.last.try!(:message),
+                message: @instance.logs.reverse.detect{ |log| log.level == 'INFO' }.try!(:message),
               )
             )
           end
@@ -60,7 +60,7 @@ module Kuroko2
                 action: 'notify_cancellation',
                 level: 'WARNING',
                 subject: message_builder.failure_text,
-                message: @instance.logs.select{ |log| log.level == 'WARN' }.last.try!(:message),
+                message: @instance.logs.reverse.detect{ |log| log.level == 'WARN' }.try!(:message),
               )
             )
           end
