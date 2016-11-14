@@ -24,7 +24,7 @@ module Kuroko2
             send_attachment_message_to_slack(
               level: 'INFO',
               text: message_builder.launched_text,
-              body: @instance.logs.select{ |log| log.level == 'INFO' }.last.try!(:message),
+              body: @instance.logs.reverse.detect{ |log| log.level == 'INFO' }.try!(:message),
             )
           end
         end
@@ -54,7 +54,7 @@ module Kuroko2
             send_attachment_message_to_slack(
               level: 'WARNING',
               text: message_builder.failure_text,
-              body: @instance.logs.select{ |log| log.level == 'WARN' }.last.try!(:message),
+              body: @instance.logs.reverse.detect{ |log| log.level == 'WARN' }.try!(:message),
             )
           end
         end

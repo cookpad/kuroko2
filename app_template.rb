@@ -27,6 +27,8 @@ default: &default
       webhook_url: 'https://localhost/test/slack'
     hipchat:
       api_token: 'token'
+    webhook:
+      secret_token: '<%= ENV["WEBHOOK_SECRET_TOKEN"] %>'
   api_basic_authentication_applications:
     test_client_name: 'secret_key'
   app_authentication:

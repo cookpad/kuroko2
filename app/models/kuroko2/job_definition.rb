@@ -77,6 +77,7 @@ class Kuroko2::JobDefinition < Kuroko2::ApplicationRecord
     with: /\A#[^\.\s]+\z/, allow_blank: true,
     message: ' must start with # and must not include any dots or spaces'
   }
+  validates :webhook_url, format: { with: /\A#{URI::regexp(%w(http https))}\z/, allow_blank: true }
 
   def proceed_multi_instance?
     tokens = Kuroko2::Token.where(job_definition_id: self.id)
