@@ -29,13 +29,11 @@ module Kuroko2
             end
           else
             definition = JobDefinition.find(@node.option)
-            instance   = definition.job_instances.create
-
-            instance.logs.info("Launched by '##{token.job_definition.id} #{token.job_definition.name}' instance##{token.job_definition.id}/#{token.job_instance.id}.")
+            launched_by = "'##{token.job_definition.id} #{token.job_definition.name}' instance##{token.job_definition.id}/#{token.job_instance.id}"
+            instance = definition.create_instance(launched_by: launched_by)
             token.job_instance.logs.info("(token #{token.uuid}) Launched '##{instance.job_definition.id} #{instance.job_definition.name}' instance##{instance.job_definition.id}/#{instance.id} as a sub process.")
 
             token.context['sub_process_id'] = instance.id
-
             :pass
           end
         rescue ActiveRecord::RecordNotFound
