@@ -9,6 +9,11 @@
 }
 
 .star-holder {
+  a {
+    position: relative;
+    z-index: 10000;
+  }
+
   a:link, a:visited, a:hover, a:active {
     color: #444;
   }

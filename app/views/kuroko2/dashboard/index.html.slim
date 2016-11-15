@@ -35,15 +35,13 @@
                 th Status
                 th Job Definition Name
                 th Started at
-                th &nbsp;
               - for instance in @instances
-                tr
+                tr data-href="#{job_definition_job_instance_path(instance.job_definition, instance)}"
                   td= instance.id
                   td= labeled_status(instance)
                   td.no-decorate= link_to instance.job_definition.name, job_definition_job_instance_path(instance.job_definition, instance)
                   td.nowrap= l(instance.created_at, format: :short)
-                  td
-                    = link_to raw('<i class="fa fa-chevron-right"></i>Details'), job_definition_job_instance_path(instance.job_definition, instance), class: 'btn btn-default btn-xs'
+
       - else
         .box-body
           .text-muted.well.well-sm.no-shadow There are no working jobs.

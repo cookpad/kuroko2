@@ -1,9 +1,17 @@
 jQuery(function ($) {
+  var link_to_table_row = function(){
+    $('tr[data-href]').css("cursor", "pointer").click(function(e){
+      document.location = $(this).data('href');
+    });
+  };
+  link_to_table_row();
+
   var bind_data = function(data) {
     $('#tags').html($(data).find('#tags').html());
     $('#definitions').html($(data).find('#definitions').html());
     $('#pagination').html($(data).find('#pagination').html());
     $('html,body').scrollTop(0);
+    link_to_table_row();
     $.bootstrapSortable();
   };
 
