@@ -100,15 +100,13 @@ module Kuroko2
           message = "(token #{token.uuid}) Marked as 'finished'."
 
           token.job_instance.logs.info(message)
+          Kuroko2.logger.info(message)
           token.mark_as_finished
           unless token.parent
             token.job_instance.touch(:finished_at)
+            Notifier.notify(:finished, token.job_instance)
             token.destroy!
           end
-
-          Kuroko2.logger.info(message)
-
-          Notifier.notify(:finished, token.job_instance)
         end
       end
 
