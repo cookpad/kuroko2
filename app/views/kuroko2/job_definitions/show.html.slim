@@ -19,7 +19,7 @@
 
         h4= 'Tags'
         - for tag in @definition.tags
-          =link_to tag.name, job_definitions_path(tag: [tag.name]), class: 'badge'
+          =link_to tag.name, job_definitions_path(tag: [tag.name]), class: 'label label-default spacer-right-3'
 
         h3= 'Administrator'.pluralize(@definition.admins.count)
         ul.media-list
