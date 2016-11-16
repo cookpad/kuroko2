@@ -26,7 +26,7 @@
           th #
           th.col-md-3 Name
           th.col-md-3 Administrators
-          th.col-md-5 Description
+          th.col-md-5 Tags / Description
           th.col-md-1 &nbsp;
         - for definition in definitions
           tr
@@ -34,14 +34,17 @@
               span.star-holder
                 = star_link_for(definition)
             td= definition.id
-            td.no-decorate= link_to definition.name, definition
+            td.no-decorate= link_to definition.name, definition, class: ''
             td.no-decorate
               - definition.admins.each do |user|
                 = link_to user.name, user_path(user)
                 br
-            td= first_line(definition.description)
             td
-              = link_to raw('<i class="fa fa-chevron-right"></i> View Details'), definition, class: 'btn btn-sm btn-default'
+              - definition.tags.each do |tag|
+                =link_to tag.name, job_definitions_path('tag': [tag.name]), class: 'label label-default spacer-right-3'
+              = first_line(definition.description)
+            td
+              = link_to raw('<i class="fa fa-chevron-right"></i> <span class="small">View Details</span>'), definition, class: 'btn btn-sm btn-default'
   - else
     - if params[:q].present?
       .text-muted.well.well-sm.no-shadow No results found for the query.
