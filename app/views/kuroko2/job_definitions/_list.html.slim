@@ -24,6 +24,10 @@
               =link_to tag.name, root_path('tag': [tag.name]), class: 'label label-default spacer-right-3'
             = first_line(definition.description)
           td
-            = link_to raw('<i class="fa fa-chevron-right"></i> <span class="small">View Details</span>'), definition, class: 'btn btn-sm btn-default'
+            = link_to definition, class: 'btn btn-sm btn-default' do
+              i class="fa fa-chevron-right"
+              | &nbsp;
+              span class="small" View Details
+
 - else
   .text-muted.well.well-sm.no-shadow There are no favorite job definitions.
