@@ -2,7 +2,7 @@ class Kuroko2::JobDefinitionsController < Kuroko2::ApplicationController
   before_action :set_definition, only: [:show, :edit, :update, :destroy]
 
   def index
-    rel = Kuroko2::JobDefinition
+    rel = Kuroko2::JobDefinition.joins(:admins).includes(:tags, :job_instances, :job_schedules, :admins)
     query = query_params[:q]
 
     if query.present?
