@@ -72,15 +72,21 @@ RSpec.describe "Users management", type: :feature do
 
       expect(page).to have_content(common_tag)
 
-      click_on(common_tag)
+      within '#tags' do
+        click_on(common_tag)
+      end
       wait_for_ajax
       expect(page).to have_selector('#definitions_list table tbody tr', count: 10)
 
-      click_on("tag_1")
+      within '#tags' do
+        click_on("tag_1")
+      end
       wait_for_ajax
       expect(page).to have_selector('#definitions_list table tbody tr', count: 1)
 
-      click_on("tag_1")
+      within '#tags' do
+        click_on("tag_1")
+      end
       wait_for_ajax
       expect(page).to have_selector('#definitions_list table tbody tr', count: 10)
     end
