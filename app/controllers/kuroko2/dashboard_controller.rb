@@ -1,6 +1,6 @@
 class Kuroko2::DashboardController < Kuroko2::ApplicationController
   def index
-    @definitions = current_user.job_definitions
+    @definitions = current_user.job_definitions.includes(:tags, :job_instances, :job_schedules)
 
     @input_tags  = params[:tag] || []
     if @input_tags.present?

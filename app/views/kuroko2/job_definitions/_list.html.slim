@@ -21,7 +21,7 @@
           td= labeled_status(definition.job_instances.take)
           td
             - definition.tags.each do |tag|
-              =link_to tag.name, root_path('tag': [tag.name]), class: 'label label-default spacer-right-3'
+              =link_to tag.name, { 'tag': [tag.name] }, class: 'label label-default spacer-right-3'
             = first_line(definition.description)
           td
             = link_to definition, class: 'btn btn-sm btn-default' do
