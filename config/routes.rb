@@ -32,6 +32,8 @@ Kuroko2::Engine.routes.draw do
     get :dataset, action: :dataset, on: :collection, defaults: { format: 'json' }
   end
 
+  resources :tags, only: %i(destroy)
+
   get '/sign_in', to: 'sessions#new', as: 'sign_in'
   delete '/sign_out', to: 'sessions#destroy', as: 'sign_out'
 

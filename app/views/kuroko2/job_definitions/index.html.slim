@@ -8,4 +8,4 @@
 
   .col-md-3
     .box#tags
-      = render 'taglist', { input_tags: @input_tags, related_tags: @related_tags, add_params: { q: params[:q] } }
+      = render 'kuroko2/shared/taglist', { input_tags: @input_tags, related_tags: @related_tags, add_params: { q: params[:q] } }

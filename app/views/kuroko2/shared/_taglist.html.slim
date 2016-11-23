@@ -1,0 +1,19 @@
+- add_params = {} if add_params.nil?
+.box-header
+  h2.box-title
+    i.fa.fa-tags
+      ' Tags
+#tag_list.box-body.table-responsive
+  ul.list-inline
+    - related_tags.each do |tag|
+      li
+        - if input_tags.include?(tag.name)
+          span.label.label-primary.js-narrow-tag
+            =link_to tag_path(tag), class: 'delete-tag', method: :delete, data: { confirm: "Are you sure to delete '#{tag.name}' ?" } do
+              i.fa.fa-remove
+            =link_to tag.name, add_params.to_h.merge({ tag: input_tags - [tag.name] }), data: { remote: "true" }
+        - else
+          span.label.label-default.js-narrow-tag
+            =link_to tag_path(tag), class: 'delete-tag', method: :delete, data: { confirm: "Are you sure to delete '#{tag.name}' ?" } do
+              i.fa.fa-remove
+            =link_to tag.name, add_params.to_h.merge({ tag: [tag.name] | input_tags }), data: { remote: "true" }

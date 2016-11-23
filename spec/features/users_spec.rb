@@ -91,6 +91,17 @@ RSpec.describe "Users management", type: :feature do
       expect(page).to have_selector('#definitions_list table tbody tr', count: 10)
     end
 
+    it 'deletes a tag' do
+      visit kuroko2.user_path(user.id)
+
+      within '#tags' do
+        page.find('#tag_list li:nth-child(2) .delete-tag').click
+      end
+
+      expect(page).not_to have_content('tag_0')
+      expect(page).to have_selector('#tag_list ul li', count: 10)
+    end
+
     context 'if the favorite job is working' do
       before do
         user.assigned_job_definitions.first.job_instances.create
