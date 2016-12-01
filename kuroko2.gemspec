@@ -18,7 +18,6 @@ Gem::Specification.new do |s|
   s.test_files = Dir["spec/**/*"]
 
   s.add_dependency "rails", ">= 5.0.0.1"
-  s.add_dependency "mysql2"
   s.add_dependency "kaminari"
   s.add_dependency "chrono"
   s.add_dependency "hashie"
@@ -55,6 +54,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'the_garage'
   s.add_dependency 'weak_parameters'
 
+  s.add_development_dependency "mysql2"
   s.add_development_dependency "rspec-rails"
   s.add_development_dependency "factory_girl_rails"
   s.add_development_dependency 'capybara'
