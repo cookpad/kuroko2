@@ -19,8 +19,8 @@ class Kuroko2::JobInstancesController < Kuroko2::ApplicationController
   end
 
   def show
-    @logs   = @instance.logs
-    @tokens = @instance.tokens
+    @logs   = @instance.logs.order(:id)
+    @tokens = @instance.tokens.order(:id)
 
     if params[:mode] == :naked
       render partial: 'instance', layout: false
