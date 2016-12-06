@@ -14,12 +14,12 @@ class Kuroko2::TokensController < Kuroko2::ApplicationController
   def update
     @instance = @token.job_instance
 
-    case params[:invoke]
-    when 'skip'
+    case
+    when params[:invoke] == 'skip' && @token.skippable?
       @instance.logs.info("Skipped by #{current_user.name}.")
 
       @engine.skip(@token)
-    when 'retry'
+    when params[:invoke] == 'retry' && @token.retryable?
       @instance.logs.info("Retry by #{current_user.name}.")
 
       @engine.retry(@token)

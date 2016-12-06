@@ -51,4 +51,42 @@ describe Kuroko2::Token do
 
     end
   end
+
+  describe "#skippable?" do
+    subject! { create(:token, status: status) }
+
+    context 'When token is failure status' do
+      let(:status) { Kuroko2::Token::FAILURE }
+      it { is_expected.to be_skippable }
+    end
+
+    context 'When token is waiting status' do
+      let(:status) { Kuroko2::Token::WAITING }
+      it { is_expected.to be_skippable }
+    end
+
+    context 'When token is working status' do
+      let(:status) { Kuroko2::Token::WORKING }
+      it { is_expected.not_to be_skippable }
+    end
+  end
+
+  describe "#retryable?" do
+    subject! { create(:token, status: status) }
+
+    context 'When token is failure status' do
+      let(:status) { Kuroko2::Token::FAILURE }
+      it { is_expected.to be_retryable }
+    end
+
+    context 'When token is waiting status' do
+      let(:status) { Kuroko2::Token::WAITING }
+      it { is_expected.not_to be_retryable }
+    end
+
+    context 'When token is working status' do
+      let(:status) { Kuroko2::Token::WORKING }
+      it { is_expected.not_to be_retryable }
+    end
+  end
 end

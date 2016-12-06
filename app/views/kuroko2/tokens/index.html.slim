@@ -21,14 +21,14 @@
                                     params: { invoke: 'retry' },
                                     class: 'btn btn-default btn-block btn-xs',
                                     role: 'button',
-                                    disabled: !token.failure?)
+                                    disabled: !token.retryable?)
                 td.col-md-3= button_to('Skip',
                                     job_definition_job_instance_token_path(job_definition_id: @definition.id, job_instance_id: @instance.id, id: token.id),
                                     method: :patch,
                                     params: { invoke: 'skip' },
                                     class: 'btn btn-default btn-block btn-xs',
                                     role: 'button',
-                                    disabled: !token.failure?,
+                                    disabled: !token.skippable?,
                                     data: { confirm: 'Continue executing job script? If not, use "Cancel" button.' })
               - if (execution = token.execution)
                 tr
