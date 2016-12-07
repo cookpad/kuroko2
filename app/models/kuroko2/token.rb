@@ -90,6 +90,14 @@ class Kuroko2::Token < Kuroko2::ApplicationRecord
     end
   end
 
+  def skippable?
+    failure? || waiting?
+  end
+
+  def retryable?
+    failure?
+  end
+
   private
 
   def set_default_values
