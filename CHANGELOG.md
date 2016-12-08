@@ -1,3 +1,20 @@
+## v0.3.0
+
+- To skippable waiting tokens https://github.com/cookpad/kuroko2/pull/27
+- Remove mysql2 from runtime dependency https://github.com/cookpad/kuroko2/pull/26
+- Job instance logs should be ordered https://github.com/cookpad/kuroko2/pull/25
+- Kill n+1 queries and fix tag links https://github.com/cookpad/kuroko2/pull/22
+- Display tags https://github.com/cookpad/kuroko2/pull/21
+- Support webhook notification https://github.com/cookpad/kuroko2/pull/16
+- Display seconds in Logs/Execution Logs timestamp https://github.com/cookpad/kuroko2/pull/18
+- Always define end_time for job limelines https://github.com/cookpad/kuroko2/pull/17
+- Fix sub_process task linker https://github.com/cookpad/kuroko2/pull/15
+- Change `Notify success event to Slack/Hipchat` option to `Notify all event to Slack/Hipchat` https://github.com/cookpad/kuroko2/pull/8 https://github.com/cookpad/kuroko2/pull/19
+- Add example systemd unit files https://github.com/cookpad/kuroko2/pull/14
+- Convert scheduled times into AS::TimeWithZone https://github.com/cookpad/kuroko2/pull/13
+- Fix queue validation https://github.com/cookpad/kuroko2/pull/12
+- Add users_controller#edit https://github.com/cookpad/kuroko2/pull/9
+
 ## v0.2.3
 - Fix Kuroko2::JobDefinition.search_by https://github.com/cookpad/kuroko2/pull/11
 - Validate hd parameter if configured https://github.com/cookpad/kuroko2/pull/10
