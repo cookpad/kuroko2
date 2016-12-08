@@ -1,3 +1,7 @@
+## v0.3.1
+
+- Do not include `job_instances` https://github.com/cookpad/kuroko2/pull/28
+
 ## v0.3.0
 
 - To skippable waiting tokens https://github.com/cookpad/kuroko2/pull/27
