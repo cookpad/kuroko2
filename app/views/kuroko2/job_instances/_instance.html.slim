@@ -37,6 +37,6 @@
   .box-footer
     .row
       #cancel-button.col-md-4.col-md-offset-8
-        = link_to 'Cancel', job_definition_job_instance_path(@definition, @instance), class: 'btn btn-default btn-block', role: 'button', method: :delete, disabled: !@instance.cancelable?
+        = link_to 'Cancel', job_definition_job_instance_path(@definition, @instance), class: 'btn btn-default btn-block', role: 'button', method: :delete, disabled: !@instance.cancelable?, data: { confirm: 'Are you sure?' }
       #force-cancel-button.col-md-4.col-md-offset-8.display-none
         = link_to 'Force Cancel', force_destroy_job_definition_job_instance_path(@definition, @instance), class: 'btn btn-danger btn-block', role: 'button', method: :delete, disabled: !@instance.working?
