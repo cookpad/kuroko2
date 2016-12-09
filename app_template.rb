@@ -8,6 +8,10 @@ gsub_file 'config/database.yml', "encoding: utf8", "encoding: utf8mb4"
 
 gem 'kuroko2'
 
+gem_group :development do
+  gem 'foreman'
+end
+
 route 'mount Kuroko2::Engine => "/"'
 
 create_file "config/kuroko2.yml", <<-EOF
