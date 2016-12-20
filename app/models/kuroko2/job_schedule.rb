@@ -71,7 +71,7 @@ class Kuroko2::JobSchedule < Kuroko2::ApplicationRecord
   end
 
   def self.launch_scheduled_jobs!(time_from, time_to)
-    find_each do |schedule|
+    includes(job_definition: :job_suspend_schedules).find_each do |schedule|
       definition = schedule.job_definition
       suspend_times = schedule.suspend_times(time_from, time_to)
 
