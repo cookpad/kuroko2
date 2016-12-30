@@ -1,7 +1,7 @@
 doctype html
 html
   head
-    title #{@title} « Kuroko 2
+    title #{yield(:title)} « Kuroko 2
     meta charset='UTF-8'
     meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'
     link rel='icon' href='/favicon.ico'
@@ -63,7 +63,7 @@ html
 
       aside.right-side
         section.content-header
-          h1= raw(@content_title || @title)
+          h1= yield(:content_title).presence || yield(:title)
           = yield :breadcrumb
         section.content
           .container-fluid

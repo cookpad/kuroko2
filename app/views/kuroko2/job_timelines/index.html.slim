@@ -1,6 +1,9 @@
-- @title = "Job Timelines"
-- @content_title = "<i class=\"fa fa-clock-o\"></i> #{@user.name}'s Job Timelines"
-- @content_title << " tagged by #{params[:tag].join(',')}" if params[:tag].present?
+- content_for :title, "Job Timelines"
+- content_for :content_title do
+  - if params[:tag].present?
+    <i class="fa fa-clock-o"></i> #{@user.name}'s Job Timelines tagged by #{params[:tag].join(', ')}
+  - else
+    <i class="fa fa-clock-o"></i> #{@user.name}'s Job Timelines
 
 .row
   .col-md-12

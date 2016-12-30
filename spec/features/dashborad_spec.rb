@@ -20,6 +20,9 @@ RSpec.describe "User shows dashboard", type: :feature do
       expect(page).to have_selector('#definitions_list table tbody tr', count: 1)
 
       expect(page).to have_content('There are no working jobs.')
+      expect(page).to have_title('Dashboard « Kuroko 2')
+      expect(page).to have_selector('i.fa.fa-dashboard', text: '')
+      expect(page).to have_selector('h1', text: /Dashboard/)
     end
 
     context 'if the favorite job is working' do
