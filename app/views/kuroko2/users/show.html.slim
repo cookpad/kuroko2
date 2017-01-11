@@ -1,5 +1,6 @@
-- @title = "#{@user.name} « Users"
-- @content_title = "<i class='fa fa-user'></i> User Details"
+- content_for :title, "#{@user.name} « Users"
+- content_for :content_title do
+  <i class="fa fa-user"></i> User Details
 
 - content_for :breadcrumb do
   ol.breadcrumb

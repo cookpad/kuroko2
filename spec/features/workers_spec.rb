@@ -24,6 +24,9 @@ RSpec.describe "Show list of workers", type: :feature do
     visit kuroko2.workers_path
     expect(page).to have_selector('#workers table tbody tr', count: 2)
     expect(page).not_to have_content('echo Hello!')
+    expect(page).to have_title('Kuroko Workers « Kuroko 2')
+    expect(page).to have_selector('i.fa.fa-rocket', text: '')
+    have_selector('h1', text: /Kuroko Workers/)
 
     worker.update_column(:execution_id, token.execution.id)
 
