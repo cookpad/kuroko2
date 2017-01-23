@@ -13,6 +13,10 @@ $ rails new your_kuroko2_application --database=mysql --skip-turbolinks --skip-j
 
 And edits "config/kuroko2.yml"
 
+## Documentation
+
+Documentation is available at [docs/index.md](docs/index.md).
+
 ## Authors
 
 - Naoto Takai
