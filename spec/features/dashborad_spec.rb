@@ -88,5 +88,16 @@ RSpec.describe "User shows dashboard", type: :feature do
       wait_for_ajax
       expect(page).to have_selector('#definitions_list table tbody tr', count: 10)
     end
+
+    it 'deletes a tag' do
+      visit kuroko2_path
+
+      within '#tags' do
+        page.find('#tag_list li:nth-child(2) .delete-tag').click
+      end
+
+      expect(page).not_to have_content('tag_0')
+      expect(page).to have_selector('#tag_list ul li', count: 10)
+    end
   end
 end

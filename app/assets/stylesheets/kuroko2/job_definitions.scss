@@ -17,3 +17,15 @@
 .script-input {
   font-family: 'Inconsolata';
 }
+
+#tags {
+  ul {
+    a {
+      color: white;
+    }
+
+    .delete-tag {
+      margin-right: 7px;
+    }
+  }
+}
