@@ -105,8 +105,7 @@ module Kuroko2
             link_names: 1,
             attachments: [
               {
-                pretext: "[#{level}] #{text}",
-                title: "##{@definition.id} #{@definition.name}",
+                title: "[#{level}] #{text}",
                 title_link: message_builder.job_instance_path,
                 text: body,
                 fallback: "[#{level}] #{text} #{message_builder.job_instance_path}",
