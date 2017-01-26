@@ -57,7 +57,7 @@ module Kuroko2
         definition = Kuroko2::JobDefinition.find_by(id: $1.to_i)
         if definition.present?
           definition_names << definition.name
-          link_to(option, Kuroko2::Engine.routes.url_helpers.job_definition_path(definition.id))
+          link_to(option, job_definition_path(definition.id))
         else
           option
         end
@@ -73,7 +73,7 @@ module Kuroko2
       if definition.present?
         formatted_line = link_to(
           line.chomp,
-          Kuroko2::Engine.routes.url_helpers.job_definition_path(definition.id),
+          job_definition_path(definition.id),
         )
 
         formatted_line << " "

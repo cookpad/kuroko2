@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe Kuroko2::JobDefinitionsHelper do
+  include Kuroko2::Engine.routes.url_helpers
+
   describe '#first_line' do
     subject { first_line(text) }
 
