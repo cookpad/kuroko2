@@ -3,6 +3,7 @@ module Kuroko2
     module Task
       class Wait < Base
         PERIODS = %w(hourly daily weekly monthly)
+        OPTION_REGEXP = %r!(\d+)\s*/\s*(#{PERIODS.join('|')})!
 
         def execute
           if token.context['WAIT'].present?
@@ -67,7 +68,7 @@ module Kuroko2
           wait_option = { "jobs" => [], "timeout" => 60.minutes.to_i / 1.minute }
           scanner = StringScanner.new(option)
           until scanner.eos?
-            if scanner.scan(%r!(\d+)\s*/\s*(#{PERIODS.join('|')})!)
+            if scanner.scan(OPTION_REGEXP)
               start_from, start_to = period_to_time(scanner[2], at: start_at)
               wait_option["jobs"] << {
                 "job_definition_id" => parse_definition_id(scanner[1]),

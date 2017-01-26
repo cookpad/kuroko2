@@ -39,4 +39,21 @@ describe Kuroko2::JobDefinitionsHelper do
     it { is_expected.to match %r(LGTM) }
   end
 
+  describe "#format_kuroko_script" do
+    subject { format_kuroko_script(text) }
+    let(:definition1) { create(:job_definition) }
+    let(:definition2) { create(:job_definition) }
+    let(:definition3) { create(:job_definition) }
+
+    let(:text) do
+      <<-EOF.strip_heredoc
+        wait: #{definition1.id}/daily #{definition2.id}/daily timeout=100
+        sub_process: #{definition3.id}
+      EOF
+    end
+
+    it do
+      expect(subject).to eq("wait: <a href=\"/definitions/#{definition1.id}\">#{definition1.id}/daily</a> <a href=\"/definitions/#{definition2.id}\">#{definition2.id}/daily</a> timeout=100 <span class=\"note\"># #{definition1.name}, #{definition2.name}</span>\n<a href=\"/definitions/#{definition3.id}\">sub_process: #{definition3.id}</a> <span class=\"note\"># #{definition3.name}</span>\n")
+    end
+  end
 end
