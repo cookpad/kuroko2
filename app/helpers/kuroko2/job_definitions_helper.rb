@@ -36,22 +36,20 @@ module Kuroko2
     end
 
     def format_kuroko_script(script_text)
-      raw(
-        script_text.each_line.map { |line|
-          formatted_line = ERB::Util.html_escape(line)
+      script_text.each_line.map { |line|
+        formatted_line = ERB::Util.html_escape(line)
 
-          if (matched = Kuroko2::Workflow::ScriptParser::LINE_REGEXP.match(line.chomp))
-            case matched[:type]
-            when 'wait'
-              formatted_line = format_wait_task(line, matched)
-            when 'sub_process'
-              formatted_line = format_sub_process_task(line, matched)
-            end
+        if (matched = Kuroko2::Workflow::ScriptParser::LINE_REGEXP.match(line.chomp))
+          case matched[:type]
+          when 'wait'
+            formatted_line = format_wait_task(line, matched)
+          when 'sub_process'
+            formatted_line = format_sub_process_task(line, matched)
           end
+        end
 
-          formatted_line
-        }.join('')
-      )
+        formatted_line
+      }.join('').html_safe
     end
 
     private
