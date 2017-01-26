@@ -53,7 +53,10 @@ describe Kuroko2::JobDefinitionsHelper do
     end
 
     it do
-      expect(subject).to eq("wait: <a href=\"/definitions/#{definition1.id}\">#{definition1.id}/daily</a> <a href=\"/definitions/#{definition2.id}\">#{definition2.id}/daily</a> timeout=100 <span class=\"note\"># #{definition1.name}, #{definition2.name}</span>\n<a href=\"/definitions/#{definition3.id}\">sub_process: #{definition3.id}</a> <span class=\"note\"># #{definition3.name}</span>\n")
+      expect(subject).to eq(<<-HTML.strip_heredoc)
+        wait: <a href=\"/definitions/#{definition1.id}\">#{definition1.id}/daily</a> <a href=\"/definitions/#{definition2.id}\">#{definition2.id}/daily</a> timeout=100 <span class=\"note\"># #{definition1.name}, #{definition2.name}</span>
+        <a href=\"/definitions/#{definition3.id}\">sub_process: #{definition3.id}</a> <span class=\"note\"># #{definition3.name}</span>
+      HTML
     end
   end
 end
