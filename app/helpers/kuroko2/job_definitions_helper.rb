@@ -59,7 +59,7 @@ module Kuroko2
           definition_names << definition.name
           link_to(option, job_definition_path(definition.id))
         else
-          option
+          ERB::Util.html_escape(option)
         end
       }.chomp
 
