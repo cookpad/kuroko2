@@ -29,7 +29,7 @@
                 img.img-rounded src="#{admin.image}" height='20' width='20'
               .media-body.no-decorate= link_to admin.name, user_path(admin)
         h3 Script
-        pre.kuroko-script #{@definition.script}
+        pre.kuroko-script= format_kuroko_script(@definition.script)
 
         'API execution allowed: #{@definition.api_allowed ? 'Yes' : 'No'}
 

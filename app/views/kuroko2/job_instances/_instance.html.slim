@@ -33,7 +33,7 @@
         th Error at
         td= @instance.error_at || '-'
     h4 Script
-    pre.kuroko-script= @instance.script
+    pre.kuroko-script= format_kuroko_script(@instance.script)
   .box-footer
     .row
       #cancel-button.col-md-4.col-md-offset-8
