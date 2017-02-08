@@ -84,3 +84,4 @@ $ foreman start
 # Resources & links
 
 * [クックパッドのジョブ管理システム kuroko2 の紹介 - クックパッド開発者ブログ (In Japanese)](http://techlife.cookpad.com/entry/2015/12/07/195732)
+* [The Design Philosophy of Kuroko2 by Naoto Takai](https://speakerdeck.com/takai/the-design-philosophy-of-kuroko2)
