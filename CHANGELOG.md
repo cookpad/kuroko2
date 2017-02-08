@@ -1,3 +1,14 @@
+## v0.3.2
+
+- Change kuroko script formatter to rails helper and expand definition name if needed https://github.com/cookpad/kuroko2/pull/37
+- To simplify slack messages https://github.com/cookpad/kuroko2/pull/36
+- Link to docs/index.md https://github.com/cookpad/kuroko2/pull/35
+- Refactor configurations https://github.com/cookpad/kuroko2/pull/34
+- Make use content_for method https://github.com/cookpad/kuroko2/pull/33
+- Kill n+1 queries  https://github.com/cookpad/kuroko2/pull/32
+- Add foreman to development dependency gem list https://github.com/cookpad/kuroko2/pull/30
+- Add confirmation dialog when to cancel failed job instance https://github.com/cookpad/kuroko2/pull/29
+
 ## v0.3.1
 
 - Do not include `job_instances` https://github.com/cookpad/kuroko2/pull/28
