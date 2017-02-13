@@ -3,11 +3,24 @@
 
 jQuery(function ($) {
   var logIntervalId;
+  var notifyIfNeeded = function (status, name) {
+    if (Notification.permission === 'granted' && Cookies.get('notification') === 'on') {
+      var notification = new Notification(
+        "[" + status + "] " + name,
+        {"icon": window.location.origin + "/assets/kuroko2/kuroko-logo-" + status.toLowerCase() + ".png"}
+      );
+      notification.onclick = function () {
+        notification.close();
+        window.focus();
+      };
+    }
+  };
   var updateInstance = function () {
     var instancePath = $('#instance').data("instance-path");
 
     $.get(instancePath, function (data) {
       $('#instance').replaceWith(data);
+      notifyIfNeeded($('#instance-status').text(), $('#definition-name').text());
     });
   };
   var updateLogs = function () {

@@ -31,6 +31,9 @@ html
               img.img-circle src='#{current_user.image}' alt="#{current_user.name}"
             .pull-left.info
               p Hello, #{current_user.name}
+              p#notification
+                i.fa.fa-volume-off
+                |  Turn on notification
           ul.sidebar-menu
             li class=('active' if controller_name == 'dashboard')
               = link_to raw('<i class="fa fa-dashboard"></i> Dashboard'), root_path
