@@ -40,6 +40,10 @@ jQuery(function ($) {
   }
 
   $('#notification').click(function (e) {
+    if (!('Notification' in window)) {
+      return;
+    }
+
     if (Notification.permission === 'default') {
       Notification.requestPermission(function (permission) {
         if (permission === "granted") {
@@ -57,5 +61,7 @@ jQuery(function ($) {
     }
   });
 
-  showNotificationStatus();
+  if ('Notification' in window) {
+    showNotificationStatus();
+  }
 });

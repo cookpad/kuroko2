@@ -4,6 +4,10 @@
 jQuery(function ($) {
   var logIntervalId;
   var notifyIfNeeded = function (status, name) {
+    if (!('Notification' in window)) {
+      return;
+    }
+
     if (Notification.permission === 'granted' && Cookies.get('notification') === 'on') {
       var notification = new Notification(
         "[" + status + "] " + name,
