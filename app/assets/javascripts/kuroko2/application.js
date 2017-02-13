@@ -1,6 +1,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require ./bootstrap
+//= require ./js.cookie.js
 //= stub kuroko2/instance_linker
 //= require_tree
 //= require moment
