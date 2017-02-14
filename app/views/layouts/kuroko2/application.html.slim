@@ -31,7 +31,7 @@ html
               img.img-circle src='#{current_user.image}' alt="#{current_user.name}"
             .pull-left.info
               p Hello, #{current_user.name}
-              p#notification
+              p#notification data-success='#{asset_url('kuroko2/kuroko-logo-success.png')}' data-error='#{asset_url('kuroko2/kuroko-logo-error.png')}'
                 i.fa.fa-volume-off
                 |  Turn on notification
           ul.sidebar-menu

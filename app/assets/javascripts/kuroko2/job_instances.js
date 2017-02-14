@@ -3,16 +3,13 @@
 
 jQuery(function ($) {
   var logIntervalId;
-  var notifyIfNeeded = function (status, name) {
+  var notifyIfNeeded = function (status, name, image) {
     if (!('Notification' in window)) {
       return;
     }
 
     if (Notification.permission === 'granted' && Cookies.get('notification') === 'on') {
-      var notification = new Notification(
-        "[" + status + "] " + name,
-        {"icon": window.location.origin + "/assets/kuroko2/kuroko-logo-" + status.toLowerCase() + ".png"}
-      );
+      var notification = new Notification("[" + status + "] " + name, {"icon": image[status.toLowerCase()]});
       notification.onclick = function () {
         notification.close();
         window.focus();
@@ -24,7 +21,7 @@ jQuery(function ($) {
 
     $.get(instancePath, function (data) {
       $('#instance').replaceWith(data);
-      notifyIfNeeded($('#instance-status').text(), $('#definition-name').text());
+      notifyIfNeeded($('#instance-status').text(), $('#definition-name').text(), $('#notification').data());
     });
   };
   var updateLogs = function () {
