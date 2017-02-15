@@ -3,11 +3,25 @@
 
 jQuery(function ($) {
   var logIntervalId;
+  var notifyIfNeeded = function (status, name, image) {
+    if (!('Notification' in window)) {
+      return;
+    }
+
+    if (Notification.permission === 'granted' && Cookies.get('notification') === 'on') {
+      var notification = new Notification("[" + status + "] " + name, {"icon": image[status.toLowerCase()]});
+      notification.onclick = function () {
+        notification.close();
+        window.focus();
+      };
+    }
+  };
   var updateInstance = function () {
     var instancePath = $('#instance').data("instance-path");
 
     $.get(instancePath, function (data) {
       $('#instance').replaceWith(data);
+      notifyIfNeeded($('#instance-status').text(), $('#definition-name').text(), $('#notification').data());
     });
   };
   var updateLogs = function () {
