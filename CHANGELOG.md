@@ -1,3 +1,7 @@
+## v0.3.3
+
+- Allow user to receive notification [#39](https://github.com/cookpad/kuroko2/pull/39)
+
 ## v0.3.2
 
 - Change kuroko script formatter to rails helper and expand definition name if needed [#37](https://github.com/cookpad/kuroko2/pull/37)
