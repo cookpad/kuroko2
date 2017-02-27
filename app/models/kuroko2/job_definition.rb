@@ -25,13 +25,7 @@ class Kuroko2::JobDefinition < Kuroko2::ApplicationRecord
 
   has_many :admin_assignments, dependent: :destroy
   has_many :admins, -> { active }, through: :admin_assignments, source: :user
-  has_many :job_instances, -> { order(:id).reverse_order } do
-    def any_token?
-      self.any? do |instance|
-        instance.tokens.present?
-      end
-    end
-  end
+  has_many :job_instances, -> { order(:id).reverse_order }
   has_many :job_schedules, dependent: :delete_all
   has_many :job_suspend_schedules, dependent: :delete_all
   has_many :job_definition_tags
@@ -107,7 +101,7 @@ class Kuroko2::JobDefinition < Kuroko2::ApplicationRecord
   private
 
   def confirm_active_instances
-    if job_instances.any_token?
+    if Kuroko2::Token.joins(:job_instance).merge(job_instances).exists?
       errors.add(:base, I18n.t('model.job_definition.confirm_active_instances'))
       throw :abort
     end
