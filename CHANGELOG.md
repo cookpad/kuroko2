@@ -1,3 +1,7 @@
+## v0.3.4
+
+- Kill n+1 queries [#41][https://github.com/cookpad/kuroko2/pull/41]
+
 ## v0.3.3
 
 - Allow user to receive notification [#39](https://github.com/cookpad/kuroko2/pull/39)
