@@ -25,13 +25,7 @@ class Kuroko2::JobDefinition < Kuroko2::ApplicationRecord
 
   has_many :admin_assignments, dependent: :destroy
   has_many :admins, -> { active }, through: :admin_assignments, source: :user
-  has_many :job_instances, -> { order(:id).reverse_order } do
-    def any_token?
-      self.any? do |instance|
-        instance.tokens.present?
-      end
-    end
-  end
+  has_many :job_instances, -> { order(:id).reverse_order }
   has_many :job_schedules, dependent: :delete_all
   has_many :job_suspend_schedules, dependent: :delete_all
   has_many :job_definition_tags
