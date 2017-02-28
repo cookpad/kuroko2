@@ -3,6 +3,22 @@ require 'rails_helper'
 describe Kuroko2::JobDefinition do
   let!(:definition) { create(:job_definition_with_instances) }
 
+  describe '.tagged_by' do
+    let(:tag_a) { build(:tag, name: 'tag_a') }
+    let(:tag_b) { build(:tag, name: 'tag_b') }
+    let(:tag_c) { create(:tag, name: 'tag_c') }
+
+    before do
+      definition.tags << tag_a
+      definition.tags << tag_b
+    end
+
+    it 'returns definitions which have all specified tags' do
+      expect(Kuroko2::JobDefinition.tagged_by(['tag_a', 'tag_b']).first).to eq(definition)
+      expect(Kuroko2::JobDefinition.tagged_by(['tag_a', 'tag_b', 'tag_c'])).to be_empty
+    end
+  end
+
   describe '#destroy' do
     subject { definition.destroy }
 
