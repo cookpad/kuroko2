@@ -17,8 +17,10 @@ class Kuroko2::User < Kuroko2::ApplicationRecord
   has_many :admin_assignments, dependent: :restrict_with_error
   has_many :assigned_job_definitions, through: :admin_assignments, source: :job_definition
 
-  validates :name, uniqueness: { case_sensitive: false} , presence: true
-  validates :email, uniqueness: { case_sensitive: false}, presence: true
+  validates_presence_of :name
+  validates_presence_of :email
+  validates_uniqueness_of :name,  case_sensitive: false, unless: :google_account?
+  validates_uniqueness_of :email, case_sensitive: false, unless: :google_account?
 
   before_create :set_gravatar_image
 
