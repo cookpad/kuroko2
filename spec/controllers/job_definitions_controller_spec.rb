@@ -42,7 +42,7 @@ describe Kuroko2::JobDefinitionsController do
 
   describe '#create' do
     subject! do
-      post :create, params: { job_definition: { name: 'Job Definition', description: 'This is description', script: "noop:\n" } }
+      post :create, params: { job_definition: { name: 'Job Definition', description: 'This is description', script: "noop:\n" }, admin_assignments: { user_id: [controller.current_user] } }
     end
 
     it do

@@ -34,11 +34,12 @@ class Kuroko2::JobDefinitionsController < Kuroko2::ApplicationController
 
   def new
     @definition = Kuroko2::JobDefinition.new
+    @definition.admins << current_user
   end
 
   def create
     @definition = Kuroko2::JobDefinition.new(definition_params)
-    @definition.admins << current_user
+    @definition.admins = Kuroko2::User.active.with(admin_id_params)
 
     if @definition.save
       current_user.stars.create(job_definition: @definition)
@@ -77,9 +78,9 @@ class Kuroko2::JobDefinitionsController < Kuroko2::ApplicationController
 
   def admin_id_params
     params.require(:admin_assignments).permit(user_id: []).
-      try(:[], :user_id).
-      try(:reject!, &:blank?).
-      try(:map, &:to_i) || []
+      try!(:[], :user_id).
+      try!(:reject, &:blank?).
+      try!(:map, &:to_i) || []
   end
 
   def definition_params
