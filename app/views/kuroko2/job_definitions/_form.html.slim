@@ -9,17 +9,9 @@
       = form.text_area :description, class: 'form-control', rows: 10
     .form-group
       label Administrators
-      - if @definition.new_record?
-        ul.media-list
-          li.media
-            span.pull-left
-              img.img-rounded src="#{current_user.image}" height='20' width='20'
-            .media-body
-              = current_user.name
-      - else
-        = collection_select(:admin_assignments, :user_id, Kuroko2::User.active.order(:name).all, :id, :name,
-                            { selected: @definition.admins.map(&:id), include_blank: false },
-                            { multiple: true, class: 'form-control' })
+      = collection_select(:admin_assignments, :user_id, Kuroko2::User.active.order(:name).all, :id, :name,
+                          { selected: @definition.admins.map(&:id), include_blank: false },
+                          { multiple: true, class: 'form-control' })
 
     .form-group
       = form.label :script
