@@ -8,6 +8,7 @@ module Kuroko2
         sequence:              Task::Sequence,
         auto_skip_error:       Task::AutoSkipError,
         fork:                  Task::Fork,
+        parallel_fork:         Task::ParallelFork,
         env:                   Task::Env,
         execute:               Task::Execute,
         queue:                 Task::Queue,
