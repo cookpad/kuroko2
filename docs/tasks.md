@@ -59,6 +59,23 @@ fork:
   execute: say -v "Victoria"" "I'm Victoria"
 ```
 
+## parallel_fork
+
+`parallel_fork` task applies its child branches the specified number of times in parallel,
+and adds the enviroment value `KUROKO2_PARALLEL_FORK_INDEX` and `KUROKO2_PARALLEL_FORK_SIZE` automatically.
+
+**Option**
+
+A number of parallel size.
+
+**Example**
+
+```
+parallel_fork: 5
+  execute: sleep $KUROKO2_PARALLEL_INDEX
+  execute: echo $KUROKO2_PARALLEL_FORK_INDEX $KUROKO2_PARALLEL_FORK_SIZE
+```
+
 ## noop
 
 `noop` does nothing. This is a task for test purpose.

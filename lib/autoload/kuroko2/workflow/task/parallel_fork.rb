@@ -2,7 +2,7 @@ module Kuroko2
   module Workflow
     module Task
       class ParallelFork < Fork
-        def vallidate
+        def validate
           super
           raise Workflow::AssertionError, "ParallelFork must have a parallel size (Int)" unless option.present? && option.match(/\A\d+\z/)
         end
