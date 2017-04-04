@@ -9,18 +9,8 @@ module Kuroko2
 
             token.job_instance.logs.info(message)
             Kuroko2.logger.info(message)
+            extract_child_nodes
 
-            node.children.each do |child|
-              attributes = token.attributes.except('id', 'uuid', 'script', 'path', 'message', 'created_at', 'updated_at')
-              attributes = attributes.merge(uuid: SecureRandom.uuid, parent: token, script: child.to_script, path: '/')
-
-              Token.create!(attributes).tap do |created|
-                message = "(token #{created.uuid}) New token are created for #{node.path}"
-                created.job_instance.logs.info(message)
-
-                Kuroko2.logger.info(message)
-              end
-            end
             :pass
           elsif children.all?(&:finished?)
             message = "(token #{token.uuid}) All children are finished."
@@ -36,7 +26,27 @@ module Kuroko2
 
         def validate
           if node.children.empty?
-            raise Workflow::AssertionError, "Fork must have children node"
+            raise Workflow::AssertionError, "#{self.class} must have children node"
+          end
+        end
+
+        private
+
+        def extract_child_nodes
+          node.children.each do |child|
+            create_child_token(child_node: child)
+          end
+        end
+
+        def create_child_token(child_node:, env: {})
+          attributes = token.attributes.except('id', 'uuid', 'script', 'path', 'message', 'created_at', 'updated_at')
+          attributes = attributes.merge(uuid: SecureRandom.uuid, parent: token, script: child_node.to_script, path: '/')
+          attributes['context']['ENV'] = (attributes['context']['ENV'] || {}).merge(env)
+
+          Token.create!(attributes).tap do |created|
+            message = "(token #{created.uuid}) New token are created for #{child_node.path}"
+            created.job_instance.logs.info(message)
+            Kuroko2.logger.info(message)
           end
         end
       end
