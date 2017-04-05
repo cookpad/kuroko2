@@ -9,17 +9,17 @@ ul class="nav nav-pills" role="tablist"
   .box-header
   .box-body.tab-content
     div class="tab-pane active" role="tabpanel" id="logs" data-logs-path="#{job_definition_job_instance_logs_path(@definition, @instance)}"
-      table.table.table-condensed.table-hover data-reload="#{@instance.working? && !@instance.error?}"
+      table.table.table-condensed.table-hover
         thead
           tr
             th &nbsp;
             th.col-md-1 Time
             th.col-md-10 Message
-          - for log in @logs
-            tr
-              td= labeled_log_level(log.level)
-              td.nowrap= log.created_at
-              td.log= rinku_auto_link(log.message, :urls)
+        tbody data-last-log-id="0"
+          tr.loading
+            td
+              i.fa.fa-spinner.fa-spin
+                span.sr-only Loading logs...
       = javascript_include_tag 'kuroko2/instance_linker'
 
     div class="tab-pane" role="tabpanel" id="execution_logs" data-api-path="#{job_definition_job_instance_execution_logs_path(@definition, @instance)}" data-logger="#{Kuroko2.config.execution_logger.try!(:type)}"

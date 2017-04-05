@@ -28,12 +28,27 @@ jQuery(function ($) {
     var logsPath = $('#logs').data("logs-path");
 
     $.get(logsPath, function (data) {
-      $('#logs').html($(data).find('#logs').html());
+      var tbody = $('#logs tbody');
+      var lastLogId = +tbody.data('last-log-id');
+      data.logs.forEach(function(log) {
+        if (log.id > lastLogId) {
+          var tr = $('<tr>');
+          var label = $('<span class="label">').text(log.level).addClass(log.class_for_label);
+          tr.append($('<td>').append(label));
+          tr.append($('<td class="nowrap">').text(log.created_at));
+          tr.append($('<td class="log">').html(log.message_html));
+          tbody.append(tr);
+        }
+      });
+      if (data.logs.length !== 0) {
+        tbody.data('last-log-id', data.logs[data.logs.length - 1].id);
+      }
 
-      if (!$('#logs table').data("reload")) {
+      if (!data.reload) {
         clearInterval(logIntervalId);
         updateInstance();
       }
+      tbody.find('.loading').empty();
     });
   };
 
@@ -82,9 +97,7 @@ jQuery(function ($) {
     updateLogs();
   };
 
-  if ($('#logs table').data("reload")) {
-    logIntervalId = setInterval(updateAll, 2000);
-  }
+  logIntervalId = setInterval(updateAll, 2000);
 
   if ($('#execution_logs').size() > 0) {
     startGetExecutionLog();

@@ -1,19 +1,5 @@
 module Kuroko2
   module JobInstancesHelper
-    def labeled_log_level(level)
-      modifier = case level
-                 when 'INFO'
-                   'info'
-                 when 'ERROR'
-                   'danger'
-                 when 'WARN'
-                   'warning'
-                 else
-                   'default'
-                 end
-      content_tag(:span, level, class: "label label-#{modifier}")
-    end
-
     def labeled_token_status(status)
       modifier = case status
                  when 'working'
