@@ -119,6 +119,65 @@ module Kuroko2::Workflow
         end
       end
 
+      context 'with parallel_fork' do
+        let!(:definition) do
+          create(:job_definition_with_instances, script: <<-EOF.strip_heredoc)
+            env: GLOBAL_ENV=g
+            parallel_fork: 3
+              noop: noop1
+              noop: noop2
+          EOF
+        end
+
+        specify do
+          subject.process(token)
+          expect(token.path).to eq '/0-env'
+          subject.process(token)
+          expect(token.path).to eq '/1-parallel_fork'
+
+          subject.process(token)
+          expect(token.children.size).to eq 3
+
+          parallel_tokens = token.children
+          subject.process_all
+
+          parallel_tokens.each(&:reload)
+          expect(token.path).to eq '/1-parallel_fork'
+          expect(parallel_tokens.map(&:path)).to all(eq('/0-sequence'))
+
+          subject.process_all
+          parallel_tokens.each(&:reload)
+          expect(token.path).to eq '/1-parallel_fork'
+          expect(parallel_tokens.map(&:path)).to all(eq('/0-sequence/0-noop'))
+          expect(parallel_tokens.map(&:status_name)).to all(eq('working'))
+          expect(parallel_tokens.map{ |token| token.context['ENV']['KUROKO2_PARALLEL_FORK_SIZE'] }).to all(eq('3'))
+          expect(parallel_tokens.map{ |token| token.context['ENV']['GLOBAL_ENV'] }).to all(eq('g'))
+          expect(parallel_tokens[0].context['ENV']['KUROKO2_PARALLEL_FORK_INDEX']).to eq('0')
+          expect(parallel_tokens[1].context['ENV']['KUROKO2_PARALLEL_FORK_INDEX']).to eq('1')
+          expect(parallel_tokens[2].context['ENV']['KUROKO2_PARALLEL_FORK_INDEX']).to eq('2')
+
+          subject.process_all
+          parallel_tokens.each(&:reload)
+          expect(token.path).to eq '/1-parallel_fork'
+          expect(parallel_tokens.map(&:path)).to all(eq('/0-sequence/1-noop'))
+          expect(parallel_tokens.map(&:status_name)).to all(eq('working'))
+          expect(parallel_tokens.map{ |token| token.context['ENV']['KUROKO2_PARALLEL_FORK_SIZE'] }).to all(eq('3'))
+          expect(parallel_tokens.map{ |token| token.context['ENV']['GLOBAL_ENV'] }).to all(eq('g'))
+          expect(parallel_tokens[0].context['ENV']['KUROKO2_PARALLEL_FORK_INDEX']).to eq('0')
+          expect(parallel_tokens[1].context['ENV']['KUROKO2_PARALLEL_FORK_INDEX']).to eq('1')
+          expect(parallel_tokens[2].context['ENV']['KUROKO2_PARALLEL_FORK_INDEX']).to eq('2')
+
+          subject.process_all
+          parallel_tokens.each(&:reload)
+          expect(token.path).to eq '/1-parallel_fork'
+          expect(parallel_tokens.map(&:path)).to all(eq('/0-sequence/1-noop'))
+          expect(parallel_tokens.map(&:status_name)).to all(eq('finished'))
+
+          subject.process_all
+          expect(Kuroko2::Token.all.count).to eq 0
+        end
+      end
+
       context 'retry' do
         let!(:definition) do
           create(:job_definition_with_instances, script: <<-EOF.strip_heredoc)
