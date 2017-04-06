@@ -97,7 +97,9 @@ jQuery(function ($) {
     updateLogs();
   };
 
-  logIntervalId = setInterval(updateAll, 2000);
+  if ($('#logs tbody').size() > 0) {
+    logIntervalId = setInterval(updateAll, 2000);
+  }
 
   if ($('#execution_logs').size() > 0) {
     startGetExecutionLog();
