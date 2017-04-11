@@ -31,7 +31,7 @@ class Kuroko2::Api::ApplicationController < ActionController::Base
   def api_authentication
     service_name = authenticate_with_http_basic do |name, api_key|
       stored = Kuroko2.config.api_basic_authentication_applications.try!(name.to_sym)
-      if Rack::Utils.secure_compare(api_key, stored)
+      if stored && Rack::Utils.secure_compare(api_key, stored)
         name.to_sym
       else
         nil
