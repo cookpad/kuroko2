@@ -18,12 +18,15 @@ jQuery(function ($) {
   };
   var updateInstance = function () {
     var instancePath = $('#instance').data("instance-path");
-
+    var currentStatus = $('#instance').data("current-status");
     $.get(instancePath, function (data) {
       $('#instance').replaceWith(data);
-      notifyIfNeeded($('#instance-status').text(), $('#definition-name').text(), $('#notification').data());
+      if (currentStatus != 'success' && currentStatus != 'canceled') {
+        notifyIfNeeded($('#instance-status').text(), $('#definition-name').text(), $('#notification').data());
+      }
     });
   };
+
   var updateLogs = function () {
     var logsPath = $('#logs').data("logs-path");
 
