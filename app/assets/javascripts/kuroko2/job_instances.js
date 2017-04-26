@@ -48,6 +48,7 @@ jQuery(function ($) {
         tbody.data('last-log-id', data.logs[data.logs.length - 1].id);
       }
 
+      $('#logs').data("reload", data.reload);
       if (!data.reload) {
         clearInterval(logIntervalId);
         updateInstance();
@@ -86,7 +87,7 @@ jQuery(function ($) {
         clearInterval(executionLogIntervalId);
       }
     }).fail( function(data, status, error) {
-      if (!$('#logs table').data("reload")) {
+      if (!$('#logs').data("reload")) {
         clearInterval(executionLogIntervalId);
       }
     });
