@@ -1,4 +1,4 @@
-.box#instance data-instance-path="#{naked_job_definition_job_instance_path(@definition, @instance)}"
+.box#instance data-instance-path="#{naked_job_definition_job_instance_path(@definition, @instance)}" data-current-status="#{@instance.status}"
   .box-header
     h2#definition-name.box-title
       = link_to "##{@definition.id} #{@definition.name}", job_definition_path(@definition)
