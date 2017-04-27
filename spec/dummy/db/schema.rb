@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 27) do
+ActiveRecord::Schema.define(version: 28) do
 
   create_table "admin_assignments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.integer  "user_id",           null: false
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 27) do
     t.text     "context",                limit: 65535,                           null: false
     t.integer  "pid"
     t.text     "output",                 limit: 4294967295
-    t.integer  "exit_status",            limit: 1
+    t.integer  "exit_status",            limit: 1,                                            unsigned: true
     t.integer  "term_signal",            limit: 1
     t.datetime "started_at"
     t.datetime "finished_at"
