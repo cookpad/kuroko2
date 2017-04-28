@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'retryable'
   s.add_dependency 'faraday'
   s.add_dependency 'sprockets'
+  s.add_dependency 'slim'
   s.add_dependency 'slim-rails'
   s.add_dependency 'sass', '~> 3.4.5'
   s.add_dependency 'sass-rails'
