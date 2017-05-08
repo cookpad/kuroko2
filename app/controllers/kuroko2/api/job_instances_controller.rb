@@ -3,7 +3,7 @@ class Kuroko2::Api::JobInstancesController < Kuroko2::Api::ApplicationController
 
   validates :create do
     hash :env, description: 'Env variables to launch an instance' do |env|
-      env.to_h.all? { |_, v| v.is_a?(String) }
+      env.values.all? { |v| v.is_a?(String) }
     end
   end
 
