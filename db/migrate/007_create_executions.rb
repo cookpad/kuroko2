@@ -1,4 +1,4 @@
-class CreateExecutions < ActiveRecord::Migration
+class CreateExecutions < ActiveRecord::Migration[5.0]
   def change
     create_table "executions" do |t|
       t.string   "uuid",                   limit: 36,                              null: false

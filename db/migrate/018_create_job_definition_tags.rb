@@ -1,4 +1,4 @@
-class CreateJobDefinitionTags < ActiveRecord::Migration
+class CreateJobDefinitionTags < ActiveRecord::Migration[5.0]
   def change
     create_table "job_definition_tags" do |t|
       t.integer  "job_definition_id", limit: 4, null: false

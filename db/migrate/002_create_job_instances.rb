@@ -1,4 +1,4 @@
-class CreateJobInstances < ActiveRecord::Migration
+class CreateJobInstances < ActiveRecord::Migration[5.0]
   def change
     create_table "job_instances" do |t|
       t.integer  "job_definition_id",      limit: 4

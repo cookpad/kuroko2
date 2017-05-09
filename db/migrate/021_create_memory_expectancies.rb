@@ -1,4 +1,4 @@
-class CreateMemoryExpectancies < ActiveRecord::Migration
+class CreateMemoryExpectancies < ActiveRecord::Migration[5.0]
   def change
     create_table :memory_expectancies do |t|
       t.integer :expected_value, null: false, default: 0
