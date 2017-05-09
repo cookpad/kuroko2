@@ -1,6 +1,17 @@
+## v0.4.0
+
+- Fix login failure [#43](https://github.com/cookpad/kuroko2/pull/43)
+- Order job instance logs returned by XHR [#44](https://github.com/cookpad/kuroko2/pull/44)
+- To selectable administrators field [#45](https://github.com/cookpad/kuroko2/pull/45)
+- Render instance logs by JavaScript to fix flicker [#46](https://github.com/cookpad/kuroko2/pull/46)
+- Add `parallel_fork` task [#47](https://github.com/cookpad/kuroko2/pull/47)
+- Avoid nil errors in API authentication [#52](https://github.com/cookpad/kuroko2/pull/52)
+- Fix job not being recorded as completed when exit status > 127 [#55](https://github.com/cookpad/kuroko2/pull/55)
+- Support Rails5.1.0 [#56](https://github.com/cookpad/kuroko2/pull/56)
+
 ## v0.3.4
 
-- Kill n+1 queries [#41][https://github.com/cookpad/kuroko2/pull/41]
+- Kill n+1 queries [#41](https://github.com/cookpad/kuroko2/pull/41)
 
 ## v0.3.3
 
