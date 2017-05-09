@@ -1,4 +1,4 @@
-class ChangeExitStatusToUnsignedTinyint < ActiveRecord::Migration
+class ChangeExitStatusToUnsignedTinyint < ActiveRecord::Migration[5.0]
   def up
     change_column :executions, :exit_status, :integer, limit: 2
   end
