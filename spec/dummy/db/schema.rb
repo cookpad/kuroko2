@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 28) do
     t.text     "context",                limit: 65535,                           null: false
     t.integer  "pid"
     t.text     "output",                 limit: 4294967295
-    t.integer  "exit_status",            limit: 1,                                            unsigned: true
+    t.integer  "exit_status",            limit: 2
     t.integer  "term_signal",            limit: 1
     t.datetime "started_at"
     t.datetime "finished_at"
