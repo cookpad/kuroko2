@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 26) do
+ActiveRecord::Schema.define(version: 27) do
 
   create_table "admin_assignments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.integer  "user_id",           null: false
@@ -182,7 +182,7 @@ ActiveRecord::Schema.define(version: 26) do
     t.datetime "suspended_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["email"], name: "email", unique: true, using: :btree
+    t.index ["email"], name: "email", using: :btree
     t.index ["uid", "suspended_at"], name: "uid_2", using: :btree
     t.index ["uid"], name: "uid", unique: true, using: :btree
   end
