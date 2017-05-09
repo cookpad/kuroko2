@@ -1,4 +1,4 @@
-class CreateProcessSignals < ActiveRecord::Migration
+class CreateProcessSignals < ActiveRecord::Migration[5.0]
   def change
     create_table "process_signals" do |t|
       t.string   "hostname",   limit: 180,   default: "", null: false

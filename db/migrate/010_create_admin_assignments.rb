@@ -1,4 +1,4 @@
-class CreateAdminAssignments < ActiveRecord::Migration
+class CreateAdminAssignments < ActiveRecord::Migration[5.0]
   def change
     create_table "admin_assignments" do |t|
       t.integer  "user_id",           limit: 4, null: false

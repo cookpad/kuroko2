@@ -1,4 +1,4 @@
-class CreateJobSuspendSchedules < ActiveRecord::Migration
+class CreateJobSuspendSchedules < ActiveRecord::Migration[5.0]
   def change
     create_table "job_suspend_schedules" do |t|
       t.integer  "job_definition_id", limit: 4
