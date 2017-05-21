@@ -2,7 +2,7 @@ module Kuroko2
   module Workflow
     class Node
       PATH_REGEXP = %r(\A(?:/|(?:/\d+-[a-z0-9_]+)+)\z)
-      TASK_REGISTORY = {
+      TASK_REGISTRY = {
         root:                  Task::Sequence,
         noop:                  Task::Noop,
         sequence:              Task::Sequence,
@@ -28,20 +28,20 @@ module Kuroko2
       def self.register(key: nil, klass:)
         key ||= klass.to_s.demodulize.underscore.to_sym
 
-        unless TASK_REGISTORY.has_key?(key)
-          TASK_REGISTORY.store(key, klass)
+        unless TASK_REGISTRY.has_key?(key)
+          TASK_REGISTRY.store(key, klass)
         else
-          Kuroko2.logger.warn("Unable to add '#{klass}' to task registory. '#{TASK_REGISTORY[key]}' is already registered.")
+          Kuroko2.logger.warn("Unable to add '#{klass}' to task registry. '#{TASK_REGISTRY[key]}' is already registered.")
         end
       end
 
       def self.deregister(key)
-        TASK_REGISTORY.delete(key)
+        TASK_REGISTRY.delete(key)
       end
 
       def initialize(type, option = nil)
         @type       = type.to_sym
-        @task_klass = TASK_REGISTORY.fetch(@type, nil)
+        @task_klass = TASK_REGISTRY.fetch(@type, nil)
         @option     = option.try(:strip)
         @parent     = nil
         @children   = []
