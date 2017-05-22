@@ -1,3 +1,9 @@
+## v0.4.1
+
+- Fix schema.rb  [#58](https://github.com/cookpad/kuroko2/pull/58)
+- Fix typo: registory to registry [#60](https://github.com/cookpad/kuroko2/pull/60)
+- Fix length validation for slack_channel column to adapt # symbol [#61](https://github.com/cookpad/kuroko2/pull/61)
+
 ## v0.4.0
 
 - Fix login failure [#43](https://github.com/cookpad/kuroko2/pull/43)
