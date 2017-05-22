@@ -31,7 +31,7 @@ module Kuroko2
 
       if Kuroko2.config.custom_tasks
         Kuroko2.config.custom_tasks.each do |key, klass|
-          unless Workflow::Node::TASK_REGISTORY.has_key?(key)
+          unless Workflow::Node::TASK_REGISTRY.has_key?(key)
             Workflow::Node.register(
               key: key.to_sym,
               klass: Workflow::Task.const_get(klass, false)
