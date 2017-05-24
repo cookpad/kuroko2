@@ -165,8 +165,9 @@ Content-Length: 537
 
 #### Job execution API
 
-Jobs can be executed by incoming webhook.
-Incoming webhook uses basic authentication and authentication information can be set at `api_basic_authentication_applications` key in kuroko2.yml.
+A job can be executed by the execution API.
+The execution API requires basic authentication. Set the `api_basic_authentication_applications` key in kuroko2.yml if you enable the API.
+To execute job from API, check `Allow API execution of this job` in job definition.
 
 ```console
 curl -H "Content-type: application/json" -H "Accept: application/json" -H "Authorization: Basic dGVzdF9jbGllbnRfbmFtZTpzZWNyZXRfa2V5\n" -XPOST -d http://localhost:5000/v1/definitions/2/instances
