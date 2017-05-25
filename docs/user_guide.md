@@ -163,6 +163,37 @@ Content-Length: 537
 }
 ```
 
+#### Job execution API
+
+A job can be executed by the execution API.
+The execution API requires basic authentication. Set the `api_basic_authentication_applications` key in kuroko2.yml if you enable the API.
+To execute job from API, check `Allow API execution of this job` in job definition.
+
+```console
+curl -H "Content-type: application/json" -H "Accept: application/json" -H "Authorization: Basic dGVzdF9jbGllbnRfbmFtZTpzZWNyZXRfa2V5\n" -XPOST -d http://localhost:5000/v1/definitions/2/instances
+POST /v1/definitions/2/instances HTTP/1.1
+Host: localhost:5000
+User-Agent: curl/7.52.1
+Content-type: application/json
+Accept: application/json
+Authorization: Basic dGVzdF9jbGllbnRfbmFtZTpzZWNyZXRfa2V5\n
+
+HTTP/1.1 201 Created
+X-Frame-Options: SAMEORIGIN
+X-XSS-Protection: 1; mode=block
+X-Content-Type-Options: nosniff
+Content-Type: application/json; charset=utf-8
+ETag: W/"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+Cache-Control: max-age=0, private, must-revalidate
+X-Request-Id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+X-Runtime: 0.098753
+Transfer-Encoding: chunked
+
+Curl_http_done: called premature == 0
+Connection #0 to host localhost left intact
+{"id":10,"status":"working"}
+```
+
 
 #### Verifying Request Signatures
 
