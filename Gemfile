@@ -19,4 +19,5 @@ group :test do
   gem 'webmock'
   gem 'database_rewinder'
   gem 'rails-controller-testing'
+  gem 'commonmarker'
 end

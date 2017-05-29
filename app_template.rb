@@ -6,6 +6,7 @@ gsub_file 'Gemfile', /^gem 'jquery-rails'.+/, ""
 gsub_file 'Gemfile', /^gem 'coffee-rails'.+/, ""
 gsub_file 'config/database.yml', "encoding: utf8", "encoding: utf8mb4"
 
+gem 'commonmarker', '~> 0.16.0'
 gem 'kuroko2'
 
 gem_group :development do
