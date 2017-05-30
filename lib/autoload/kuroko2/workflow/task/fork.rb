@@ -3,8 +3,7 @@ module Kuroko2
     module Task
       class Fork < Base
         def execute
-          children = token.children
-          if children.empty?
+          if fork_children_ids.empty?
             message = "(token #{token.uuid}) Start to fork."
 
             token.job_instance.logs.info(message)
@@ -12,7 +11,7 @@ module Kuroko2
             extract_child_nodes
 
             :pass
-          elsif children.all?(&:finished?)
+          elsif token.children.where(id: fork_children_ids).all?(&:finished?)
             message = "(token #{token.uuid}) All children are finished."
 
             token.job_instance.logs.info(message)
@@ -32,6 +31,11 @@ module Kuroko2
 
         private
 
+        def fork_children_ids
+          token.context['fork_children_ids'] ||= {}
+          token.context['fork_children_ids'][token.path] ||= []
+        end
+
         def extract_child_nodes
           node.children.each do |child|
             create_child_token(child_node: child)
@@ -44,6 +48,7 @@ module Kuroko2
           attributes['context']['ENV'] = (attributes['context']['ENV'] || {}).merge(env)
 
           Token.create!(attributes).tap do |created|
+            fork_children_ids << created.id
             message = "(token #{created.uuid}) New token are created for #{child_node.path}"
             created.job_instance.logs.info(message)
             Kuroko2.logger.info(message)
