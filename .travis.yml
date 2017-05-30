@@ -8,6 +8,13 @@ rvm:
   - 2.4.1
   - 2.3.3
   - 2.2.6
+addons:
+  apt:
+    sources:
+      - george-edison55-precise-backports # cmake 3.2.3 / doxygen 1.8.3
+    packages:
+      - cmake
+      - cmake-data
 before_script:
   - mysql -u root -e "set global innodb_large_prefix=1;"
   - mysql -u root -e "set global innodb_file_format='Barracuda';"
