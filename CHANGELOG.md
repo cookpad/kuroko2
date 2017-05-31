@@ -1,3 +1,8 @@
+## v0.4.2
+
+- Use commonmarker gem [#63](https://github.com/cookpad/kuroko2/pull/63)
+- Fix not executing multiple fork tasks [#64](https://github.com/cookpad/kuroko2/pull/64)
+
 ## v0.4.1
 
 - Fix schema.rb  [#58](https://github.com/cookpad/kuroko2/pull/58)
