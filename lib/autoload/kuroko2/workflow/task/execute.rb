@@ -2,9 +2,6 @@ module Kuroko2
   module Workflow
     module Task
       class Execute < Base
-        DEFAULT_EXPECTED_TIME = 60 * 24 # 24 hours
-        EXPECTED_TIME_NOTIFY_REMIND_TERM = 1.hours
-
         def execute
           if (execution = Execution.of(token).take)
             update_execution(execution)
@@ -70,7 +67,6 @@ module Kuroko2
             end
           else
             process_timeout_if_needed(execution)
-            notify_long_elapsed_time_if_needed(execution)
             :pass
           end
         end
@@ -90,36 +86,6 @@ module Kuroko2
               token.job_instance.logs.error(message)
               Kuroko2.logger.error(message)
             end
-          end
-        end
-
-        def expected_time
-          @expected_time ||= token.context['EXPECTED_TIME'].present? ?
-            token.context['EXPECTED_TIME'].to_i :
-            DEFAULT_EXPECTED_TIME
-        end
-
-        def available_notify_long_elapsed_time?(execution)
-          if token.context['EXPECTED_TIME_NOTIFIED_AT'].present?
-            token.context['EXPECTED_TIME_NOTIFIED_AT'] < EXPECTED_TIME_NOTIFY_REMIND_TERM.ago &&
-              execution.pid.present?
-          else
-            execution.pid.present?
-          end
-        end
-
-        def elapsed_expected_time?(execution)
-          (execution.created_at + expected_time.minutes).past?
-        end
-
-        def notify_long_elapsed_time_if_needed(execution)
-          if available_notify_long_elapsed_time?(execution) && elapsed_expected_time?(execution)
-            token.context['EXPECTED_TIME_NOTIFIED_AT'] = Time.current
-            Notifier.notify(:long_elapsed_time, token.job_instance)
-
-            message = "(token #{token.uuid}) The running time is longer than #{expected_time} minutes!"
-            token.job_instance.logs.info(message)
-            Kuroko2.logger.info(message)
           end
         end
       end
