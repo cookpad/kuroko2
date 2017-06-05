@@ -38,14 +38,12 @@ class Kuroko2::JobDefinition < Kuroko2::ApplicationRecord
 
   scope :ordered, -> { order(:id) }
   scope :tagged_by, ->(tags) {
-    where(
-      id: Kuroko2::JobDefinitionTag.
-        where(tag_id: Kuroko2::Tag.where(name: tags).pluck(:id)).
-        group(:job_definition_id).
-        having('COUNT(1) >= ?', tags.size).
-        pluck(:job_definition_id)
-    )
+    joins(:tags).
+      where(Kuroko2::Tag.table_name => { name: tags }).
+      group("#{table_name}.id").
+      having("count(distinct #{Kuroko2::Tag.table_name}.name) >= ?", tags.size)
   }
+
   scope :search_by, ->(query) {
     column = arel_table
     or_query = column[:name].matches("%#{query}%").or(column[:script].matches("%#{query}%"))
