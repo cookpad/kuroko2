@@ -210,3 +210,17 @@ The timeout option is number of minutes or `10h` or `10m` (default timeout: 60m)
 ```
 wait: 100/hourly 101/daily timeout=60m
 ```
+
+## echo
+
+`echo` task shows given message.
+
+**Option**
+
+The message to show.
+
+**Example**
+
+```
+echo: Hello world!
+```
