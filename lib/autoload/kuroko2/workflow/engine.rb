@@ -1,6 +1,9 @@
 module Kuroko2
   module Workflow
     class Engine
+      DEFAULT_EXPECTED_TIME = 60 * 24 # 24 hours
+      EXPECTED_TIME_NOTIFY_REMIND_TERM = 1.hours
+
       def process_all
         Token.processable.each do |token|
           process(token)
@@ -114,6 +117,7 @@ module Kuroko2
         node = extract_node(token)
 
         execute_task(node, token)
+        notify_long_elapsed_time_if_needed(token)
       rescue EngineError => e
         message = "#{e.message}\n" + e.backtrace.map { |trace| "    #{trace}" }.join("\n")
 
@@ -133,6 +137,32 @@ module Kuroko2
       def extract_node(token)
         root = ScriptParser.new(token.script).parse(validate: false)
         root.find(token.path)
+      end
+
+      def expected_time(token)
+        token.context['EXPECTED_TIME'].present? ?
+          token.context['EXPECTED_TIME'].to_i :
+          DEFAULT_EXPECTED_TIME
+      end
+
+      def available_notify_long_elapsed_time?(token)
+        return false if token.parent && expected_time(token) == expected_time(token.parent)
+        token.context['EXPECTED_TIME_NOTIFIED_AT'].nil? || Time.zone.parse(token.context['EXPECTED_TIME_NOTIFIED_AT']) < EXPECTED_TIME_NOTIFY_REMIND_TERM.ago
+      end
+
+      def elapsed_expected_time?(token)
+        (token.created_at + expected_time(token).minutes).past?
+      end
+
+      def notify_long_elapsed_time_if_needed(token)
+        if available_notify_long_elapsed_time?(token) && elapsed_expected_time?(token)
+          token.context['EXPECTED_TIME_NOTIFIED_AT'] = Time.current
+          Notifier.notify(:long_elapsed_time, token.job_instance)
+
+          message = "(token #{token.uuid}) The running time is longer than #{expected_time(token)} minutes!"
+          token.job_instance.logs.info(message)
+          Kuroko2.logger.info(message)
+        end
       end
     end
   end

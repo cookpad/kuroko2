@@ -178,6 +178,109 @@ module Kuroko2::Workflow
         end
       end
 
+      context 'if passed EXPECTED_TIME' do
+        context 'without EXPECTED_TIME' do
+          let!(:definition) do
+            create(:job_definition_with_instances, script: <<-EOF.strip_heredoc)
+              noop:
+            EOF
+          end
+
+          it 'notifies messages' do
+            expect(Kuroko2::Workflow::Notifier).to receive(:notify).with(:long_elapsed_time, token.job_instance)
+            Timecop.travel((24.hours + 1.second).since) {
+              subject.process(token)
+              expect(token.context['EXPECTED_TIME_NOTIFIED_AT']).to be_present
+            }
+          end
+        end
+
+        context 'with EXPECTED_TIME' do
+          let!(:definition) do
+            create(:job_definition_with_instances, script: <<-EOF.strip_heredoc)
+              expected_time: 1m
+              noop: noop1
+              noop: noop2
+              noop: noop3
+              noop: noop4
+            EOF
+          end
+
+          it 'notifies messages and wait notifing until EXPECTED_TIME_NOTIFY_REMIND_TERM' do
+            subject.process(token)
+            subject.process(token)
+
+            expect(Kuroko2::Workflow::Notifier).to receive(:notify).with(:long_elapsed_time, token.job_instance).twice
+
+            Timecop.travel((1.minutes + 1.second).since) {
+              subject.process(token) # notify
+              expect(token.context['EXPECTED_TIME_NOTIFIED_AT']).to be_present
+              subject.process(token) # do not notify until EXPECTED_TIME_NOTIFIED_AT + EXPECTED_TIME_NOTIFY_REMIND_TERM
+
+              Timecop.travel((1.hours + 1.second).since) {
+                subject.process(token) # notify
+              }
+            }
+          end
+        end
+
+        context 'with fork process' do
+          let(:engine) { Kuroko2::Workflow::Engine.new }
+
+          context 'if expected_time sets root only' do
+            let!(:definition) do
+              create(:job_definition_with_instances, script: <<-EOF.strip_heredoc)
+                fork:
+                  noop: noop_fork1
+                  noop: noop_fork2
+              EOF
+            end
+
+            it 'notifies once from the parent token only' do
+              expect(Kuroko2::Workflow::Notifier).to receive(:notify).with(:long_elapsed_time, token.job_instance).once
+              engine.process_all
+              engine.process_all
+
+              Timecop.travel((24.hours + 1.second).since) {
+                engine.process_all
+                expect(token.reload.context['EXPECTED_TIME_NOTIFIED_AT']).to be_present
+                engine.process_all
+              }
+            end
+          end
+
+          context 'if expected_time settings is different between root and children' do
+            let!(:definition) do
+              create(:job_definition_with_instances, script: <<-EOF.strip_heredoc)
+                expected_time: 1h
+                parallel_fork: 2
+                  expected_time: 1m
+                  noop: noop_parallel_fork1
+                  noop: noop_parallel_fork2
+              EOF
+            end
+
+            it 'notifies from each tokens' do
+              expect(Kuroko2::Workflow::Notifier).to receive(:notify).with(:long_elapsed_time, token.job_instance).twice
+              engine.process_all
+              engine.process_all
+              engine.process_all
+
+              Timecop.travel((1.minute + 1.second).since) {
+                engine.process_all
+                engine.process_all
+                engine.process_all
+                token.reload
+                expect(token.context['EXPECTED_TIME_NOTIFIED_AT']).not_to be_present
+                expect(token.children.map{|child| child.context['EXPECTED_TIME_NOTIFIED_AT']}).to all(be_present)
+
+                engine.process_all
+              }
+            end
+          end
+        end
+      end
+
       context 'retry' do
         let!(:definition) do
           create(:job_definition_with_instances, script: <<-EOF.strip_heredoc)
