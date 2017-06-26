@@ -8,7 +8,7 @@ class Kuroko2::ExecutionsController < Kuroko2::ApplicationController
 
   def destroy
     if @execution.try!(:pid)
-      hostname = Kuroko2::Worker.executing(@execution.id).try!(:hostname)
+      hostname = Kuroko2::Worker.executing(@execution.id).try!(:hostname) || ''
       # XXX: Store pid and hostname for compatibility
       Kuroko2::ProcessSignal.create!(pid: @execution.pid, hostname: hostname, execution_id: @execution.id)
     end
