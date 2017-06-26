@@ -1,13 +1,12 @@
 jQuery(function ($) {
   var logParent = document.querySelector('#logs tbody');
   var observer = new MutationObserver(function(mutations) {
-    if (mutations.some(x =>
-      x.addedNodes
-        && x.addedNodes instanceof NodeList
-        && x.addedNodes.length > 0
-        && x.type == 'childList'
-      )
-    ) {
+    if (mutations.some(function(m) {
+      return m.addedNodes
+        && m.addedNodes instanceof NodeList
+        && m.addedNodes.length > 0
+        && m.type == 'childList'
+    })) {
       $('td.log').each(function() {
         var logText = $(this).html();
         $(this).html(
