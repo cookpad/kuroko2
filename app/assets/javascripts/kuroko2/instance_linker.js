@@ -1,4 +1,8 @@
 jQuery(function ($) {
+  var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+  if (!MutationObserver) {
+    return;
+  }
   var logParent = document.querySelector('#logs tbody');
   var observer = new MutationObserver(function(mutations) {
     if (mutations.some(function(m) {
