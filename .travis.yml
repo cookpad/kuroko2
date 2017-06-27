@@ -1,3 +1,4 @@
+dist: trusty
 language: ruby
 cache: bundler
 branches:
@@ -8,6 +9,8 @@ rvm:
   - 2.4.1
   - 2.3.3
   - 2.2.6
+before_install:
+  - phantomjs --version
 addons:
   apt:
     sources:
