@@ -28,6 +28,7 @@ RSpec.describe "Launches a job instace and Management job instances on the web c
       click_on 'Launch'
     end
 
+    sleep 1
     expect(page).to have_content('Job Instance Details')
     expect(page).to have_selector('#instance-status .label', text: 'WORKING')
 
