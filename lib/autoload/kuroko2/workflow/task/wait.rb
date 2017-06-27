@@ -64,7 +64,7 @@ module Kuroko2
         # ex. wait: 100/daily 200/daily
         def parse_option(option, start_at: Time.current)
           raise_assertion_error unless option
-          wait_option = { "jobs" => [], "timeout" => (60.minutes / 1.minute).to_i }
+          wait_option = { "jobs" => [], "timeout" => 60 } # 60 minutes by default
           scanner = StringScanner.new(option)
           until scanner.eos?
             if scanner.scan(OPTION_REGEXP)
