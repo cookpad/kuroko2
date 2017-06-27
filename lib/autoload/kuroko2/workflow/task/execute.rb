@@ -75,17 +75,12 @@ module Kuroko2
           timeout = token.context['TIMEOUT'].to_i
 
           if timeout > 0 && ((execution.created_at + timeout.minutes) < Time.current) && execution.pid
-            hostname = Worker.executing(execution.id).try(:hostname)
-            if hostname
-              ProcessSignal.create!(pid: execution.pid, hostname: hostname)
-              message = "(token #{token.uuid}) Timeout occurred after #{timeout} minutes."
-              token.job_instance.logs.info(message)
-              Kuroko2.logger.info(message)
-            else
-              message = "(token #{token.uuid}) The timeout task is not working. Hostname not found on execution_id #{execution.id}"
-              token.job_instance.logs.error(message)
-              Kuroko2.logger.error(message)
-            end
+            hostname = Worker.executing(execution.id).try!(:hostname)
+            # XXX: Store pid and hostname for compatibility
+            ProcessSignal.create!(pid: execution.pid, hostname: hostname, execution_id: execution.id)
+            message = "(token #{token.uuid}) Timeout occurred after #{timeout} minutes."
+            token.job_instance.logs.info(message)
+            Kuroko2.logger.info(message)
           end
         end
       end
