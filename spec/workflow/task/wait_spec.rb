@@ -24,14 +24,14 @@ module Kuroko2::Workflow::Task
           it 'returns :wait' do
             expect(Wait.new(node, token).execute).to eq(:pass)
             expect(token.context['WAIT']).to eq({
-              "timeout"  => 60.minutes.to_i / 60,
               "jobs" => [{
                 "job_definition_id" => wait_definition.id,
                 "period" => 'daily',
                 "start_from" => now.beginning_of_day.to_s,
                 "start_to" => now.end_of_day.to_s,
                 "received" => false,
-              }]
+              }],
+              "timeout"  => 60,
             })
           end
 
@@ -61,16 +61,33 @@ module Kuroko2::Workflow::Task
           context 'if timeout' do
             let(:definition) { create(:job_definition, script: "noop:") }
             let(:instance) { create(:job_instance, job_definition: definition) }
-            let(:option) { "#{definition.id}/daily timeout=1m" }
 
-            around do |example|
-              Wait.new(node, token).execute
-              Timecop.travel((1.minutes + 1.second).since) { example.run }
+            context 'timeout options is `1m`' do
+              let(:option) { "#{definition.id}/daily timeout=1m" }
+
+              around do |example|
+                Wait.new(node, token).execute
+                Timecop.travel((1.minutes + 1.second).since) { example.run }
+              end
+
+              it 'fails task' do
+                expect(token.context['WAIT']["timeout"]).to eq(1)
+                expect(Wait.new(node, token).execute).to eq(:failure)
+              end
             end
 
-            it 'fails task' do
-              expect(token.context['WAIT']["timeout"]).to eq(1)
-              expect(Wait.new(node, token).execute).to eq(:failure)
+            context 'timeout options is `2h`' do
+              let(:option) { "#{definition.id}/daily timeout=2h" }
+
+              around do |example|
+                Wait.new(node, token).execute
+                Timecop.travel((2.hours + 1.second).since) { example.run }
+              end
+
+              it 'fails task' do
+                expect(token.context['WAIT']["timeout"]).to eq(120)
+                expect(Wait.new(node, token).execute).to eq(:failure)
+              end
             end
           end
         end
@@ -87,7 +104,6 @@ module Kuroko2::Workflow::Task
           it 'returns :wait' do
             expect(Wait.new(node, token).execute).to eq(:pass)
             expect(token.context['WAIT']).to eq({
-              "timeout"  => 60.minutes.to_i / 60,
               "jobs" => [
                 {
                   "job_definition_id" => wait_definition1.id,
@@ -103,7 +119,8 @@ module Kuroko2::Workflow::Task
                   "start_to" => now.end_of_day.to_s,
                   "received" => false,
                 },
-              ]
+              ],
+              "timeout"  => 60,
             })
           end
 
