@@ -60,8 +60,9 @@ module Kuroko2::Workflow::Task
         Timecop.travel(2.minutes.since) { example.run }
       end
 
-      it 'creates ProcessSignal' do
+      it 'creates one ProcessSignal' do
         expect { Execute.new(node, token).execute }.to change { Kuroko2::ProcessSignal.where(pid: execution.pid, hostname: hostname).count }.from(0).to(1)
+        expect { Execute.new(node, token).execute }.to_not change { Kuroko2::ProcessSignal.where(pid: execution.pid, hostname: hostname).count }.from(1)
       end
     end
   end

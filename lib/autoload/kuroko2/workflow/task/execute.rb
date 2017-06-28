@@ -81,6 +81,7 @@ module Kuroko2
             message = "(token #{token.uuid}) Timeout occurred after #{timeout} minutes."
             token.job_instance.logs.info(message)
             Kuroko2.logger.info(message)
+            token.context.delete('TIMEOUT')
           end
         end
       end
