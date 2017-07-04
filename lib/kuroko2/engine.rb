@@ -54,12 +54,12 @@ module Kuroko2
 
       if Kuroko2.config.extensions && Kuroko2.config.extensions.controller
         Kuroko2.config.extensions.controller.each do |extension|
-          Kuroko2::ApplicationController.include(Module.const_get(extension, false))
+          Kuroko2::ApplicationController.include(Object.const_get(extension, false))
         end
       elsif Kuroko2.config.extentions && Kuroko2.config.extentions.controller
         # XXX: Check legacy configuration which was typo
         Kuroko2.config.extentions.controller.each do |extention|
-          Kuroko2::ApplicationController.include(Module.const_get(extention, false))
+          Kuroko2::ApplicationController.include(Object.const_get(extention, false))
         end
       end
     end
