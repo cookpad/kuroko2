@@ -52,7 +52,12 @@ module Kuroko2
 
       app.config.assets.precompile += %w(kuroko2/kuroko-logo-success.png kuroko2/kuroko-logo-error.png)
 
-      if Kuroko2.config.extentions && Kuroko2.config.extentions.controller
+      if Kuroko2.config.extensions && Kuroko2.config.extensions.controller
+        Kuroko2.config.extensions.controller.each do |extension|
+          Kuroko2::ApplicationController.include(Module.const_get(extension, false))
+        end
+      elsif Kuroko2.config.extentions && Kuroko2.config.extentions.controller
+        # XXX: Check legacy configuration which was typo
         Kuroko2.config.extentions.controller.each do |extention|
           Kuroko2::ApplicationController.include(Module.const_get(extention, false))
         end

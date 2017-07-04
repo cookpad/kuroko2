@@ -41,9 +41,9 @@ default: &default
       client_secret: '<%= ENV["GOOGLE_CLIENT_SECRET"] %>'
       options:
         hd: '<%= ENV["GOOGLE_HOSTED_DOMAIN"] %>'
-  extentions:
+  extensions:
 #    controller:
-#      - DummyExtention
+#      - DummyExtension
 development:
   <<: *default
 
