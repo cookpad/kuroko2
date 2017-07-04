@@ -13,9 +13,13 @@
         tr
           td= definition.id
           td.no-decorate= link_to definition.name, definition
-          - if !definition.suspended? && definition.job_schedules.present?
+          - if !definition.suspended? && !definition.job_schedules.empty?
             - next_job_schedule = definition.job_schedules.map(&:next).min
-            td data-value=next_job_schedule.to_i = l(next_job_schedule, format: :short)
+            - if next_job_schedule
+              td data-value=next_job_schedule.to_i = l(next_job_schedule, format: :short)
+            - else
+              td data-value="9999999990"
+                span class="small" Suspended
           - else
             td data-value="9999999999" --
           td= labeled_status(definition.job_instances.take)
