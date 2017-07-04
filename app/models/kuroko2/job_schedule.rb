@@ -71,7 +71,7 @@ class Kuroko2::JobSchedule < Kuroko2::ApplicationRecord
     job_definition.job_suspend_schedules.each do |suspend_schedule_model|
       suspend_schedule = Chrono::Schedule.new(suspend_schedule_model.cron)
       CHRONO_SCHEDULE_METHODS.each do |method|
-        schedule[method] = schedule[method] - suspend_schedule.send(method)
+        schedule[method] -= suspend_schedule.send(method)
       end
 
       # https://linux.die.net/man/5/crontab
