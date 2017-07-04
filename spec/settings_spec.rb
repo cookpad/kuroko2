@@ -6,5 +6,9 @@ module Kuroko2
       expect(Workflow::Node::TASK_REGISTRY).to have_key(:custom_task1)
       expect(Workflow::ScriptParser.new('custom_task1:').parse).to be_a(Workflow::Node)
     end
+
+    it 'includes extensions.controller' do
+      expect(ApplicationController).to include(DummyExtension)
+    end
   end
 end
