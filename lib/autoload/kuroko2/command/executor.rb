@@ -28,6 +28,7 @@ module Kuroko2
         Kuroko2.logger = logger
         Kuroko2.logger.info "[#{@hostname}-#{worker_id}] Start worker"
         toggle_worker_status(true)
+        $0 = "command-executor (worker_id=#{worker_id} command=#{@command.class.name})"
 
         sleep worker_id
 
