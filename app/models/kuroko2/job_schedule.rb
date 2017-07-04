@@ -66,9 +66,27 @@ class Kuroko2::JobSchedule < Kuroko2::ApplicationRecord
     launch_schedule = Chrono::Schedule.new(cron)
     schedule = CHRONO_SCHEDULE_METHODS.each_with_object({}) do |method, h|
       h[method] = launch_schedule.send(method)
-      job_definition.job_suspend_schedules.each do |suspend_schedule_model|
-        suspend_schedule = Chrono::Schedule.new(suspend_schedule_model.cron)
-        h[method] = h[method] - suspend_schedule.send(method)
+    end
+
+    job_definition.job_suspend_schedules.each do |suspend_schedule_model|
+      suspend_schedule = Chrono::Schedule.new(suspend_schedule_model.cron)
+      CHRONO_SCHEDULE_METHODS.each do |method|
+        schedule[method] = schedule[method] - suspend_schedule.send(method)
+      end
+
+      # https://linux.die.net/man/5/crontab
+      # > Note: The day of a command's execution can be specified by two fields
+      # >  day of month, and day of week. If both fields are restricted (ie, aren't *),
+      # >  the command will be run when either field matches the current time.
+      # >  For example, "30 4 1,15 * 5" would cause a command to be run at 4:30 am
+      # >  on the 1st and 15th of each month, plus every Friday.
+      if suspend_schedule.wdays? && suspend_schedule.days?
+        case
+        when launch_schedule.wdays? && !launch_schedule.days?
+          schedule[:days] = []
+        when !launch_schedule.wdays? && launch_schedule.days?
+          schedule[:wdays] = []
+        end
       end
     end
 

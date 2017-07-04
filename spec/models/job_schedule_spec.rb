@@ -59,6 +59,41 @@ describe Kuroko2::JobSchedule do
       end
     end
 
+    context 'When suspended schedule has wdays and days' do
+      let(:time) { Time.new(2016, 1, 2, 10, 0) }
+      before do
+        create(:job_suspend_schedule, job_definition: definition, cron: '* * 1 * 0') # suspend every sunday or first day of month
+      end
+
+      context 'If the schedule has days only' do
+        let(:cron) { '0 10 1 * *' }
+        it 'returns nil' do
+          expect(schedule.next(time)).to be_nil
+        end
+      end
+
+      context 'If the schedule has wdays only' do
+        let(:cron) { '0 10 * * 0' }
+        it 'returns nil' do
+          expect(schedule.next(time)).to be_nil
+        end
+      end
+
+      context 'If the schedule has wdays and days' do
+        let(:cron) { '0 10 2 * 0' }
+        it 'returns next schedule' do
+          expect(schedule.next(time)).to eq(Time.new(2016, 2, 2, 10, 0))
+        end
+      end
+
+      context 'If the schedule has wdays and days' do
+        let(:cron) { '0 10 1 * 1' }
+        it 'returns next schedule' do
+          expect(schedule.next(time)).to eq(Time.new(2016, 1, 4, 10, 0))
+        end
+      end
+    end
+
     context 'With invalid date' do
       let(:cron) { '* * 31 2 *' }
       let(:time) { Time.new(2016, 2, 28, 10, 0) }
