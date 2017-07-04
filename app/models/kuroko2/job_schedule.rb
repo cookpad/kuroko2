@@ -24,7 +24,7 @@ class Kuroko2::JobSchedule < Kuroko2::ApplicationRecord
     return if suspended_all?
 
     next_time = Chrono::Iterator.new(self.cron, now: now).next
-    suspend_times = suspend_times(now, next_time)
+    suspend_times = suspend_times(next_time, next_time)
 
     if suspend_times.include?(next_time)
       self.next(next_time)

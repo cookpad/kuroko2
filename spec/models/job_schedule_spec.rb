@@ -46,6 +46,19 @@ describe Kuroko2::JobSchedule do
       end
     end
 
+    context 'When schedules suspended long time ' do
+      let(:time) { Time.new(2016, 1, 2, 10, 0) }
+      let(:cron) { '0 10 1-7 * *' }
+
+      before do
+        create(:job_suspend_schedule, job_definition: definition, cron: '* * * * 0-5')
+      end
+
+      it 'returns next schedule' do
+        expect(schedule.next(time)).to eq(Time.new(2016, 2, 6, 10, 0))
+      end
+    end
+
     context 'With invalid date' do
       let(:cron) { '* * 31 2 *' }
       let(:time) { Time.new(2016, 2, 28, 10, 0) }
