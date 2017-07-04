@@ -15,14 +15,13 @@ class Kuroko2::JobSchedule < Kuroko2::ApplicationRecord
     (?:[0-6]|(?:(?:[0-6]\-[0-6]|\*)(?:\/[0-6])?))(?:,(?:[0-6]|(?:(?:[0-6]\-[0-6]|\*)(?:\/[0-6])?)))*
   \z/x
 
+  CHRONO_SCHEDULE_METHODS = %i[minutes hours days months wdays]
+
   validates :cron, format: { with: CRON_FORMAT }, uniqueness: { scope: :job_definition_id }
   validate :validate_cron_schedule
 
   def next(now = Time.current)
-    if 1.month.ago(now).future?
-      Kuroko2.logger.warn("Exceeds the time of criteria #{now}. (Up to 1 month since)")
-      return
-    end
+    return if suspended_all?
 
     next_time = Chrono::Iterator.new(self.cron, now: now).next
     suspend_times = suspend_times(now, next_time)
@@ -51,7 +50,7 @@ class Kuroko2::JobSchedule < Kuroko2::ApplicationRecord
   end
 
   def suspend_times(time_from, time_to)
-    if job_definition && job_definition.job_suspend_schedules.present?
+    if has_suspend_schedules?
       job_definition.job_suspend_schedules.
         map { |schedule| schedule.suspend_times(time_from, time_to) }.flatten.uniq
     else
@@ -60,6 +59,25 @@ class Kuroko2::JobSchedule < Kuroko2::ApplicationRecord
   end
 
   private
+
+  def suspended_all?
+    return false unless has_suspend_schedules?
+
+    launch_schedule = Chrono::Schedule.new(cron)
+    schedule = CHRONO_SCHEDULE_METHODS.each_with_object({}) do |method, h|
+      h[method] = launch_schedule.send(method)
+      job_definition.job_suspend_schedules.each do |suspend_schedule_model|
+        suspend_schedule = Chrono::Schedule.new(suspend_schedule_model.cron)
+        h[method] = h[method] - suspend_schedule.send(method)
+      end
+    end
+
+    schedule.values.all?(&:empty?)
+  end
+
+  def has_suspend_schedules?
+    job_definition && !job_definition.job_suspend_schedules.empty?
+  end
 
   def validate_cron_schedule
     if CRON_FORMAT === cron
