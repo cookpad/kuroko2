@@ -51,11 +51,9 @@ class Kuroko2::JobSuspendSchedule < Kuroko2::ApplicationRecord
         end
 
         if schedule.values.all?(&:empty?)
-          errors.add(:cron, "suspends all schedules")
+          errors.add(:cron, "suspends all launched schedules")
         end
       end
-    else
-      errors.add(:cron, "has invalid format")
     end
   rescue Chrono::Fields::Base::InvalidField => e
     errors.add(:cron, "has invalid field: #{e.message}")

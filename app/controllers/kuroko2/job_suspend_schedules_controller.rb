@@ -13,7 +13,7 @@ class Kuroko2::JobSuspendSchedulesController < Kuroko2::ApplicationController
     if suspend_schedule.valid?
       render json: suspend_schedule, status: :created
     else
-      render json: suspend_schedule, status: :bad_request
+      render json: suspend_schedule.errors.full_messages, status: :bad_request
     end
   end
 
