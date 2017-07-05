@@ -27,7 +27,9 @@ class Kuroko2::JobSuspendSchedule < Kuroko2::ApplicationRecord
   def validate_cron_schedule
     if Kuroko2::JobSchedule::CRON_FORMAT === cron
       suspend_schedule = Chrono::Schedule.new(cron)
-      unless job_definition.job_schedules.empty?
+      if job_definition.job_schedules.empty?
+        errors.add(:cron, "needs job schedules")
+      else
         schedule = job_definition.job_schedules.each_with_object({}) do |launch_schedule_model, h|
           launch_schedule = Chrono::Schedule.new(launch_schedule_model.cron)
           Kuroko2::JobSchedule::CHRONO_SCHEDULE_METHODS.each do |method|

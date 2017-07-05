@@ -28,7 +28,7 @@ describe Kuroko2::JobSchedule do
 
     context 'With suspend_schelule' do
       before do
-        create(:job_suspend_schedule, job_definition: definition, cron: '0-29 10 * * *')
+        create(:job_suspend_schedule, job_definition: schedule.job_definition, cron: '0-29 10 * * *')
       end
 
       it 'skips suspend time range' do
@@ -38,7 +38,8 @@ describe Kuroko2::JobSchedule do
 
     context 'When suspend schelules covers all schedule' do
       before do
-        create(:job_suspend_schedule, job_definition: definition, cron: '0-50 10 * * *')
+        suspend_schedule = create(:job_suspend_schedule, job_definition: schedule.job_definition, cron: '50 10 * * *')
+        suspend_schedule.update_column(:cron, '0-50 10 * * *')
       end
 
       it 'returns nil' do
@@ -51,7 +52,7 @@ describe Kuroko2::JobSchedule do
       let(:cron) { '0 10 1-7 * *' }
 
       before do
-        create(:job_suspend_schedule, job_definition: definition, cron: '* * * * 0-5')
+        create(:job_suspend_schedule, job_definition: schedule.job_definition, cron: '* * * * 0-5')
       end
 
       it 'returns next schedule' do
@@ -62,7 +63,7 @@ describe Kuroko2::JobSchedule do
     context 'When suspended schedule has wdays and days' do
       let(:time) { Time.new(2016, 1, 2, 10, 0) }
       before do
-        create(:job_suspend_schedule, job_definition: definition, cron: '* * 1 * 0') # suspend every sunday or first day of month
+        create(:job_suspend_schedule, job_definition: schedule.job_definition, cron: '* * 1 * 0') # suspend every sunday or first day of month
       end
 
       context 'If the schedule has days only' do
