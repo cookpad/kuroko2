@@ -6,5 +6,7 @@ FactoryGirl.define do
 
       "#{n % 60} #{hour} #{day} * *"
     end
+
+    job_definition
   end
 end
