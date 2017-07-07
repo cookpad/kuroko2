@@ -64,7 +64,21 @@ RSpec.describe "Management job definitions", type: :feature do
 
     fill_in 'job_suspend_schedule_cron', with: '* * * * *'
     click_on 'Add Suspend Schedule'
-    expect(page).to have_selector('#suspend-schedules table tbody tr .log', text: '* * * * *', count: 1)
+    expect(page).to have_content('Cron needs job schedules')
+    expect(page).to have_selector('#suspend-schedules table tbody tr .log', text: '* * * * *', count: 0)
+
+    fill_in 'job_schedule_cron', with: '* * * * *'
+    click_on 'Add Schedule'
+    expect(page).to have_selector('#schedules table tbody tr .log', text: '* * * * *', count: 1)
+
+    fill_in 'job_suspend_schedule_cron', with: '* * * * *'
+    click_on 'Add Suspend Schedule'
+    expect(page).to have_content('Cron suspends all launched schedules')
+    expect(page).to have_selector('#suspend-schedules table tbody tr .log', text: '* * * * *', count: 0)
+
+    fill_in 'job_suspend_schedule_cron', with: '* 10 * * *'
+    click_on 'Add Suspend Schedule'
+    expect(page).to have_selector('#suspend-schedules table tbody tr .log', text: '* 10 * * *', count: 1)
 
     within '#suspend-schedules' do
       click_on 'Delete'

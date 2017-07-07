@@ -21,7 +21,10 @@
   = form_for([@definition, @suspend_schedule], remote: true) do |form|
     .box-body
       #suspend-cron-field.row.form-group
+        .col-md-12
+          div id="suspend-cron-error"
         .col-md-8
           = form.text_field :cron, class: 'form-control script-input', placeholder: '0 9 * * *'
+          = javascript_include_tag 'kuroko2/suspend_schedule_handler'
         .col-md-4
           = form.submit 'Add Suspend Schedule', class: 'btn btn-default btn-block'
