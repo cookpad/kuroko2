@@ -1,6 +1,16 @@
-- content_for :title, 'Users' + (params[:target] == 'group' ? ' > Groups' : '')
+- content_for :title do
+  - if params[:target] == 'group'
+    | Users > Groups
+  - else
+    | Users
+
 - content_for :content_title do
-  <i class="fa fa-users"></i> Users#{params[:target] == 'group' ? ' <i class="fa fa-angle-double-right"></i> Groups' : ''}
+  - if params[:target] == 'group'
+    | <i class="fa fa-users"></i> Users
+      <i class="fa fa-angle-double-right"></i> Groups
+  - else
+    | <i class="fa fa-users"></i> Users
+
 - @scope = @users
 
 - if @user.errors.any?
