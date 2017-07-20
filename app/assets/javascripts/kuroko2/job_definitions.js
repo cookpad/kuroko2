@@ -76,4 +76,24 @@ jQuery(function ($) {
   });
 
   $('#admin_assignments_user_id').select2();
+
+  $('#adhoc-launch').submit(function(event) {
+      event.preventDefault();
+      var $form = $(this);
+
+      $.ajax({
+          url: $form.attr('action'),
+          type: $form.attr('method'),
+          data: $form.serialize(),
+          timeout: 10000,
+
+          success: function(result, textStatus, xhr) {
+              window.location.href = result.url;
+          },
+
+          error: function(xhr, textStatus, error) {
+              $("#launchAdHocModal-error").show().html("<p>Error: " + xhr.responseJSON.reason + "</p>");
+          }
+      });
+  });
 });

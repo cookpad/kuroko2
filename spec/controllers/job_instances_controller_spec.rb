@@ -25,7 +25,7 @@ describe Kuroko2::JobInstancesController do
     before { post :create, params: { job_definition_id: definition.id }, xhr: true }
 
     it do
-      expect(response).to redirect_to(job_definition_job_instance_path(definition, assigns(:instance)))
+      expect(response).to have_http_status(:ok)
 
       expect(assigns(:definition)).to eq definition
     end
@@ -35,6 +35,22 @@ describe Kuroko2::JobInstancesController do
       before { post :create, params: { job_definition_id: definition.id, job_definition: { script: script } }, xhr: true }
       it 'creates instance in Ad-Hoc script' do
         expect(assigns(:instance).script).to eq script
+      end
+    end
+
+    context 'with Ad-Hoc `empty script` parameter' do
+      let(:script) { "" }
+      before { post :create, params: { job_definition_id: definition.id, job_definition: { script: script } }, xhr: true }
+      it 'creates instance in Ad-Hoc script' do
+        expect(assigns(:instance).script).to eq "noop:\n"
+      end
+    end
+
+    context 'with Ad-Hoc `invalid script` parameter' do
+      let(:script) { "error" }
+      before { post :create, params: { job_definition_id: definition.id, job_definition: { script: script } }, xhr: true }
+      it 'creates instance in Ad-Hoc script' do
+        expect(assigns(:instance)).to eq ["There are syntax errors on script: (line 1) syntax error."]
       end
     end
   end
