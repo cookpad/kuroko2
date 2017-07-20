@@ -38,7 +38,7 @@
 .modal.fade id="launchAdHocModal" tabindex="-1" role="dialog" aria-labelledby="launchAdHocModalLabel"
   .modal-dialog
     .modal-content
-      = form_for @definition, url: job_definition_job_instances_path(@definition), method: :post, html: { role: 'form' } do |form|
+      = form_for @definition, url: job_definition_job_instances_path(@definition), method: :post, html: { role: 'form', id: 'adhoc-launch' } do |form|
 
         .modal-header
           button type="button" class="close" data-dismiss="modal" aria-label="Close"
@@ -47,6 +47,8 @@
           h4.modal-title
             'Launch Job
         .modal-body
+          .col-md-12
+            div id="launchAdHocModal-error"
           .form-group
             = form.label :script
             = form.text_area :script, class: 'form-control script-input', rows: 10, value: @definition.script

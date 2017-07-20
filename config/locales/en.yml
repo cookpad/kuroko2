@@ -26,3 +26,6 @@ en:
       validation_error: 'There are validation errors on script: %{reason}'
       validate_number_of_admins: 'should be at least one person.'
       confirm_active_instances: 'There are a working job instance.'
+    job_instance:
+      script_syntax: 'There are syntax errors on script: %{reason}'
+      validation_error: 'There are validation errors on script: %{reason}'

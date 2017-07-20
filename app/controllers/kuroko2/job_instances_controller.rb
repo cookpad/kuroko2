@@ -15,7 +15,13 @@ class Kuroko2::JobInstancesController < Kuroko2::ApplicationController
     end
 
     @instance = @definition.create_instance(creation_params)
-    redirect_to job_definition_job_instance_path(@definition, @instance)
+    if @definition.errors.any?
+      json = JSON.generate({'reason' => @instance[0] })
+      render json: json, status: :bad_request
+    else
+      json = JSON.generate({'url' => request.protocol + request.host_with_port + job_definition_job_instance_path(@definition, @instance)})
+      render json: json, status: :ok
+    end
   end
 
   def show

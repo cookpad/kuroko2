@@ -97,7 +97,20 @@ class Kuroko2::JobDefinition < Kuroko2::ApplicationRecord
       message = "(token #{token.uuid}) #{message}"
     end
 
-    job_instances.create!(script: script, log_message: message)
+    if script.nil?
+      job_instances.create!(script: script, log_message: message)
+    elsif script == ''
+      job_instances.create!(script: script, log_message: message)
+    else
+      begin
+        Kuroko2::Workflow::ScriptParser.new(script).parse
+        job_instances.create!(script: script, log_message: message)
+      rescue Kuroko2::Workflow::SyntaxError => e
+        errors.add(:base, I18n.t('model.job_instance.script_syntax', reason: e.message))
+      rescue Kuroko2::Workflow::AssertionError => e
+        errors.add(:base, I18n.t('model.job_instance.validation_error', reason: e.message))
+      end
+    end
   end
 
   private
