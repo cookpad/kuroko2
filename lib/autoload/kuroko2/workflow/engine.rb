@@ -125,7 +125,7 @@ module Kuroko2
         token.job_instance.logs.error("(token #{token.uuid}) #{message}")
         token.job_instance.touch(:canceled_at)
 
-        Token.delete_all(job_definition: token.job_definition)
+        Token.where(job_definition: token.job_definition).delete_all
         token.job_instance.logs.warn("(token #{token.uuid}) This job is canceled.")
 
         Kuroko2.logger.error(message)
