@@ -72,6 +72,21 @@ module Kuroko2
         end
       end
 
+      def auto_retry(node, token)
+        token.context['RETRY'][node.path]['current'] += 1
+
+        message = "(token #{token.uuid}) Retry current node: '#{node.type}: #{node.option}'"
+        token.job_instance.logs.info(message)
+        Kuroko2.logger.info(message)
+
+        message = "(token #{token.uuid}) The number of retries: " << 
+          "#{token.context['RETRY'][node.path]['current']} / #{token.context['RETRY'][node.path]['count']}"
+        token.job_instance.logs.info(message)
+        Kuroko2.logger.info(message)
+
+        sleep_for_each_retry(node, token)
+      end
+
       private
 
       def execute_task(node, token)
@@ -85,7 +100,13 @@ module Kuroko2
         when :pass
           # Do nothing
         when :failure
-          failure(token)
+          if token.context['RETRY'].present? &&
+              token.context['RETRY'][node.path].present? &&
+              token.context['RETRY'][node.path]['count'] > token.context['RETRY'][node.path]['current']
+            auto_retry(node, token)
+          else
+            failure(token)
+          end
         end
       rescue KeyError => e
         raise EngineError.new(e.message)
@@ -162,6 +183,15 @@ module Kuroko2
           message = "(token #{token.uuid}) The running time is longer than #{expected_time(token)} minutes!"
           token.job_instance.logs.info(message)
           Kuroko2.logger.info(message)
+        end
+      end
+
+      def sleep_for_each_retry(node, token)
+        if token.context['RETRY'].present? && token.context['RETRY'][node.path].present?
+          started_time = Time.current.to_i
+          while started_time + token.context['RETRY'][node.path]['sleep_time'] > Time.current.to_i
+            # sleep
+          end
         end
       end
     end

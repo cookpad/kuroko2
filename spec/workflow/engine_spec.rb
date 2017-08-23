@@ -398,6 +398,63 @@ module Kuroko2::Workflow
           expect(token.status_name).to eq 'finished'
         end
       end
+
+      context 'with retry' do
+        let!(:definition) do
+          create(:job_definition_with_instances, script: <<-EOF.strip_heredoc)
+            retry: count=3 sleep_time=1
+              noop:
+              noop:
+          EOF
+        end
+
+        let(:root){ ScriptParser.new(token.script).parse(validate: false) }
+        let(:object) { Task::Noop.new(root.next.next, token) }
+      
+        before do
+          allow(Task::Noop).to receive(:new).and_return(object)
+        end
+
+        specify do
+          subject.process(token)
+          subject.process(token)
+          expect(token.context['RETRY']['/0-retry/0-noop']['current']).to eq 0
+          expect(token.status_name).to eq 'working'
+          allow(object).to receive(:execute).and_return(:failure)
+          subject.process(token)
+          expect(token.context['RETRY']['/0-retry/0-noop']['current']).to eq 1
+          expect(token.status_name).to eq 'working'
+          subject.process(token)
+          expect(token.context['RETRY']['/0-retry/0-noop']['current']).to eq 2
+          expect(token.status_name).to eq 'working'
+          allow(object).to receive(:execute).and_return(:next)
+          subject.process(token)
+          expect(token.context['RETRY']['/0-retry/0-noop']['current']).to eq 2
+          expect(token.status_name).to eq 'working'
+          subject.process(token)
+          expect(token.status_name).to eq 'finished'
+        end
+
+        specify do
+          subject.process(token)
+          subject.process(token)
+          expect(token.context['RETRY']['/0-retry/0-noop']['current']).to eq 0
+          expect(token.status_name).to eq 'working'
+          allow(object).to receive(:execute).and_return(:failure)
+          subject.process(token)
+          expect(token.context['RETRY']['/0-retry/0-noop']['current']).to eq 1
+          expect(token.status_name).to eq 'working'
+          subject.process(token)
+          expect(token.context['RETRY']['/0-retry/0-noop']['current']).to eq 2
+          expect(token.status_name).to eq 'working'
+          subject.process(token)
+          expect(token.context['RETRY']['/0-retry/0-noop']['current']).to eq 3
+          expect(token.status_name).to eq 'working'
+          subject.process(token)
+          expect(token.path).to eq '/0-retry/0-noop'
+          expect(token.status_name).to eq 'failure'
+        end
+      end
     end
   end
 end

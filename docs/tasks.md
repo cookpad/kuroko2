@@ -224,3 +224,25 @@ The message to show.
 ```
 echo: Hello world!
 ```
+
+## retry
+
+`retry` task retries the job from a failed task automatically.
+
+**Option**
+
+`count` option and optional `sleep_time` option.
+`count` option is required.
+
+The count option is the number of attempts to execute each task.
+The sleep time option is the number of seconds in an interval of retries.
+
+**Example**
+
+```
+retry: count=3 sleep_time=30
+  execute: echo 1
+  execute: test -e /tmp/foo.txt
+```
+
+if `execute: test -e /tmp/foo.txt` is failed,  `execute: echo 1` is not executed and `execute: test -e /tmp/foo.txt` is only executed.
