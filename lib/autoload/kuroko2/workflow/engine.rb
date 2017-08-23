@@ -170,6 +170,8 @@ module Kuroko2
       end
 
       def auto_retry(node, token)
+        sleep_for_each_retry(node, token)
+
         token.context['RETRY'][node.path]['current'] += 1
 
         message = "(token #{token.uuid}) Retry current node: '#{node.type}: #{node.option}'"
@@ -180,14 +182,14 @@ module Kuroko2
           "#{token.context['RETRY'][node.path]['current']} / #{token.context['RETRY'][node.path]['count']}"
         token.job_instance.logs.info(message)
         Kuroko2.logger.info(message)
-
-        sleep_for_each_retry(node, token)
       end
 
       def sleep_for_each_retry(node, token)
-        started_time = Time.current.to_i
-        while started_time + token.context['RETRY'][node.path]['sleep_time'] > Time.current.to_i
-        end
+        message = "(token #{token.uuid}) Sleep for #{token.context['RETRY'][node.path]['sleep_time']} seconds"
+        token.job_instance.logs.info(message)
+        Kuroko2.logger.info(message)
+
+        sleep(token.context['RETRY'][node.path]['sleep_time'])
       end
 
       def auto_retryable?(node, token)
