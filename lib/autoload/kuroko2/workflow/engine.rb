@@ -185,11 +185,8 @@ module Kuroko2
       end
 
       def sleep_for_each_retry(node, token)
-        if token.context['RETRY'].present? && token.context['RETRY'][node.path].present?
-          started_time = Time.current.to_i
-          while started_time + token.context['RETRY'][node.path]['sleep_time'] > Time.current.to_i
-            # sleep
-          end
+        started_time = Time.current.to_i
+        while started_time + token.context['RETRY'][node.path]['sleep_time'] > Time.current.to_i
         end
       end
 
