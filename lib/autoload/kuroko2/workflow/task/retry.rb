@@ -26,7 +26,7 @@ module Kuroko2
   
           private
   
-          # ex. count=5 sleep_time=30
+          # e.g count=5 sleep_time=30
           def parse_option(option)
             raise_assertion_error unless option
             retry_option = { "sleep_time" => 0 }
