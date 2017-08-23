@@ -72,21 +72,6 @@ module Kuroko2
         end
       end
 
-      def auto_retry(node, token)
-        token.context['RETRY'][node.path]['current'] += 1
-
-        message = "(token #{token.uuid}) Retry current node: '#{node.type}: #{node.option}'"
-        token.job_instance.logs.info(message)
-        Kuroko2.logger.info(message)
-
-        message = "(token #{token.uuid}) The number of retries: " << 
-          "#{token.context['RETRY'][node.path]['current']} / #{token.context['RETRY'][node.path]['count']}"
-        token.job_instance.logs.info(message)
-        Kuroko2.logger.info(message)
-
-        sleep_for_each_retry(node, token)
-      end
-
       private
 
       def execute_task(node, token)
@@ -182,6 +167,21 @@ module Kuroko2
           token.job_instance.logs.info(message)
           Kuroko2.logger.info(message)
         end
+      end
+
+      def auto_retry(node, token)
+        token.context['RETRY'][node.path]['current'] += 1
+
+        message = "(token #{token.uuid}) Retry current node: '#{node.type}: #{node.option}'"
+        token.job_instance.logs.info(message)
+        Kuroko2.logger.info(message)
+
+        message = "(token #{token.uuid}) The number of retries: " << 
+          "#{token.context['RETRY'][node.path]['current']} / #{token.context['RETRY'][node.path]['count']}"
+        token.job_instance.logs.info(message)
+        Kuroko2.logger.info(message)
+
+        sleep_for_each_retry(node, token)
       end
 
       def sleep_for_each_retry(node, token)
