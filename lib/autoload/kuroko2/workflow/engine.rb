@@ -100,9 +100,7 @@ module Kuroko2
         when :pass
           # Do nothing
         when :failure
-          if token.context['RETRY'].present? &&
-              token.context['RETRY'][node.path].present? &&
-              token.context['RETRY'][node.path]['count'] > token.context['RETRY'][node.path]['current']
+          if auto_retryable?(node, token)
             auto_retry(node, token)
           else
             failure(token)
@@ -193,6 +191,12 @@ module Kuroko2
             # sleep
           end
         end
+      end
+
+      def auto_retryable?(node, token)
+        token.context['RETRY'].present? &&
+          token.context['RETRY'][node.path].present? &&
+          token.context['RETRY'][node.path]['count'] > token.context['RETRY'][node.path]['current']
       end
     end
   end
