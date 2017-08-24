@@ -55,7 +55,7 @@ module Kuroko2::Workflow::Task
         it 'passes validation' do
           expect(task.execute).to eq :next
           token.context['RETRY'].each {|path, retry_option|
-            expect(retry_option[:current]).to eq 0
+            expect(retry_option[:retried_count]).to eq 0
             expect(retry_option[:count]).to eq 3
             expect(retry_option[:sleep_time]).to eq 10
           }

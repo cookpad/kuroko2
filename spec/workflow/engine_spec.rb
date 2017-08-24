@@ -418,18 +418,18 @@ module Kuroko2::Workflow
         specify do
           subject.process(token)
           subject.process(token)
-          expect(token.context['RETRY']['/0-retry/0-noop']['current']).to eq 0
+          expect(token.context['RETRY']['/0-retry/0-noop']['retried_count']).to eq 0
           expect(token.status_name).to eq 'working'
           allow(object).to receive(:execute).and_return(:failure)
           subject.process(token)
-          expect(token.context['RETRY']['/0-retry/0-noop']['current']).to eq 1
+          expect(token.context['RETRY']['/0-retry/0-noop']['retried_count']).to eq 1
           expect(token.status_name).to eq 'working'
           subject.process(token)
-          expect(token.context['RETRY']['/0-retry/0-noop']['current']).to eq 2
+          expect(token.context['RETRY']['/0-retry/0-noop']['retried_count']).to eq 2
           expect(token.status_name).to eq 'working'
           allow(object).to receive(:execute).and_return(:next)
           subject.process(token)
-          expect(token.context['RETRY']['/0-retry/0-noop']['current']).to eq 2
+          expect(token.context['RETRY']['/0-retry/0-noop']['retried_count']).to eq 2
           expect(token.status_name).to eq 'working'
           subject.process(token)
           expect(token.status_name).to eq 'finished'
@@ -438,17 +438,17 @@ module Kuroko2::Workflow
         specify do
           subject.process(token)
           subject.process(token)
-          expect(token.context['RETRY']['/0-retry/0-noop']['current']).to eq 0
+          expect(token.context['RETRY']['/0-retry/0-noop']['retried_count']).to eq 0
           expect(token.status_name).to eq 'working'
           allow(object).to receive(:execute).and_return(:failure)
           subject.process(token)
-          expect(token.context['RETRY']['/0-retry/0-noop']['current']).to eq 1
+          expect(token.context['RETRY']['/0-retry/0-noop']['retried_count']).to eq 1
           expect(token.status_name).to eq 'working'
           subject.process(token)
-          expect(token.context['RETRY']['/0-retry/0-noop']['current']).to eq 2
+          expect(token.context['RETRY']['/0-retry/0-noop']['retried_count']).to eq 2
           expect(token.status_name).to eq 'working'
           subject.process(token)
-          expect(token.context['RETRY']['/0-retry/0-noop']['current']).to eq 3
+          expect(token.context['RETRY']['/0-retry/0-noop']['retried_count']).to eq 3
           expect(token.status_name).to eq 'working'
           subject.process(token)
           expect(token.path).to eq '/0-retry/0-noop'

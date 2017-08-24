@@ -7,7 +7,7 @@ module Kuroko2
           token.context['RETRY'] ||= {}
           node.children.each do |child|
             token.context['RETRY'][child.path] = {
-              current: 0,
+              retried_count: 0,
               count: retry_option['count'].to_i,
               sleep_time: retry_option['sleep_time'].to_i
             }
