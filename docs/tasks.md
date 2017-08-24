@@ -224,3 +224,29 @@ The message to show.
 ```
 echo: Hello world!
 ```
+
+## retry
+
+`retry` task retries the job from a failed task automatically.
+
+**Option**
+
+`count` option and optional `sleep_time` option.
+`count` option is required.
+
+The count option is the number of attempts to execute each task.
+The sleep time option is the number of seconds in an interval of retries.
+
+**Example**
+
+```
+retry: count=3 sleep_time=30
+  execute: echo 1
+  execute: test -e /tmp/foo.txt
+```
+
+Assume that you have more than one command. and the command which triggered not first, was failed.
+In this case, the retried job started from the command which make job failed. For instance, you have above task definition:
+
+- `execute: test -e /tmp/foo.txt` failed (first command is success, and the second was fail)
+- The retried job starts from `execute: test -e /tmp/foo.txt`
