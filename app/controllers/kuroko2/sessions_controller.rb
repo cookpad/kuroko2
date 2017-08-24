@@ -35,7 +35,8 @@ class Kuroko2::SessionsController < Kuroko2::ApplicationController
   end
 
   def valid_google_hosted_domain?
-    hd = Kuroko2.config.app_authentication.google_oauth2.options.hd
+    options = Kuroko2.config.app_authentication.google_oauth2.options
+    hd = options ? options.hd : nil
     if hd.present?
       hd == auth_hash.extra.id_info.hd
     else
