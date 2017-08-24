@@ -415,7 +415,7 @@ module Kuroko2::Workflow
           allow(Task::Noop).to receive(:new).and_return(object)
         end
 
-        specify do
+        it 'passes all tasks' do
           subject.process(token)
           subject.process(token)
           expect(token.context['RETRY']['/0-retry/0-noop']['retried_count']).to eq 0
@@ -435,7 +435,7 @@ module Kuroko2::Workflow
           expect(token.status_name).to eq 'finished'
         end
 
-        specify do
+        it 'fails in /0-retry/0-noop' do
           subject.process(token)
           subject.process(token)
           expect(token.context['RETRY']['/0-retry/0-noop']['retried_count']).to eq 0
