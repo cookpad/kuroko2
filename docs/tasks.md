@@ -245,4 +245,8 @@ retry: count=3 sleep_time=30
   execute: test -e /tmp/foo.txt
 ```
 
-if `execute: test -e /tmp/foo.txt` is failed,  `execute: echo 1` is not executed and `execute: test -e /tmp/foo.txt` is only executed.
+Assume that you have more than one command. and the command which triggered not first, was failed.
+In this case, the retried job started from the command which make job failed. For instance, you have above task definition:
+
+- `execute: test -e /tmp/foo.txt` failed (first command is success, and the second was fail)
+- The retried job starts from `execute: test -e /tmp/foo.txt`
