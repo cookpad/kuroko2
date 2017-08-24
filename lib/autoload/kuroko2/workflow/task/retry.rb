@@ -5,13 +5,13 @@ module Kuroko2
           def execute
             retry_option = parse_option(option)
             token.context['RETRY'] ||= {}
-            node.children.each {|child|
+            node.children.each do |child|
               token.context['RETRY'][child.path] = {
                 current: 0,
                 count: retry_option['count'].to_i,
                 sleep_time: retry_option['sleep_time'].to_i
               }
-            }
+            end
   
             :next
           end
