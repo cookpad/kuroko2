@@ -75,7 +75,11 @@ module Kuroko2
       private
 
       def execute_task(node, token)
-        result = node.execute(token)
+        result = if sleeping?(token)
+            :pass
+          else
+            node.execute(token)
+          end
 
         case result
         when :next
@@ -93,6 +97,10 @@ module Kuroko2
         end
       rescue KeyError => e
         raise EngineError.new(e.message)
+      end
+
+      def sleeping?(token)
+        token.context['SLEEP'].present? && token.context['SLEEP'] > Time.current.to_i
       end
 
       def process_next(node, token)
@@ -189,7 +197,7 @@ module Kuroko2
         token.job_instance.logs.info(message)
         Kuroko2.logger.info(message)
 
-        sleep(token.context['RETRY'][node.path]['sleep_time'])
+        token.context['SLEEP'] = Time.current.to_i + token.context['RETRY'][node.path]['sleep_time']
       end
 
       def auto_retryable?(node, token)

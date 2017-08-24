@@ -402,7 +402,7 @@ module Kuroko2::Workflow
       context 'with retry' do
         let!(:definition) do
           create(:job_definition_with_instances, script: <<-EOF.strip_heredoc)
-            retry: count=3 sleep_time=1
+            retry: count=3 sleep_time=0
               noop:
               noop:
           EOF
