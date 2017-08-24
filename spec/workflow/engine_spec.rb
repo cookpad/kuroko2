@@ -408,7 +408,7 @@ module Kuroko2::Workflow
           EOF
         end
 
-        let(:root){ ScriptParser.new(token.script).parse(validate: false) }
+        let(:root) { ScriptParser.new(token.script).parse(validate: false) }
         let(:object) { Task::Noop.new(root.next.next, token) }
       
         before do

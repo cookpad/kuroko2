@@ -23,7 +23,7 @@ module Kuroko2::Workflow::Task
         end
 
         it 'passes validation' do
-          expect{ task.validate }.not_to raise_error
+          expect { task.validate }.not_to raise_error
         end
       end
 
@@ -36,7 +36,7 @@ module Kuroko2::Workflow::Task
         end
 
         it 'raises AssertionError' do
-          expect{ task.validate }.to raise_error(Kuroko2::Workflow::AssertionError)
+          expect { task.validate }.to raise_error(Kuroko2::Workflow::AssertionError)
         end
       end
     end
@@ -54,11 +54,11 @@ module Kuroko2::Workflow::Task
 
         it 'passes validation' do
           expect(task.execute).to eq :next
-          token.context['RETRY'].each {|path, retry_option|
+          token.context['RETRY'].each do |path, retry_option|
             expect(retry_option[:retried_count]).to eq 0
             expect(retry_option[:count]).to eq 3
             expect(retry_option[:sleep_time]).to eq 10
-          }
+          end
         end
       end
     end
