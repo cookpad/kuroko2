@@ -20,14 +20,14 @@ module Kuroko2
           retry_option = parse_option(option)
 
           unless retry_option.has_key?("count")
-            raise_assertion_error
+            raise Workflow::AssertionError, "Syntax error option value of retry: #{option} [count option is required]"
           end
         end
 
         private
 
         # e.g count=5 sleep_time=30
-        def parse_option(option)
+        def parse_option(option
           raise_assertion_error unless option
           retry_option = { "sleep_time" => 0 }
           scanner = StringScanner.new(option)
