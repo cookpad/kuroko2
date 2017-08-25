@@ -190,13 +190,13 @@ module Kuroko2
           "#{token.context['RETRY'][node.path]['retried_count']} / #{token.context['RETRY'][node.path]['count']}"
         token.job_instance.logs.info(message)
         Kuroko2.logger.info(message)
-      end
 
-      def set_sleep_context_before_retrying(node, token)
         message = "(token #{token.uuid}) Sleep for #{token.context['RETRY'][node.path]['sleep_time']} seconds"
         token.job_instance.logs.info(message)
         Kuroko2.logger.info(message)
+      end
 
+      def set_sleep_context_before_retrying(node, token)
         token.context['SLEEP'] = Time.current.to_i + token.context['RETRY'][node.path]['sleep_time']
       end
 
