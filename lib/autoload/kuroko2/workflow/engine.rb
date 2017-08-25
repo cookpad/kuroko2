@@ -178,7 +178,7 @@ module Kuroko2
       end
 
       def auto_retry(node, token)
-        sleep_for_each_retry(node, token)
+        set_sleep_context_before_retrying(node, token)
 
         token.context['RETRY'][node.path]['retried_count'] += 1
 
@@ -192,7 +192,7 @@ module Kuroko2
         Kuroko2.logger.info(message)
       end
 
-      def sleep_for_each_retry(node, token)
+      def set_sleep_context_before_retrying(node, token)
         message = "(token #{token.uuid}) Sleep for #{token.context['RETRY'][node.path]['sleep_time']} seconds"
         token.job_instance.logs.info(message)
         Kuroko2.logger.info(message)
