@@ -10,9 +10,6 @@ class Kuroko2::Api::JobDefinitionsController < Kuroko2::Api::ApplicationControll
 
   def create_resource
     definition = Kuroko2::JobDefinition.new(definition_params(params))
-    unless definition.api_allowed?
-      raise_not_allowed(definition)
-    end
     user_ids = admin_id_params(params)
     definition.admins = Kuroko2::User.active.with(user_ids)
 
@@ -35,18 +32,12 @@ class Kuroko2::Api::JobDefinitionsController < Kuroko2::Api::ApplicationControll
   
   def update_resource
     definition = Kuroko2::JobDefinition.find(params[:id])
-    unless definition.api_allowed?
-      raise_not_allowed(definition)
-    end
     definition.update_attributes(definition_params(params))
     @resource = Kuroko2::Api::JobDefinitionResource.new(definition)
   end
 
   def destroy_resource
     definition = Kuroko2::JobDefinition.find(params[:id])
-    unless definition.api_allowed?
-      raise_not_allowed(definition)
-    end
     definition.destroy
   end
 
@@ -73,9 +64,5 @@ class Kuroko2::Api::JobDefinitionsController < Kuroko2::Api::ApplicationControll
       try!(:[], :user_id).
       try!(:reject, &:blank?).
       try!(:map, &:to_i) || []
-  end
-
-  def raise_not_allowed(definition)
-    raise HTTP::Forbidden.new("#{definition.name} is not allowed to be executed via API")
   end
 end
