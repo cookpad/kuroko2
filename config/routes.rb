@@ -42,7 +42,7 @@ Kuroko2::Engine.routes.draw do
   get '/osd' => 'dashboard#osd', as: :osd
 
   scope :v1, module: 'api', as: 'api' do
-    resources :job_definitions, path: 'definitions', only: %w(index create show update destroy) do
+    resources :job_definitions, path: 'definitions', only: %w(create show update destroy) do
       resources :job_instances, path: 'instances', only: %w(show create)
     end
 

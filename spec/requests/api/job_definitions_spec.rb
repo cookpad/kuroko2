@@ -11,29 +11,6 @@ describe 'job_definitions' do
   end
   let(:result) { JSON.parse(response.body) }
 
-  describe 'GET /v1/definitions' do
-    let(:definition) do
-      create(:job_definition, script: 'noop:', api_allowed: true)
-    end
-
-    before do
-      definition
-    end
-
-    it 'returns definitions' do
-      get "/v1/definitions", params: {}, env: env
-      expect(result).to eq(
-        [{
-          'id' => definition.id,
-          'name' => definition.name,
-          'description' => definition.description,
-          'script' => definition.script
-        }]
-      )
-      expect(response.status).to eq(200)
-    end
-  end
-
   describe 'POST /v1/definitions' do
     let(:params) do
       {

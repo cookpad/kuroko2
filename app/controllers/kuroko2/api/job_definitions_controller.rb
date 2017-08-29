@@ -4,8 +4,6 @@ class Kuroko2::Api::JobDefinitionsController < Kuroko2::Api::ApplicationControll
   private
 
   def require_resources
-    definitions = Kuroko2::JobDefinition.all
-    @resources = definitions.map {|definition| Kuroko2::Api::JobDefinitionResource.new(definition) }
   end
 
   def create_resource
