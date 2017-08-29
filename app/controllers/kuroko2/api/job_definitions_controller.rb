@@ -34,11 +34,6 @@ class Kuroko2::Api::JobDefinitionsController < Kuroko2::Api::ApplicationControll
     @resource = Kuroko2::Api::JobDefinitionResource.new(definition)
   end
 
-  def destroy_resource
-    definition = Kuroko2::JobDefinition.find(params[:id])
-    definition.destroy
-  end
-
   def definition_params(params)
     params.permit(
       :name,

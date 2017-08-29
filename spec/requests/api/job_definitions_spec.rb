@@ -95,18 +95,4 @@ describe 'job_definitions' do
       expect(response.status).to eq(204)
     end
   end
-
-  describe 'DELETE /v1/definitions/:id' do
-    let(:definition) do
-      create(:job_definition, script: 'noop:', api_allowed: true)
-    end
-
-    it 'deletes a definition' do
-      expect {
-        delete "/v1/definitions/#{definition.id}", params: {}, env: env
-      }.to change {
-        Kuroko2::JobDefinition.count
-      }.by(0)
-    end
-  end
 end
