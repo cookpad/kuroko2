@@ -75,7 +75,11 @@ module Kuroko2
       private
 
       def execute_task(node, token)
-        result = node.execute(token)
+        result = if sleeping?(token)
+            :pass
+          else
+            node.execute(token)
+          end
 
         case result
         when :next
@@ -85,10 +89,18 @@ module Kuroko2
         when :pass
           # Do nothing
         when :failure
-          failure(token)
+          if auto_retryable?(node, token)
+            auto_retry(node, token)
+          else
+            failure(token)
+          end
         end
       rescue KeyError => e
         raise EngineError.new(e.message)
+      end
+
+      def sleeping?(token)
+        token.context['SLEEP'].present? && token.context['SLEEP'] > Time.current.to_i
       end
 
       def process_next(node, token)
@@ -163,6 +175,35 @@ module Kuroko2
           token.job_instance.logs.info(message)
           Kuroko2.logger.info(message)
         end
+      end
+
+      def auto_retry(node, token)
+        token.context['RETRY'][node.path]['retried_count'] += 1
+
+        message = "(token #{token.uuid}) Retry current node: '#{node.type}: #{node.option}'"
+        token.job_instance.logs.info(message)
+        Kuroko2.logger.info(message)
+
+        message = "(token #{token.uuid}) The number of retries: " << 
+          "#{token.context['RETRY'][node.path]['retried_count']} / #{token.context['RETRY'][node.path]['count']}"
+        token.job_instance.logs.info(message)
+        Kuroko2.logger.info(message)
+
+        set_sleep_context_before_retrying(node, token)
+        
+        message = "(token #{token.uuid}) Sleep for #{token.context['RETRY'][node.path]['sleep_time']} seconds"
+        token.job_instance.logs.info(message)
+        Kuroko2.logger.info(message)
+      end
+
+      def set_sleep_context_before_retrying(node, token)
+        token.context['SLEEP'] = Time.current.to_i + token.context['RETRY'][node.path]['sleep_time']
+      end
+
+      def auto_retryable?(node, token)
+        token.context['RETRY'].present? &&
+          token.context['RETRY'][node.path].present? &&
+          token.context['RETRY'][node.path]['count'] > token.context['RETRY'][node.path]['retried_count']
       end
     end
   end

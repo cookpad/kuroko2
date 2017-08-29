@@ -21,6 +21,7 @@ module Kuroko2
         rails_env:             Task::RailsEnv,
         kuroko_runner:         Task::KurokoRunner,
         echo:                  Task::Echo,
+        retry:                 Task::Retry,
       }
 
       attr_reader :type, :option, :children

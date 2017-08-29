@@ -3,19 +3,9 @@ module Kuroko2
     module Task
       class Sleep < Base
         def execute
-          if (time = token.context['SLEEP'])
-            if Time.current.to_i > time
-              token.context.delete('SLEEP')
+          token.context['SLEEP'] = Time.current.to_i + option.to_i
 
-              :next
-            else
-              :pass
-            end
-          else
-            token.context['SLEEP'] = Time.current.to_i + option.to_i
-
-            :pass
-          end
+          :next
         end
 
         def validate
