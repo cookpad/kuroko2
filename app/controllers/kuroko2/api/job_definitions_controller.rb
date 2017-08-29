@@ -19,7 +19,7 @@ class Kuroko2::Api::JobDefinitionsController < Kuroko2::Api::ApplicationControll
       
       @resource = Kuroko2::Api::JobDefinitionResource.new(definition)
     else
-      raise HTTP::Forbidden.new("#{definition.name}: #{definition.errors.full_messages.join()}")
+      raise WeakParameters::ValidationError.new("#{definition.name}: #{definition.errors.full_messages.join()}")
     end
   end
 
