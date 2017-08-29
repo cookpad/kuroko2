@@ -29,7 +29,7 @@ class Kuroko2::Api::JobDefinitionsController < Kuroko2::Api::ApplicationControll
   
   def update_resource
     definition = Kuroko2::JobDefinition.find(params[:id])
-    definition.update_attributes(definition_params(params))
+    definition.update!(definition_params(params))
     @resource = Kuroko2::Api::JobDefinitionResource.new(definition)
   end
 
