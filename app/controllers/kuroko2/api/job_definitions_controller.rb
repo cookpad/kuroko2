@@ -12,8 +12,7 @@ class Kuroko2::Api::JobDefinitionsController < Kuroko2::Api::ApplicationControll
     definition.admins = Kuroko2::User.active.with(user_ids)
 
     if definition.save
-      user_ids.each do |user_id|
-        user = Kuroko2::User.active.find(user_id)
+      definition.admins.each do |user|
         user.stars.create(job_definition: definition) if user.google_account?
       end
       
