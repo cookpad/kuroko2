@@ -125,6 +125,32 @@ describe 'job_definitions' do
       end
     end
 
+    context 'with invalid parameters' do
+      let(:params) do
+        {
+          name: "test",
+          description: "description",
+          script: nil,
+          notify_cancellation: 1,
+          hipchat_room: "",
+          hipchat_notify_finished: 1,
+          suspended: false,
+          prevent_multi: 1,
+          hipchat_additional_text: "",
+          text_tags: "",
+          api_allowed: 1,
+          slack_channel: "",
+          webhook_url: "",
+        }
+      end
+
+      it 'updates a definition' do
+        expect {
+          put "/v1/definitions/#{definition.id}", params: params, env: env
+        }.to raise_error
+      end
+    end
+
     context 'with a undefined definition' do
       let(:params) do
         {
