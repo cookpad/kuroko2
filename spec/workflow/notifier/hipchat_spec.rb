@@ -20,6 +20,12 @@ module Kuroko2::Workflow
         and_return(hipchat_room_object)
     end
 
+    describe '#hipchat' do
+      it 'is an instance of HipChat::Client' do
+        expect(Notifier::Hipchat.new(instance).hipchat).to be_an_instance_of(::HipChat::Client)
+      end
+    end
+
     describe '#notify_failure' do
       it 'sends failure mesasge' do
         expect(hipchat_room_object).to receive(:send) do |_, message, option|
