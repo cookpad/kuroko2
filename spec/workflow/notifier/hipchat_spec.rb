@@ -20,6 +20,27 @@ module Kuroko2::Workflow
         and_return(hipchat_room_object)
     end
 
+    describe '#hipchat' do
+      it 'is an instance of HipChat::Client' do
+        expect(Notifier::Hipchat.new(instance).hipchat).to be_an_instance_of(::HipChat::Client)
+      end
+
+      it 'accepts options from conig' do
+        options = {
+          api_version: 'v2',
+          server_url: 'https://api.example.com',
+        }
+
+        allow(Kuroko2.config.notifiers.hipchat).to receive(:options).
+          and_return(Hashie::Mash.new(options))
+
+        client = class_double(::HipChat::Client).as_stubbed_const
+        expect(client).to receive(:new).with('token', options)
+
+        Notifier::Hipchat.new(instance)
+      end
+    end
+
     describe '#notify_failure' do
       it 'sends failure mesasge' do
         expect(hipchat_room_object).to receive(:send) do |_, message, option|

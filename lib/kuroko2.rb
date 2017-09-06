@@ -4,6 +4,7 @@ require 'aws-sdk'
 require 'retryable'
 require 'faraday'
 require 'html/pipeline'
+require 'hipchat'
 
 require "kuroko2/engine"
 require "kuroko2/configuration"
