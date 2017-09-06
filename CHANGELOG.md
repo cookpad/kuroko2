@@ -1,3 +1,20 @@
+## v0.4.3
+
+- Add operator Echo [#65](https://github.com/cookpad/kuroko2/pull/65)
+- Notify expected_time warnings from the root task only [#66](https://github.com/cookpad/kuroko2/pull/66)
+- Add execution_id to process_signals table and use it [#67](https://github.com/cookpad/kuroko2/pull/67)
+- Following rails5.1.2 ActiveSupport::Duration changes [#69](https://github.com/cookpad/kuroko2/pull/69)
+- Send SIGTERM only once on timeout  [#72](https://github.com/cookpad/kuroko2/pull/72)
+- Load extension modules from top-level [#75](https://github.com/cookpad/kuroko2/pull/75)
+- Resolve next scheduling ploblems  [#76](https://github.com/cookpad/kuroko2/pull/78)
+- Set process title of command-executor from its command [#77](https://github.com/cookpad/kuroko2/pull/77)
+- Fix icon font displaying bug [#78](https://github.com/cookpad/kuroko2/pull/78)
+- Fix deprecated #delete_all conditions parameter [#80](https://github.com/cookpad/kuroko2/pull/80)
+- Set default rails port number to align `kuroko2.yml` url settings [#82](https://github.com/cookpad/kuroko2/pull/82)
+- Add retry task [#83](https://github.com/cookpad/kuroko2/pull/83)
+- Fix google_oauth2 hd check: fix hd option fetching [#84](https://github.com/cookpad/kuroko2/pull/84)
+- Fix hipChat notifier [#88](https://github.com/cookpad/kuroko2/pull/88)
+
 ## v0.4.2
 
 - Use commonmarker gem [#63](https://github.com/cookpad/kuroko2/pull/63)
