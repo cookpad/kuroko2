@@ -7,9 +7,10 @@ module Kuroko2
         USER_NAME = 'kuroko2'
 
         def initialize(instance)
+          hipchat_options = Kuroko2.config.notifiers.hipchat.try!(:options).try!(:symbolize_keys) || {}
           @instance   = instance
           @definition = instance.job_definition
-          @hipchat    = HipChat::Client.new(Kuroko2.config.notifiers.hipchat.api_token)
+          @hipchat    = HipChat::Client.new(Kuroko2.config.notifiers.hipchat.api_token, hipchat_options)
           @message_builder = Workflow::Notifier::Concerns::ChatMessageBuilder.new(instance)
         end
 
