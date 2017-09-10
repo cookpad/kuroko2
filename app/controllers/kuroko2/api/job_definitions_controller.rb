@@ -15,10 +15,10 @@ class Kuroko2::Api::JobDefinitionsController < Kuroko2::Api::ApplicationControll
       definition.admins.each do |user|
         user.stars.create(job_definition: definition) if user.google_account?
       end
-      
+
       @resource = Kuroko2::Api::JobDefinitionResource.new(definition)
     else
-      raise WeakParameters::ValidationError.new("#{definition.name}: #{definition.errors.full_messages.join()}")
+      raise HTTP::UnprocessableEntity.new("#{definition.name}: #{definition.errors.full_messages.join()}")
     end
   end
 
@@ -26,11 +26,15 @@ class Kuroko2::Api::JobDefinitionsController < Kuroko2::Api::ApplicationControll
     definition = Kuroko2::JobDefinition.find(params[:id])
     @resource = Kuroko2::Api::JobDefinitionResource.new(definition)
   end
-  
+
   def update_resource
     definition = Kuroko2::JobDefinition.find(params[:id])
-    definition.update!(definition_params(params))
-    @resource = Kuroko2::Api::JobDefinitionResource.new(definition)
+
+    if definition.update(definition_params(params))
+      @resource = Kuroko2::Api::JobDefinitionResource.new(definition)
+    else
+      raise HTTP::UnprocessableEntity.new("#{definition.name}: #{definition.errors.full_messages.join()}")
+    end
   end
 
   def definition_params(params)

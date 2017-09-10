@@ -12,7 +12,7 @@ describe 'job_definitions' do
   let(:result) { JSON.parse(response.body) }
 
   describe 'POST /v1/definitions' do
-    
+
     let(:user) do
       create(:user)
     end
@@ -69,9 +69,9 @@ describe 'job_definitions' do
         }
       end
 
-      it 'returns Http Status: 400' do
+      it 'returns Http Status: 422' do
         post "/v1/definitions", params: params, env: env
-        expect(response.status).to eq(400)
+        expect(response.status).to eq(422)
       end
     end
   end
@@ -130,7 +130,7 @@ describe 'job_definitions' do
         {
           name: "test",
           description: "description",
-          script: nil,
+          script: "noop",
           notify_cancellation: 1,
           hipchat_room: "",
           hipchat_notify_finished: 1,
@@ -144,10 +144,9 @@ describe 'job_definitions' do
         }
       end
 
-      it 'updates a definition' do
-        expect {
-          put "/v1/definitions/#{definition.id}", params: params, env: env
-        }.to raise_error
+      it 'returns Http Status: 422' do
+        put "/v1/definitions/#{definition.id}", params: params, env: env
+        expect(response.status).to eq(422)
       end
     end
 
