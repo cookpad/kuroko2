@@ -6,7 +6,7 @@
 - Following rails5.1.2 ActiveSupport::Duration changes [#69](https://github.com/cookpad/kuroko2/pull/69)
 - Send SIGTERM only once on timeout  [#72](https://github.com/cookpad/kuroko2/pull/72)
 - Load extension modules from top-level [#75](https://github.com/cookpad/kuroko2/pull/75)
-- Resolve next scheduling ploblems  [#76](https://github.com/cookpad/kuroko2/pull/78)
+- Resolve next scheduling ploblems  [#76](https://github.com/cookpad/kuroko2/pull/76)
 - Set process title of command-executor from its command [#77](https://github.com/cookpad/kuroko2/pull/77)
 - Fix icon font displaying bug [#78](https://github.com/cookpad/kuroko2/pull/78)
 - Fix deprecated #delete_all conditions parameter [#80](https://github.com/cookpad/kuroko2/pull/80)
