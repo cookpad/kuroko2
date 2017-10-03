@@ -81,10 +81,15 @@ module Kuroko2
         job_definition_name = execution.context['meta'].try(:[], 'job_definition_name').to_s
         job_instance_id     = execution.context['meta'].try(:[], 'job_instance_id').to_s
 
-        env.reverse_merge!(
-          'HOME'                        => ENV['HOME'],
-          'PATH'                        => ENV['PATH'],
-          'LANG'                        => ENV['LANG'],
+        if Kuroko2.config.fetch("executer", {}).fetch("take_over_env_from_parent_process", false)
+          env.reverse_merge!(ENV)
+        else
+          env.reverse_merge!(
+            'HOME' => ENV['HOME'],
+            'PATH' => ENV['PATH'],
+            'LANG' => ENV['LANG'],
+          )
+        end.reverse_merge!(
           'KUROKO2_LAUNCHED_TIME'       => launched_time,
           'KUROKO2_JOB_DEFINITION_ID'   => job_definition_id,
           'KUROKO2_JOB_DEFINITION_NAME' => job_definition_name,
