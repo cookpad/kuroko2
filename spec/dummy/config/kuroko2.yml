@@ -4,6 +4,8 @@ default: &default
     delivery_method: 'test'
   execution_logger:
     type: 'Void'
+  executer:
+    take_over_env_from_parent_process: false
   custom_tasks:
     custom_task1: 'CustomTask1'
   notifiers:
