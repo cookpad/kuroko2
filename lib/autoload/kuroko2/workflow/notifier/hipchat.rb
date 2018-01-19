@@ -73,7 +73,7 @@ module Kuroko2
         end
 
         def notify_finished
-          if @definition.hipchat_notify_finished?
+          if @definition.hipchat_notify_finished? || @instance.notify_back_to_normal?
             message = build_message(level: 'SUCCESS', text: message_builder.finished_text)
             send_to_hipchat(message)
           end

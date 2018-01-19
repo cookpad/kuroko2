@@ -34,6 +34,10 @@ class Kuroko2::JobInstance < Kuroko2::ApplicationRecord
   scope :working, -> { where(finished_at: nil, canceled_at: nil) }
   scope :finished, -> { where.not(finished_at: nil) }
 
+  def notify_back_to_normal?
+    job_definition.notify_back_to_normal? && retrying?
+  end
+
   def error?
     working? && error_at?
   end

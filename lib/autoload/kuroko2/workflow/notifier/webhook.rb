@@ -89,7 +89,7 @@ module Kuroko2
         end
 
         def notify_finished
-          if @definition.hipchat_notify_finished?
+          if @definition.hipchat_notify_finished? || @instance.notify_back_to_normal?
             request(
               build_payload(
                 action: 'notify_finished',

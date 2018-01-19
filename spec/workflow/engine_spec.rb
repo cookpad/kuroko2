@@ -298,15 +298,19 @@ module Kuroko2::Workflow
         end
 
         specify do
+          expect(token.job_instance.notify_back_to_normal?).to be_falsey
+
           subject.process(token)
           subject.process(token)
           shell.execute
           subject.process(token)
           expect(token.status_name).to eq 'failure'
+          expect(token.job_instance.retrying?).to be_falsey
 
           FileUtils.touch(tmpfile)
 
           subject.retry(token)
+          expect(token.job_instance.retrying?).to be_truthy
 
           subject.process(token)
           shell.execute
@@ -315,6 +319,36 @@ module Kuroko2::Workflow
 
           expect(token.status_name).to eq 'finished'
           expect(Kuroko2::Token.all.count).to eq 0
+          expect(token.job_instance.notify_back_to_normal?).to be_falsey
+        end
+
+        context 'notify_back_to_normal' do
+          before do
+            definition.update_column(:notify_back_to_normal, true)
+          end
+
+          specify do
+            expect(token.job_instance.notify_back_to_normal?).to be_falsey
+
+            subject.process(token)
+            subject.process(token)
+            shell.execute
+            subject.process(token)
+            expect(token.status_name).to eq 'failure'
+
+            FileUtils.touch(tmpfile)
+
+            subject.retry(token)
+
+            subject.process(token)
+            shell.execute
+            subject.process(token)
+            subject.process(token)
+
+            expect(token.status_name).to eq 'finished'
+            expect(Kuroko2::Token.all.count).to eq 0
+            expect(token.job_instance.notify_back_to_normal?).to be_truthy
+          end
         end
       end
 
