@@ -80,10 +80,19 @@ module Kuroko2
         end
 
         def notify_finished
-          if @definition.hipchat_notify_finished? || @instance.notify_back_to_normal?
+          if @definition.hipchat_notify_finished?
             send_attachment_message_to_slack(
               level: 'SUCCESS',
               text: message_builder.finished_text,
+            )
+          end
+        end
+
+        def notify_back_to_normal
+          if @definition.notify_back_to_normal?
+            send_attachment_message_to_slack(
+              level: 'SUCCESS',
+              text: message_builder.back_to_normal_text,
             )
           end
         end

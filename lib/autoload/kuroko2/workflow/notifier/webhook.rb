@@ -89,12 +89,24 @@ module Kuroko2
         end
 
         def notify_finished
-          if @definition.hipchat_notify_finished? || @instance.notify_back_to_normal?
+          if @definition.hipchat_notify_finished?
             request(
               build_payload(
                 action: 'notify_finished',
                 level: 'SUCCESS',
                 subject: message_builder.finished_text,
+              )
+            )
+          end
+        end
+
+        def notify_back_to_normal
+          if @definition.notify_back_to_normal?
+            request(
+              build_payload(
+                action: 'notify_back_to_normal',
+                level: 'SUCCESS',
+                subject: message_builder.back_to_normal_text,
               )
             )
           end

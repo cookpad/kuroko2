@@ -80,7 +80,6 @@ ActiveRecord::Schema.define(version: 30) do
     t.datetime "error_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean "retrying"
     t.index ["finished_at", "canceled_at", "job_definition_id"], name: "job_instance_idx"
     t.index ["job_definition_id"], name: "index_kuroko2_job_instances_on_job_definition_id"
   end

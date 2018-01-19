@@ -72,6 +72,36 @@ module Kuroko2::Workflow
       end
     end
 
+    describe '#notify_back_to_normal' do
+      context 'with notify_back_to_normal' do
+        before do
+          instance.job_definition.notify_back_to_normal = true
+          instance.save!
+        end
+
+        it 'sends back_to_normal message' do
+          stub.with { |req|
+            expect(JSON.parse(req.body)).to include("action"=>"notify_back_to_normal")
+          }
+
+          notifier.notify_back_to_normal
+          expect(stub).to have_been_requested
+        end
+      end
+
+      context 'without notify_back_to_normal' do
+        before do
+          instance.job_definition.notify_back_to_normal = false
+          instance.save!
+        end
+
+        it 'sends back_to_normal message' do
+          notifier.notify_back_to_normal
+          expect(stub).not_to have_been_requested
+        end
+      end
+    end
+
     describe '#notify_retrying' do
       context 'with notify_finished' do
         before do

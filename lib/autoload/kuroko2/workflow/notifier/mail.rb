@@ -37,6 +37,10 @@ module Kuroko2
           # do nothing
         end
 
+        def notify_back_to_normal
+          # do nothing
+        end
+
         def notify_long_elapsed_time
           Kuroko2::Notifications.notify_long_elapsed_time(@job_instance).deliver_now
         end
