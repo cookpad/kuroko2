@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 30) do
     t.boolean "suspended", default: false, null: false
     t.integer "prevent_multi", default: 1, null: false
     t.boolean "notify_cancellation", default: true, null: false
-    t.boolean "notify_back_to_normal"
+    t.boolean "notify_back_to_normal", default: false, null: false
     t.string "hipchat_room", limit: 180, default: "", null: false
     t.boolean "hipchat_notify_finished", default: true, null: false
     t.string "hipchat_additional_text", limit: 180
