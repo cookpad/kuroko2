@@ -81,7 +81,7 @@ class Kuroko2::JobDefinition < Kuroko2::ApplicationRecord
   end
 
   def text_tags
-    tags.pluck(:name).join(',')
+    tags.map(&:name).join(',')
   end
 
   def text_tags=(text_tags)
