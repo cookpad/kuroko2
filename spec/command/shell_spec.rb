@@ -62,6 +62,16 @@ module Kuroko2::Command
         end
       end
 
+      context 'when all workers are suspended' do
+        let(:worker) { create(:worker, suspended: true) }
+
+        it 'skips execution' do
+          is_expected.to be_nil
+          execution.reload
+          expect(execution.started_at).to be_nil
+        end
+      end
+
       describe 'memory expectancy calculation' do
         let(:worker) { create(:worker) }
         let(:memory_expectancy) { execution.job_definition.memory_expectancy }
