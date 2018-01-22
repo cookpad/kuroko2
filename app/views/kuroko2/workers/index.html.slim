@@ -22,7 +22,9 @@
             td= worker.worker_id
             td= worker.queue
             td
-              - if worker.working
+              - if worker.suspended
+                span.label.label-warning SUSPENDED
+              - elsif worker.working
                 span.label.label-primary WORKING
               - else
                 '&nbsp;

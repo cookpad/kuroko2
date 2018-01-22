@@ -57,18 +57,24 @@ RSpec.describe "Show list of workers", type: :feature do
       expect(page).to have_selector('#workers table tbody tr', count: 2)
       expect(page).to have_selector('#workers table tbody tr td .btn[value=Suspend]', count: 1)
       expect(page).to have_selector('#workers table tbody tr td .btn[value=Unsuspend]', count: 0)
+      expect(page).to have_selector('#workers table tbody tr td .label', text: 'WORKING', count: 1)
+      expect(page).to have_selector('#workers table tbody tr td .label', text: 'SUSPENDED', count: 0)
 
       click_on 'Suspend'
 
       expect(page).to have_selector('#workers table tbody tr', count: 2)
       expect(page).to have_selector('#workers table tbody tr td .btn[value=Suspend]', count: 0)
       expect(page).to have_selector('#workers table tbody tr td .btn[value=Unsuspend]', count: 1)
+      expect(page).to have_selector('#workers table tbody tr td .label', text: 'WORKING', count: 0)
+      expect(page).to have_selector('#workers table tbody tr td .label', text: 'SUSPENDED', count: 1)
 
       click_on 'Unsuspend'
 
       expect(page).to have_selector('#workers table tbody tr', count: 2)
       expect(page).to have_selector('#workers table tbody tr td .btn[value=Suspend]', count: 1)
       expect(page).to have_selector('#workers table tbody tr td .btn[value=Unsuspend]', count: 0)
+      expect(page).to have_selector('#workers table tbody tr td .label', text: 'WORKING', count: 1)
+      expect(page).to have_selector('#workers table tbody tr td .label', text: 'SUSPENDED', count: 0)
     end
   end
 end
