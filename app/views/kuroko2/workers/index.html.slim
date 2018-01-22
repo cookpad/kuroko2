@@ -47,11 +47,11 @@
                             method: :patch,
                             params: { suspended: true },
                             role: 'button',
-                            class: 'btn btn-xs btn-danger')
+                            class: 'btn btn-xs btn-default')
               - else
                 = button_to('Unsuspend',
                             worker_path(worker),
                             method: :patch,
                             params: { suspended: false },
                             role: 'button',
-                            class: 'btn btn-xs btn-success')
+                            class: 'btn btn-xs btn-default')
