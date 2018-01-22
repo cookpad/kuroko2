@@ -13,7 +13,8 @@
           th.col-md-1 WID
           th.col-md-2 Queue
           th.col-md-1 Status
-          th.col-md-5 Execution
+          th.col-md-4 Execution
+          th.col-md-1 &nbsp;
           th.col-md-1 &nbsp;
         - for worker in @workers
           tr
@@ -39,3 +40,18 @@
                           role: 'button', class: 'btn btn-sm btn-default')
               - else
                 '&nbsp;
+            td
+              - if !worker.suspended
+                = button_to('Suspend',
+                            worker_path(worker),
+                            method: :patch,
+                            params: { suspended: true },
+                            role: 'button',
+                            class: 'btn btn-xs btn-danger')
+              - else
+                = button_to('Unsuspend',
+                            worker_path(worker),
+                            method: :patch,
+                            params: { suspended: false },
+                            role: 'button',
+                            class: 'btn btn-xs btn-success')

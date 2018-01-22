@@ -22,7 +22,7 @@ Kuroko2::Engine.routes.draw do
     get 'page/:page', action: :index, on: :collection, as: 'paged'
   end
 
-  resources :workers, only: :index
+  resources :workers, only: %i(index update)
   resources :job_instances, path: 'instances', only: %w() do
     get :working, action: :working, on: :collection
   end
