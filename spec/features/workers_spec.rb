@@ -44,4 +44,31 @@ RSpec.describe "Show list of workers", type: :feature do
     expect(page).not_to have_content('echo Hello!')
     expect(page).to have_selector('#workers table tbody tr td .btn', text: 'Details', count: 0)
   end
+
+  context 'toggle suspended' do
+    it js: true do
+      visit kuroko2.workers_path
+      expect(page).to have_selector('#workers table tbody tr', count: 2)
+      expect(page).not_to have_content('echo Hello!')
+      expect(page).to have_title('Kuroko Workers « Kuroko 2')
+      expect(page).to have_selector('i.fa.fa-rocket', text: '')
+      have_selector('h1', text: /Kuroko Workers/)
+
+      expect(page).to have_selector('#workers table tbody tr', count: 2)
+      expect(page).to have_selector('#workers table tbody tr td .btn[value=Suspend]', count: 1)
+      expect(page).to have_selector('#workers table tbody tr td .btn[value=Unsuspend]', count: 0)
+
+      click_on 'Suspend'
+
+      expect(page).to have_selector('#workers table tbody tr', count: 2)
+      expect(page).to have_selector('#workers table tbody tr td .btn[value=Suspend]', count: 0)
+      expect(page).to have_selector('#workers table tbody tr td .btn[value=Unsuspend]', count: 1)
+
+      click_on 'Unsuspend'
+
+      expect(page).to have_selector('#workers table tbody tr', count: 2)
+      expect(page).to have_selector('#workers table tbody tr td .btn[value=Suspend]', count: 1)
+      expect(page).to have_selector('#workers table tbody tr td .btn[value=Unsuspend]', count: 0)
+    end
+  end
 end
