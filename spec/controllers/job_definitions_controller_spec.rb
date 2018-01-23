@@ -51,7 +51,7 @@ describe Kuroko2::JobDefinitionsController do
         expect(assigns(:definition).tags).to eq definition.tags
       end
 
-      context 'with current_user and aother admin user' do
+      context 'with current_user and another admin user' do
         let!(:admin_user) { create(:user) }
         let!(:definition) { create(:job_definition, admins: [admin_user, controller.current_user]) }
         it do
