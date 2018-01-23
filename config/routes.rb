@@ -42,8 +42,8 @@ Kuroko2::Engine.routes.draw do
   get '/osd' => 'dashboard#osd', as: :osd
 
   scope :v1, module: 'api', as: 'api' do
-    resources :job_definitions, path: 'definitions', only: [] do
-      resources :job_instances, path: 'instances', only: [:show, :create]
+    resources :job_definitions, path: 'definitions', only: %w(create show update) do
+      resources :job_instances, path: 'instances', only: %w(show create)
     end
 
     namespace :stats do

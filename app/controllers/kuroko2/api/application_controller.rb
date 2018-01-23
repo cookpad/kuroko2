@@ -15,6 +15,10 @@ class Kuroko2::Api::ApplicationController < ActionController::Base
     respond_with_error(401, 'unauthorized', exception.message)
   end
 
+  rescue_from HTTP::UnprocessableEntity do |exception|
+    respond_with_error(422, 'unprocessable_entity', exception.message)
+  end
+
   rescue_from WeakParameters::ValidationError do |exception|
     respond_with_error(400, 'bad_request', exception.message)
   end
