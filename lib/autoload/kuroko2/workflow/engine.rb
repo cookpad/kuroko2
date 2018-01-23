@@ -118,9 +118,9 @@ module Kuroko2
           token.job_instance.logs.info(message)
           Kuroko2.logger.info(message)
           token.mark_as_finished
+          Notifier.notify(:back_to_normal, token.job_instance) if token.context['RETRYING']
           unless token.parent
             token.job_instance.touch(:finished_at)
-            Notifier.notify(:back_to_normal, token.job_instance) if token.context['RETRYING']
             Notifier.notify(:finished, token.job_instance)
             token.destroy!
           end
