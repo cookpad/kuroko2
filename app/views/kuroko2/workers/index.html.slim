@@ -49,11 +49,13 @@
                             method: :patch,
                             params: { suspended: true },
                             role: 'button',
-                            class: 'btn btn-xs btn-default')
+                            class: 'btn btn-xs btn-default',
+                            data: { confirm: 'Continue suspending the worker? If not, use "Cancel" button.' })
               - else
                 = button_to('Unsuspend',
                             worker_path(worker),
                             method: :patch,
                             params: { suspended: false },
                             role: 'button',
-                            class: 'btn btn-xs btn-default')
+                            class: 'btn btn-xs btn-default',
+                            data: { confirm: 'Continue unsuspending the worker? If not, use "Cancel" button.' })
