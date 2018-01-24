@@ -91,30 +91,11 @@ module Kuroko2::Workflow
     end
 
     describe '#notify_back_to_normal' do
-      context 'with notify_back_to_normal' do
-        before do
-          instance.job_definition.notify_back_to_normal = true
-          instance.save!
-        end
+      it 'sends back_to_normal mesasge' do
+        expect(notifier).to receive(:send_to_slack).
+          with(hash_including(channel: slack_channel)).and_call_original
 
-        it 'sends back_to_normal mesasge' do
-          expect(notifier).to receive(:send_to_slack).
-            with(hash_including(channel: slack_channel)).and_call_original
-
-          notifier.notify_back_to_normal
-        end
-      end
-
-      context 'without notify_back_to_normal' do
-        before do
-          instance.job_definition.notify_back_to_normal = false
-          instance.save!
-        end
-
-        it 'sends back_to_normal mesasge' do
-          expect(notifier).not_to receive(:send_to_slack)
-          notifier.notify_back_to_normal
-        end
+        notifier.notify_back_to_normal
       end
     end
 

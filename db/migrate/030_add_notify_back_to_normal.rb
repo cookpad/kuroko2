@@ -1,5 +1,5 @@
-class AddNotifyBackToNormal < ActiveRecord::Migration[5.1]
+class AddNotifyBackToNormal < ActiveRecord::Migration[5.0]
   def change
-    add_column :job_definitions, :notify_back_to_normal, :boolean, default: false, null: false, after: :notify_cancellation
+    add_column :job_instances, :retrying, :boolean, default: false, null: false
   end
 end

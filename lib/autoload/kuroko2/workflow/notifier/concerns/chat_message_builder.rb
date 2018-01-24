@@ -21,7 +21,7 @@ module Kuroko2
           end
 
           def back_to_normal_text
-            "The task in '#{@definition.name}' was successfully retried"
+            "Backed to normal '#{@definition.name}'"
           end
 
           def retrying_text

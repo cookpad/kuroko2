@@ -60,9 +60,6 @@
                   - if @definition.hipchat_additional_text
                     li Failure notification text: #{@definition.hipchat_additional_text}
 
-          - if @definition.notify_back_to_normal?
-            li Notify when back to normal
-
           - if @definition.notify_cancellation
             li Notify administrators when the job is cancelled by system.
 

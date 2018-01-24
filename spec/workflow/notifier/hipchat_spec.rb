@@ -126,31 +126,13 @@ module Kuroko2::Workflow
     end
 
     describe '#notify_back_to_normal' do
-      context 'with notify_back_to_normal' do
-        before do
-          instance.job_definition.notify_back_to_normal = true
-          instance.save!
+      it 'sends back_to_normal message' do
+        expect(hipchat_room_object).to receive(:send) do |_, message, option|
+          expect(message).to include('SUCCESS')
+          expect(option[:color]).to eq('green')
         end
 
-        it 'sends back_to_normal message' do
-          expect(hipchat_room_object).to receive(:send) do |_, message, option|
-            expect(message).to include('SUCCESS')
-            expect(option[:color]).to eq('green')
-          end
-
-          notifier.notify_back_to_normal
-        end
-      end
-      context 'without notify_back_to_normal' do
-        before do
-          instance.job_definition.notify_back_to_normal = false
-          instance.save!
-        end
-
-        it 'sends back_to_normal message' do
-          expect(hipchat_room_object).not_to receive(:send)
-          notifier.notify_back_to_normal
-        end
+        notifier.notify_back_to_normal
       end
     end
 

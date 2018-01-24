@@ -25,11 +25,10 @@ module Kuroko2
           node = extract_node(token)
 
           message = "(token #{token.uuid}) Retry current node: '#{node.type}: #{node.option}'"
-          token.job_instance.update_column(:error_at, nil)
+          token.job_instance.update_columns(error_at: nil, retrying: true)
           token.job_instance.logs.info(message)
 
           token.mark_as_working
-          token.context['RETRYING'] = true
           token.save!
 
           Kuroko2.logger.info(message)
@@ -118,10 +117,13 @@ module Kuroko2
           token.job_instance.logs.info(message)
           Kuroko2.logger.info(message)
           token.mark_as_finished
-          Notifier.notify(:back_to_normal, token.job_instance) if token.context['RETRYING']
           unless token.parent
             token.job_instance.touch(:finished_at)
-            Notifier.notify(:finished, token.job_instance) unless token.context['RETRYING'] && token.job_definition.notify_back_to_normal?
+            if token.job_instance.retrying?
+              Notifier.notify(:back_to_normal, token.job_instance)
+            else
+              Notifier.notify(:finished, token.job_instance)
+            end
             token.destroy!
           end
         end
