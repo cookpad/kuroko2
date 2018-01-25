@@ -196,6 +196,7 @@ ActiveRecord::Schema.define(version: 31) do
     t.string "queue", limit: 180, default: "@default", null: false
     t.boolean "working", default: false, null: false
     t.integer "execution_id"
+    t.boolean "suspendable", default: false, null: false
     t.boolean "suspended", default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"

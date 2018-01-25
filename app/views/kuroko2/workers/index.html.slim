@@ -43,7 +43,9 @@
               - else
                 '&nbsp;
             td
-              - if !worker.suspended
+              - if !worker.suspendable
+                '&nbsp;
+              - elsif !worker.suspended
                 = button_to('Suspend',
                             worker_path(worker),
                             method: :patch,
