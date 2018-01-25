@@ -33,8 +33,15 @@ class Kuroko2::JobDefinitionsController < Kuroko2::ApplicationController
   end
 
   def new
-    @definition = Kuroko2::JobDefinition.new
-    @definition.admins << current_user
+    dup_from = Kuroko2::JobDefinition.find_by(id: params[:dup_from])
+    if dup_from.present?
+      @definition = dup_from.dup
+      @definition.admins = dup_from.admins
+      @definition.tags = dup_from.tags
+    else
+      @definition = Kuroko2::JobDefinition.new
+    end
+    @definition.admins << current_user unless @definition.admins.include?(current_user)
   end
 
   def create

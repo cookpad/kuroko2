@@ -38,6 +38,68 @@ describe Kuroko2::JobDefinitionsController do
 
       expect(assigns(:definition)).to be_new_record
     end
+
+    context 'with dup_from params' do
+      subject! { get :new, params: { dup_from: definition.id } }
+      it do
+        expect(response).to have_http_status(:ok)
+        expect(response).to render_template('new')
+
+        expect(assigns(:definition)).to be_new_record
+        expect(assigns(:definition).name).to eq definition.name
+        expect(assigns(:definition).admins).to eq definition.admins + [controller.current_user]
+        expect(assigns(:definition).tags).to eq definition.tags
+      end
+
+      context 'with current_user and another admin user' do
+        let!(:admin_user) { create(:user) }
+        let!(:definition) { create(:job_definition, admins: [admin_user, controller.current_user]) }
+        it do
+          expect(response).to have_http_status(:ok)
+          expect(response).to render_template('new')
+
+          expect(assigns(:definition)).to be_new_record
+          expect(assigns(:definition).name).to eq definition.name
+          expect(assigns(:definition).admins).to match_array [admin_user, controller.current_user]
+        end
+
+        context 'with only another admin user' do
+          let!(:definition) { create(:job_definition, admins: [admin_user]) }
+          it do
+            expect(response).to have_http_status(:ok)
+            expect(response).to render_template('new')
+
+            expect(assigns(:definition)).to be_new_record
+            expect(assigns(:definition).name).to eq definition.name
+            expect(assigns(:definition).admins).to match_array [admin_user, controller.current_user]
+          end
+        end
+      end
+
+      context 'with tags' do
+        let!(:definition) { create(:job_definition, text_tags: 'First,Second') }
+        it do
+          expect(response).to have_http_status(:ok)
+          expect(response).to render_template('new')
+
+          expect(assigns(:definition)).to be_new_record
+          expect(assigns(:definition).name).to eq definition.name
+          expect(assigns(:definition).text_tags).to eq definition.text_tags
+        end
+      end
+
+      context 'with invalid id' do
+        subject! { get :new, params: { dup_from: 'invalid' } }
+        it do
+          expect(response).to have_http_status(:ok)
+          expect(response).to render_template('new')
+
+          expect(assigns(:definition)).to be_new_record
+          expect(assigns(:definition).name).to be_blank
+          expect(assigns(:definition).admins).to eq [controller.current_user]
+        end
+      end
+    end
   end
 
   describe '#create' do
