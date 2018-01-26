@@ -25,10 +25,20 @@ RSpec.describe "Launches a job instace and Management job instances on the web c
 
     expect(page).to have_selector('#launchAdHocModal .modal-dialog', visible: true)
     within '#launchAdHocModal .modal-dialog' do
+      # retry 5 times to wait Lauch button appearing
+      5.times do
+        break if find_button('Launch').visible?
+        sleep 1
+      end
+
       click_on 'Launch'
     end
 
-    sleep 1
+    # Wait for moving to a target page
+    5.times do
+      break if has_css?('#instance-status .label')
+      sleep 1
+    end
     expect(page).to have_content('Job Instance Details')
     expect(page).to have_selector('#instance-status .label', text: 'WORKING')
 
