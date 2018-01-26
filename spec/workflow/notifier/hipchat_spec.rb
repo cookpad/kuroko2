@@ -125,6 +125,17 @@ module Kuroko2::Workflow
       end
     end
 
+    describe '#notify_back_to_normal' do
+      it 'sends back_to_normal message' do
+        expect(hipchat_room_object).to receive(:send) do |_, message, option|
+          expect(message).to include('SUCCESS')
+          expect(option[:color]).to eq('green')
+        end
+
+        notifier.notify_back_to_normal
+      end
+    end
+
     describe '#notify_retrying' do
       context 'with notify_finished' do
         before do

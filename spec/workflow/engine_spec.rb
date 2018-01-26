@@ -306,7 +306,9 @@ module Kuroko2::Workflow
 
           FileUtils.touch(tmpfile)
 
+          expect(token.job_instance.retrying?).to be_falsy
           subject.retry(token)
+          expect(token.job_instance.retrying?).to be_truthy
 
           subject.process(token)
           shell.execute

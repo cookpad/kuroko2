@@ -88,6 +88,13 @@ module Kuroko2
           end
         end
 
+        def notify_back_to_normal
+          send_attachment_message_to_slack(
+            level: 'SUCCESS',
+            text: message_builder.back_to_normal_text,
+          )
+        end
+
         def notify_long_elapsed_time
           send_attachment_message_to_slack(
             level: 'WARNING',

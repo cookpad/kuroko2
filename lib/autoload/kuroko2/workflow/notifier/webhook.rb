@@ -100,6 +100,16 @@ module Kuroko2
           end
         end
 
+        def notify_back_to_normal
+          request(
+            build_payload(
+              action: 'notify_back_to_normal',
+              level: 'SUCCESS',
+              subject: message_builder.back_to_normal_text,
+            )
+          )
+        end
+
         def notify_long_elapsed_time
           request(
             build_payload(

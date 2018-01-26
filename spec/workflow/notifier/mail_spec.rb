@@ -67,6 +67,14 @@ module Kuroko2::Workflow
       end
     end
 
+    describe '#notify_back_to_normal' do
+      it 'does not send mail' do
+        expect { notifier.notify_back_to_normal }.not_to change {
+          ActionMailer::Base.deliveries.size
+        }
+      end
+    end
+
     describe '#notify_long_elapsed_time' do
       it 'sends warning mesasge' do
         expect { notifier.notify_long_elapsed_time }.to change {

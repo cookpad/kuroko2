@@ -79,6 +79,11 @@ module Kuroko2
           end
         end
 
+        def notify_back_to_normal
+          message = build_message(level: 'SUCCESS', text: message_builder.back_to_normal_text)
+          send_to_hipchat(message)
+        end
+
         def notify_long_elapsed_time
           message = build_message(level: 'WARNING', text: message_builder.long_elapsed_time_text)
           send_to_hipchat(message, color: 'red')

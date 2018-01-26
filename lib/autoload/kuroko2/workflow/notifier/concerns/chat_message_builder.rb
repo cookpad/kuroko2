@@ -20,6 +20,10 @@ module Kuroko2
             "Launched '#{@definition.name}'"
           end
 
+          def back_to_normal_text
+            "Backed to normal '#{@definition.name}'"
+          end
+
           def retrying_text
             "Retrying the current task in '#{@definition.name}'"
           end
