@@ -34,7 +34,10 @@
               span.star-holder
                 = star_link_for(definition)
             td= definition.id
-            td.no-decorate= link_to definition.name, definition
+            td.no-decorate
+              - if definition.suspended
+                span.label.label-warning.spacer-right-3 SUSPENDED
+              = link_to definition.name, definition
             td.no-decorate
               - definition.admins.each do |user|
                 = link_to user.name, user_path(user)
