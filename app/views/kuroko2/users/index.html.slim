@@ -16,7 +16,7 @@
 - if @user.errors.any?
   .alert.alert-danger
     i.fa.fa-ban
-    h4 #{pluralize(@user.errors.count, "error")} prohibited this employee from being saved:
+    h4 #{pluralize(@user.errors.count, "error")} prohibited this user from being saved:
     ul
     - @user.errors.full_messages.each do |message|
       li= message
