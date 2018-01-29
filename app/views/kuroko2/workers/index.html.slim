@@ -52,7 +52,7 @@
                             params: { suspended: true },
                             role: 'button',
                             class: 'btn btn-xs btn-default',
-                            data: { confirm: 'Continue suspending the worker? If not, use "Cancel" button.' })
+                            data: { confirm: 'Continue suspending the worker?' })
               - else
                 = button_to('Unsuspend',
                             worker_path(worker),
@@ -60,4 +60,4 @@
                             params: { suspended: false },
                             role: 'button',
                             class: 'btn btn-xs btn-default',
-                            data: { confirm: 'Continue unsuspending the worker? If not, use "Cancel" button.' })
+                            data: { confirm: 'Continue unsuspending the worker?' })
