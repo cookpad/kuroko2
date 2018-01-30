@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 30) do
+ActiveRecord::Schema.define(version: 31) do
 
   create_table "admin_assignments", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.integer "user_id", null: false
@@ -18,6 +18,18 @@ ActiveRecord::Schema.define(version: 30) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["user_id", "job_definition_id"], name: "user_id", unique: true
+  end
+
+  create_table "execution_histories", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+    t.string "hostname", limit: 180
+    t.integer "worker_id", limit: 1
+    t.string "queue", limit: 180, default: "@default", null: false
+    t.integer "job_definition_id", null: false
+    t.integer "job_instance_id", null: false
+    t.text "shell", null: false
+    t.datetime "started_at", null: false
+    t.datetime "finished_at", null: false
+    t.index ["worker_id", "started_at"], name: "index_kuroko2_execution_histories_on_worker_id_and_started_at"
   end
 
   create_table "executions", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
@@ -38,6 +50,8 @@ ActiveRecord::Schema.define(version: 30) do
     t.datetime "mailed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string "hostname", limit: 180
+    t.integer "worker_id", limit: 1
     t.index ["job_definition_id", "token_id"], name: "index_kuroko2_executions_on_job_definition_id_and_token_id", unique: true
     t.index ["started_at"], name: "started_at"
   end
