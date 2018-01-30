@@ -1,0 +1,33 @@
+- content_for :title, "Execution Timeline"
+- content_for :content_title do
+    <i class="fa fa-clock-o"></i> Execution Timeline
+
+.row
+  .col-md-12
+    .box
+      .box-header
+        nav class="navbar navbar-default"
+          div class="container-fluid"
+            div class="navbar-header"
+              a class="navbar-brand" href="#" Period
+            div class="" id="period-nav"
+              ul class="nav navbar-nav"
+                li class="#{params[:period] == '30m' ? 'active' : ''}"
+                  = link_to '30 minutes', timeline_execution_histories_path(params.permit(:queue, :hostname, :end_at).merge(period: '30m'))
+                li class="#{params[:period] == '1h' || !params[:period] ? 'active' : ''}"
+                  = link_to '1 hour', timeline_execution_histories_path(params.permit(:queue, :hostname, :end_at).merge(period: '1h'))
+                li class="#{params[:period] == '3h' ? 'active' : ''}"
+                  = link_to '3 hours', timeline_execution_histories_path(params.permit(:queue, :hostname, :end_at).merge(period: '3h'))
+                li class="#{params[:period] == '6h' ? 'active' : ''}"
+                  = link_to '6 hours', timeline_execution_histories_path(params.permit(:queue, :hostname, :end_at).merge(period: '6h'))
+                li class="#{params[:period] == '12h' ? 'active' : ''}"
+                  = link_to '12 hours', timeline_execution_histories_path(params.permit(:queue, :hostname, :end_at).merge(period: '12h'))
+                li class="#{params[:period] == '1d' ? 'active' : ''}"
+                  = link_to '1 day', timeline_execution_histories_path(params.permit(:queue, :hostname, :end_at).merge(period: '1d'))
+                li class="#{params[:period] == '3d' ? 'active' : ''}"
+                  = link_to '3 days', timeline_execution_histories_path(params.permit(:queue, :hostname, :end_at).merge(period: '3d'))
+                li class="#{params[:period] == '1w' ? 'active' : ''}"
+                  = link_to '1 week', timeline_execution_histories_path(params.permit(:queue, :hostname, :end_at).merge(period: '1w'))
+
+      .box-body
+        div#timeline data-dataset-path="#{dataset_execution_histories_path(params.permit(:queue, :hostname, :start_at, :end_at, :period))}"

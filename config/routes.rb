@@ -32,6 +32,11 @@ Kuroko2::Engine.routes.draw do
     get :dataset, action: :dataset, on: :collection, defaults: { format: 'json' }
   end
 
+  resources :execution_histories, only: :index do
+    get :timeline, action: :timeline, on: :collection
+    get 'timeline/dataset', action: :dataset, on: :collection, defaults: { format: 'json' }, as: 'dataset'
+  end
+
   get '/sign_in', to: 'sessions#new', as: 'sign_in'
   delete '/sign_out', to: 'sessions#destroy', as: 'sign_out'
 
