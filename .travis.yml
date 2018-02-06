@@ -6,9 +6,10 @@ branches:
     - master
 rvm:
   - ruby-head
-  - 2.4.1
-  - 2.3.3
-  - 2.2.6
+  - 2.5
+  - 2.4
+  - 2.3
+  - 2.2
 before_install:
   - phantomjs --version
 addons:
