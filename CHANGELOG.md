@@ -1,3 +1,12 @@
+## v0.4.4
+
+- Add API for job definitions [#87](https://github.com/cookpad/kuroko2/pull/87)
+- Add button to duplicate job definition [#92](https://github.com/cookpad/kuroko2/pull/92)
+- Notify when back to normal [#93](https://github.com/cookpad/kuroko2/pull/93)
+- Show SUSPENDED label to list of job definitions [#99](https://github.com/cookpad/kuroko2/pull/99)
+- Fix Fix feature specs fails randomly [#101](https://github.com/cookpad/kuroko2/pull/101)
+- Add ruby-2.5 to CI settings [#102](https://github.com/cookpad/kuroko2/pull/102)
+
 ## v0.4.3
 
 - Add operator Echo [#65](https://github.com/cookpad/kuroko2/pull/65)
