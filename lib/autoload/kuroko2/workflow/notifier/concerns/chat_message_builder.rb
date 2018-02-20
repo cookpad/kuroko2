@@ -13,7 +13,7 @@ module Kuroko2
           end
 
           def finished_text
-            "Finished to execute '#{@definition.name}'"
+            "Finished executing '#{@definition.name}'"
           end
 
           def launched_text
@@ -21,7 +21,7 @@ module Kuroko2
           end
 
           def back_to_normal_text
-            "Backed to normal '#{@definition.name}'"
+            "'#{@definition.name}' is back to normal"
           end
 
           def retrying_text
@@ -33,7 +33,7 @@ module Kuroko2
           end
 
           def long_elapsed_time_text
-            "The running time is longer than expected '#{@definition.name}'."
+            "The running time of '#{@definition.name}' is longer than expected."
           end
 
           def additional_text
