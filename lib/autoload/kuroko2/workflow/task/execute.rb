@@ -61,6 +61,17 @@ module Kuroko2
               instance.logs.error(message)
             end
 
+            Kuroko2::ExecutionHistory.create(
+              hostname: execution.hostname,
+              worker_id: execution.worker_id,
+              queue: execution.queue,
+              job_definition: execution.job_definition,
+              job_instance: execution.job_instance,
+              shell: execution.shell,
+              started_at: execution.started_at,
+              finished_at: execution.finished_at,
+            )
+
             execution.with_lock do
               execution.destroy
               execution.success? ? :next : :failure

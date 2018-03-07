@@ -1,0 +1,39 @@
+- content_for :title, 'Execution Histories'
+- content_for :content_title do
+  <i class="fa fa-history"></i> Execution Histories
+- @scope = @histories
+
+.box#execution-histories
+  .box-header
+    .row
+      .col-md-9
+        h3.box-title Execution Histories
+      .col-md-3.right-button
+        = link_to raw('<i class="fa fa-clock-o"></i> Show Timeline'), timeline_execution_histories_path(params.permit(:queue, :hostname)), class: 'btn btn-default btn-small btn-block js-to-timeline'
+  - if @histories.empty?
+    .box-body
+      .text-muted.well.well-sm.no-shadow There are no execution histories yet.
+  - else
+    .box-body.table-responsive
+      table.table.table-hover
+        thead
+          tr
+            th.col-md-2 Hostname
+            th.col-md-1 WID
+            th.col-md-2 Queue
+            th.col-md-2 Job
+            th.col-md-2 Command
+            th.col-md-2 Started at
+            th.col-md-1 Elapsed Time
+        tbody
+          - for history in @histories
+            tr
+              td= history.hostname
+              td= history.worker_id
+              td= history.queue
+              td.no-decorate= link_to "##{history.job_definition.id} #{history.job_definition.name}", job_definition_job_instance_path(history.job_definition, history.job_instance)
+              td= history.shell
+              td= l(history.started_at, format: :short)
+              td= distance_of_time(history.started_at, history.finished_at)
+    .box-footer#pagination
+      = paginate @histories, theme: 'list'

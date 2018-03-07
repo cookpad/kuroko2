@@ -17,9 +17,9 @@
           th.col-md-1 &nbsp;
         - for worker in @workers
           tr
-            td= worker.hostname
+            td.no-decorate= link_to worker.hostname, execution_histories_path(hostname: worker.hostname)
             td= worker.worker_id
-            td= worker.queue
+            td.no-decorate= link_to worker.queue, execution_histories_path(queue: worker.queue)
             td
               - if worker.working
                 span.label.label-primary WORKING

@@ -32,6 +32,7 @@ module Kuroko2
       def do_execute(execution)
         begin
           @worker.update_column(:execution_id, execution.id)
+          execution.update(hostname: @hostname, worker_id: @worker_id)
 
           invoke(execution)
         rescue SystemCallError => e

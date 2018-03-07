@@ -41,6 +41,7 @@ module Kuroko2::Workflow::Task
 
         expect(Kuroko2::Execution.all.size).to eq 0
         expect(Kuroko2::Log.all.count).to eq 1
+        expect(Kuroko2::ExecutionHistory.all.size).to eq 1
       end
     end
 
