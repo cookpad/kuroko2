@@ -4,5 +4,6 @@ FactoryGirl.define do
     sequence(:worker_id)
     queue "@default"
     working true
+    suspendable true
   end
 end

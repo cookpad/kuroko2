@@ -19,7 +19,8 @@ module Kuroko2
                    elsif worker_id == (Command::Executor.num_workers - 1)
                      Command::Monitor.new(hostname: @hostname, worker_id: worker_id)
                    else
-                     @worker = Worker.where(hostname: @hostname, worker_id: worker_id, queue: @queue).first_or_create!
+                     @worker = Worker.where(hostname: @hostname, worker_id: worker_id, queue: @queue).first_or_initialize
+                     @worker.update!(suspendable: true)
                      Command::Shell.new(hostname: @hostname, worker_id: worker_id, worker: @worker, queue: @queue)
                    end
       end

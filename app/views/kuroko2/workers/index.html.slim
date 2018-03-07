@@ -13,7 +13,8 @@
           th.col-md-1 WID
           th.col-md-2 Queue
           th.col-md-1 Status
-          th.col-md-5 Execution
+          th.col-md-4 Execution
+          th.col-md-1 &nbsp;
           th.col-md-1 &nbsp;
         - for worker in @workers
           tr
@@ -21,7 +22,9 @@
             td= worker.worker_id
             td.no-decorate= link_to worker.queue, execution_histories_path(queue: worker.queue)
             td
-              - if worker.working
+              - if worker.suspended
+                span.label.label-warning SUSPENDED
+              - elsif worker.working
                 span.label.label-primary WORKING
               - else
                 '&nbsp;
@@ -39,3 +42,22 @@
                           role: 'button', class: 'btn btn-sm btn-default')
               - else
                 '&nbsp;
+            td
+              - if !worker.suspendable
+                '&nbsp;
+              - elsif !worker.suspended
+                = button_to('Suspend',
+                            worker_path(worker),
+                            method: :patch,
+                            params: { suspended: true },
+                            role: 'button',
+                            class: 'btn btn-xs btn-default',
+                            data: { confirm: 'Continue suspending the worker?' })
+              - else
+                = button_to('Unsuspend',
+                            worker_path(worker),
+                            method: :patch,
+                            params: { suspended: false },
+                            role: 'button',
+                            class: 'btn btn-xs btn-default',
+                            data: { confirm: 'Continue unsuspending the worker?' })

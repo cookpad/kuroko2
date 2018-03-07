@@ -14,6 +14,7 @@ module Kuroko2
 
       def execute
         @worker.reload
+        return nil if @worker.suspended?
         unless @worker.execution_id?
           if (execution = Execution.poll(@queue))
             do_execute(execution)
