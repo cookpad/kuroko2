@@ -1,3 +1,9 @@
+## v0.4.5
+
+- Add button to suspend worker [#94](https://github.com/cookpad/kuroko2/pull/94)
+- Add execution history for worker [#98](https://github.com/cookpad/kuroko2/pull/98)
+- Improve the chat-messages [#104](https://github.com/cookpad/kuroko2/pull/104)
+
 ## v0.4.4
 
 - Add API for job definitions [#87](https://github.com/cookpad/kuroko2/pull/87)
