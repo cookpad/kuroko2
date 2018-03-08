@@ -1,3 +1,7 @@
+## v0.4.6
+
+- Resolve multiple migrations
+
 ## v0.4.5
 
 - Add button to suspend worker [#94](https://github.com/cookpad/kuroko2/pull/94)
