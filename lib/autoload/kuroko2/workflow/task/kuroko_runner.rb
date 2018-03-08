@@ -15,8 +15,20 @@ module Kuroko2
 
         def shell
           rails = Rails.root.join('bin/rails').to_s
-          kuroko_script = Kuroko2::Engine.root.join("bin/#{option}.rb")
           "bundle exec #{rails} runner -e #{Rails.env} #{kuroko_script}"
+        end
+
+        private
+
+        # Try to find target script in mounted project at first.
+        # If not exist, fallback to engine
+        def kuroko_script
+          script_in_project = Rails.root.join("bin/#{option}.rb")
+          if File.exist?(script_in_project)
+            script_in_project
+          else
+            Kuroko2::Engine.root.join("bin/#{option}.rb")
+          end
         end
       end
     end
