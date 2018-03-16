@@ -38,7 +38,7 @@ class Kuroko2::SessionsController < Kuroko2::ApplicationController
     options = Kuroko2.config.app_authentication.google_oauth2.options
     hd = options ? options.hd : nil
     if hd.present?
-      hd == auth_hash.extra.id_info.hd
+      Array(hd).include?(auth_hash.extra.id_info.hd)
     else
       true
     end
