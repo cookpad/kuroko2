@@ -76,6 +76,38 @@ describe Kuroko2::SessionsController do
         end
       end
     end
+
+    context 'with multiple hd configured' do
+      let(:configured_hd) { %w(example.com example.org) }
+
+      before do
+        allow(Kuroko2.config.app_authentication.google_oauth2.options).to receive_messages(hd: configured_hd)
+      end
+
+      context 'with valid hd' do
+        before do
+          auth_hash.extra.id_info.hd = 'example.com'
+        end
+
+        it 'creates a new session' do
+          get :create, params: { provider: :google_oauth2 }
+          expect(response).to redirect_to(root_path)
+          expect(controller.current_user.uid).to eq(uid)
+        end
+      end
+
+      context 'with invalid hd' do
+        before do
+          auth_hash.extra.id_info.hd = 'example.net'
+        end
+
+        it 'rejects' do
+          get :create, params: { provider: :google_oauth2 }
+          expect(response).to have_http_status(403)
+          expect(controller.current_user).to be_nil
+        end
+      end
+    end
   end
 
   describe '#new' do
