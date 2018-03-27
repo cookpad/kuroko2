@@ -1,4 +1,7 @@
-old_instances = Kuroko2::JobInstance.where('finished_at < ?', 3.months.ago)
+target_date = 3.months.ago
+old_instances = Kuroko2::JobInstance
+  .where('finished_at < ?', target_date)
+  .or(Kuroko2::JobInstance.where('canceled_at < ?', target_date))
 
 count = old_instances.count
 
