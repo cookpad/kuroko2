@@ -1,12 +1,15 @@
 target_date = 3.months.ago
-old_instances = Kuroko2::JobInstance
+count = 0
+
+Kuroko2::JobInstance
   .where('finished_at < ?', target_date)
   .or(Kuroko2::JobInstance.where('canceled_at < ?', target_date))
-
-count = old_instances.count
-
-Kuroko2::JobInstance.transaction do
-  old_instances.destroy_all
+  .order(id: :asc)
+  .in_batches do |old_instances|
+  count += old_instances.size
+  Kuroko2::JobInstance.transaction do
+    old_instances.destroy_all
+  end
 end
 
 puts "Destroyed #{count} instances"
