@@ -7,9 +7,7 @@ Kuroko2::JobInstance
   .order(id: :asc)
   .in_batches do |old_instances|
   count += old_instances.size
-  Kuroko2::JobInstance.transaction do
-    old_instances.destroy_all
-  end
+  old_instances.destroy_all
 end
 
 puts "Destroyed #{count} instances"
