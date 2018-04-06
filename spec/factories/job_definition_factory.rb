@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :job_definition, class: Kuroko2::JobDefinition do
     name 'Job Definition'
     description 'This is description for the job definition.'

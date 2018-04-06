@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :job_schedule, class: Kuroko2::JobSchedule do
     sequence(:cron) do |n|
       hour = n > 60 ? (n / 60) : '*'

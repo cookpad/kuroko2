@@ -7,7 +7,7 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'spec_helper'
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
-require 'factory_girl_rails'
+require 'factory_bot_rails'
 
 require 'timecop'
 Timecop.safe_mode = true
@@ -36,7 +36,7 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
   config.include SignInHelper, type: :controller
   config.include FeatureSignInHelper, type: :feature
   config.include WaitForAjax, type: :feature

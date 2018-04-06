@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :token, class: Kuroko2::Token do
     uuid { SecureRandom.uuid }
     path '/'

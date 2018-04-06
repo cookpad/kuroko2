@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :execution_history, class: Kuroko2::ExecutionHistory do
     hostname 'rspec'
     worker_id 1
