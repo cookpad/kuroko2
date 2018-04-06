@@ -5,7 +5,7 @@ describe Kuroko2::JobDefinitionsController do
 
   before { sign_in }
 
-  let(:definition) { create(:job_definition) }
+  let(:definition) { create(:job_definition, :with_revisions) }
 
   describe '#index' do
     subject! { get :index }
@@ -113,6 +113,8 @@ describe Kuroko2::JobDefinitionsController do
       expect(assigns(:definition)).not_to be_new_record
       expect(assigns(:definition).admins).to eq [controller.current_user]
       expect(assigns(:definition).memory_expectancy).not_to be_nil
+      expect(assigns(:definition).revisions.size).to eq 1
+      expect(assigns(:definition).revisions.first.user).to eq controller.current_user
     end
   end
 
@@ -127,14 +129,29 @@ describe Kuroko2::JobDefinitionsController do
 
   describe '#update' do
     let(:admin) { create(:user) }
+    let(:script) { "noop:\n" }
     subject! do
-      patch :update, params: { id: definition.id, job_definition: { name: 'Job Definition', description: 'This is description', script: "noop:\n" }, admin_assignments: { user_id: ["", admin.id] } }
+      patch :update, params: { id: definition.id, job_definition: { name: 'Job Definition', description: 'This is description', script: script }, admin_assignments: { user_id: ["", admin.id] } }
     end
 
     it do
       expect(response).to redirect_to(assigns(:definition))
 
       expect(assigns(:definition)).not_to be_new_record
+      expect(assigns(:definition).revisions.size).to eq 1
+    end
+
+    describe 'changes script' do
+      let(:script) { "noop:\nnoop:\n" }
+      it do
+        expect(response).to redirect_to(assigns(:definition))
+
+        expect(assigns(:definition)).not_to be_new_record
+        expect(assigns(:definition).script).to eq script
+        expect(assigns(:definition).revisions.size).to eq 2
+        expect(assigns(:definition).revisions.first.script).to eq script
+        expect(assigns(:definition).revisions.first.user).to eq controller.current_user
+      end
     end
   end
 

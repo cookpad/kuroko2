@@ -15,6 +15,7 @@ module Kuroko2
       require 'visjs/rails'
       require 'dotenv-rails'
       require 'weak_parameters'
+      require 'diffy'
     end
 
     config.autoload_paths << root.join('lib/autoload').to_s

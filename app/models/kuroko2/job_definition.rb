@@ -30,6 +30,7 @@ class Kuroko2::JobDefinition < Kuroko2::ApplicationRecord
   has_many :job_suspend_schedules, dependent: :delete_all
   has_many :job_definition_tags
   has_many :tags, through: :job_definition_tags
+  has_many :revisions, -> { order(id: :desc) }, class_name: 'ScriptRevision', dependent: :destroy
   has_one :memory_expectancy, dependent: :destroy
 
   before_destroy :confirm_active_instances
@@ -100,6 +101,17 @@ class Kuroko2::JobDefinition < Kuroko2::ApplicationRecord
     job_instances.create!(script: script, log_message: message)
   end
 
+  def save_and_record_revision(edited_user: nil)
+    record_revision(edited_user: edited_user)
+    save
+  end
+
+  def update_and_record_revision(attributes, edited_user: nil)
+    assign_attributes(attributes)
+    record_revision(edited_user: edited_user)
+    save
+  end
+
   private
 
   def confirm_active_instances
@@ -126,6 +138,12 @@ class Kuroko2::JobDefinition < Kuroko2::ApplicationRecord
       ## Recovery Procedures
       Describe how to recover from the failure.
     EOF
+  end
+
+  def record_revision(edited_user: nil)
+    unless revisions.first.try(:script) == script
+      revisions.new(script: script, user: edited_user, changed_at: Time.current)
+    end
   end
 
   def create_default_memory_expectancy

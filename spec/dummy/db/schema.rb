@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 33) do
+ActiveRecord::Schema.define(version: 34) do
 
   create_table "admin_assignments", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.bigint "user_id", null: false
@@ -152,6 +152,17 @@ ActiveRecord::Schema.define(version: 33) do
     t.index ["hostname", "started_at"], name: "hostname_started_at"
   end
 
+  create_table "script_revisions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+    t.bigint "job_definition_id", null: false
+    t.text "script", null: false
+    t.bigint "user_id"
+    t.datetime "changed_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["job_definition_id"], name: "index_kuroko2_script_revisions_on_job_definition_id"
+    t.index ["user_id"], name: "index_kuroko2_script_revisions_on_user_id"
+  end
+
   create_table "stars", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.bigint "user_id", null: false
     t.bigint "job_definition_id", null: false
@@ -217,4 +228,6 @@ ActiveRecord::Schema.define(version: 33) do
     t.index ["hostname", "worker_id"], name: "hostname", unique: true
   end
 
+  add_foreign_key "script_revisions", "job_definitions"
+  add_foreign_key "script_revisions", "users"
 end

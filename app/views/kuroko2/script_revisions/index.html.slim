@@ -1,0 +1,23 @@
+- content_for :title, "##{@definition.id} #{@definition.name} « Script Revisions"
+- content_for :content_title, "Script Revisions"
+
+- content_for :breadcrumb do
+  ol.breadcrumb
+    li= link_to raw('<i class="fa fa-database"></i> Job Definitions'), job_definitions_path
+    li= link_to "Details", @definition
+    li.active Revisions
+
+style= Diffy::CSS
+
+- @revisions.each.with_index(1) do |revision, nextIndex|
+  .box id="revision-#{revision.id}"
+    .box-header
+      .row
+        .col-md-9
+          - if revision.user
+            h2.box-title= revision.user.name
+          - else
+            h2.box-title Unknown User
+        .col-md-3.right-button.text-right
+          = link_to revision.changed_at, anchor: "revision-#{revision.id}"
+    .box-body= revision.html_diff(@revisions[nextIndex])

@@ -11,7 +11,7 @@ class Kuroko2::Api::JobDefinitionsController < Kuroko2::Api::ApplicationControll
     user_ids = admin_id_params(params)
     definition.admins = Kuroko2::User.active.with(user_ids)
 
-    if definition.save
+    if definition.save_and_record_revision
       definition.admins.each do |user|
         user.stars.create(job_definition: definition) if user.google_account?
       end
@@ -30,7 +30,7 @@ class Kuroko2::Api::JobDefinitionsController < Kuroko2::Api::ApplicationControll
   def update_resource
     definition = Kuroko2::JobDefinition.find(params[:id])
 
-    if definition.update(definition_params(params))
+    if definition.update_and_record_revision(definition_params(params))
       @resource = Kuroko2::Api::JobDefinitionResource.new(definition)
     else
       raise HTTP::UnprocessableEntity.new("#{definition.name}: #{definition.errors.full_messages.join()}")

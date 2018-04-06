@@ -17,6 +17,7 @@ Kuroko2::Engine.routes.draw do
       get :memory, action: :memory, on: :collection, defaults: { format: 'json' }
       get :execution_time, action: :execution_time, on: :collection, defaults: { format: 'json' }
     end
+    resources :script_revisions, path: 'revisions', only: %w(index)
   end
   resources :users do
     get 'page/:page', action: :index, on: :collection, as: 'paged'
