@@ -43,7 +43,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'omniauth-google-oauth2', '~> 0.2.4'
 
   s.add_dependency 'html-pipeline'
-  s.add_dependency 'commonmarker', '~> 0.16.0'
+  s.add_dependency 'commonmarker', '>= 0.17.8'
   s.add_dependency 'font-awesome-rails'
   s.add_dependency 'rinku'
   s.add_dependency 'visjs-rails'
