@@ -110,6 +110,15 @@ jQuery(function ($) {
   if ($('#execution_logs').size() > 0) {
     startGetExecutionLog();
   }
+
+  $('#force-cancel-button').click(function(evt) {
+    if (confirm("Force-cancel is STRONGLY DISCOURAGED because it breaks invariants of Kuroko2's internal state.\nAre you sure to cancel this job instance forcibly?") && confirm('Are you really sure?') && confirm('Do you understand EXACTLY what happens?')) {
+      // run default
+    } else {
+      evt.preventDefault();
+      evt.stopPropagation();
+    }
+  });
 });
 
 jQuery(function ($) {
