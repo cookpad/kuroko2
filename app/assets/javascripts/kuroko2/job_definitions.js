@@ -12,6 +12,7 @@ jQuery(function ($) {
 
         var elem = $('<a class="star" rel="nofollow" data-remote="true" data-method="post"><i class="fa fa-star-o"></i></a>')
           .attr("href", definitionsPath + "/" + definitionId + "/stars")
+          .attr("data-definitions-path", definitionsPath)
           .attr("data-definition-id", definitionId);
 
         $(currentTarget).replaceWith(elem);
@@ -24,6 +25,7 @@ jQuery(function ($) {
         var elem = $('<a class="star" rel="nofollow" data-remote="true" data-method="delete"><i class="fa fa-star"></i></a>')
           .attr("href", definitionsPath + "/" + definitionId + "/stars/" + starId)
           .attr("data-star-id", starId)
+          .attr("data-definitions-path", definitionsPath)
           .attr("data-definition-id", definitionId);
 
         $(currentTarget).replaceWith(elem);
