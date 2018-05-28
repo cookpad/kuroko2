@@ -7,6 +7,16 @@ FactoryBot.define do
     prevent_multi false
     memory_expectancy { create_memory_expectancy! }
 
+    trait :with_revisions do
+      transient do
+        revisions_count 1
+      end
+
+      after(:create) do |job_definition, evaluator|
+        create_list(:script_revision, evaluator.revisions_count, job_definition: job_definition, script: "noop:\n")
+      end
+    end
+
     factory :job_definition_with_instances do
       transient do
         job_instances_count 1

@@ -31,6 +31,9 @@
         h3 Script
         pre.kuroko-script= format_kuroko_script(@definition.script)
 
+        = link_to 'Show script revisions', job_definition_script_revisions_path(@definition)
+        br
+
         'API execution allowed: #{@definition.api_allowed ? 'Yes' : 'No'}
 
         h4 Estimated Memory Consumption

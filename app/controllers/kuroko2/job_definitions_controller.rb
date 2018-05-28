@@ -48,7 +48,7 @@ class Kuroko2::JobDefinitionsController < Kuroko2::ApplicationController
     @definition = Kuroko2::JobDefinition.new(definition_params)
     @definition.admins = Kuroko2::User.active.with(admin_id_params)
 
-    if @definition.save
+    if @definition.save_and_record_revision(edited_user: current_user)
       current_user.stars.create(job_definition: @definition)
 
       redirect_to @definition, notice: 'Job Definition was successfully created.'
@@ -65,7 +65,7 @@ class Kuroko2::JobDefinitionsController < Kuroko2::ApplicationController
       @definition.attributes = definition_params
       @definition.admins     = Kuroko2::User.active.with(admin_id_params)
 
-      @definition.save
+      @definition.save_and_record_revision(edited_user: current_user)
     end
 
     if success
