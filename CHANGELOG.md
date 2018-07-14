@@ -1,5 +1,7 @@
 ## lastest(master branch)
 
+## v0.5.0
+
 - Use MutationObserver to observe log for work instance_linker.js correctly [#68](https://github.com/cookpad/kuroko2/pull/68)
 - Support multiple hosted domains [#106](https://github.com/cookpad/kuroko2/pull/106)
 - Let all job instance be target of cleanup_old_instance script [#107](https://github.com/cookpad/kuroko2/pull/107), [#108](https://github.com/cookpad/kuroko2/pull/108), [#109](https://github.com/cookpad/kuroko2/pull/109)
