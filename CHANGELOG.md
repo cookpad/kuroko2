@@ -1,3 +1,18 @@
+## lastest(master branch)
+
+## v0.5.0
+
+- Use MutationObserver to observe log for work instance_linker.js correctly [#68](https://github.com/cookpad/kuroko2/pull/68)
+- Support multiple hosted domains [#106](https://github.com/cookpad/kuroko2/pull/106)
+- Let all job instance be target of cleanup_old_instance script [#107](https://github.com/cookpad/kuroko2/pull/107), [#108](https://github.com/cookpad/kuroko2/pull/108), [#109](https://github.com/cookpad/kuroko2/pull/109)
+- Support script revision [#110](https://github.com/cookpad/kuroko2/pull/110)
+- Don't use Rails 5.2 temporarily [#112](https://github.com/cookpad/kuroko2/pull/112)
+- Remove cmake from dependency [#113](https://github.com/cookpad/kuroko2/pull/113)
+- Add Confirm process when trying force-cancel [#114](https://github.com/cookpad/kuroko2/pull/114)
+- Fix job definition star button works well with more than 1 click [#116](https://github.com/cookpad/kuroko2/pull/116)
+- Alter {users,job_definitions}.id to bigint [#117](https://github.com/cookpad/kuroko2/pull/117)
+- Do not use assets & layout on mail [#118](https://github.com/cookpad/kuroko2/pull/118)
+
 ## v0.4.6
 
 - Resolve multiple migrations
