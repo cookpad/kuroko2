@@ -9,7 +9,6 @@ rvm:
   - 2.5
   - 2.4
   - 2.3
-  - 2.2
 before_install:
   - phantomjs --version
 addons:
