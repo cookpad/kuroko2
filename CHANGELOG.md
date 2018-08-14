@@ -1,5 +1,7 @@
 ## lastest(master branch)
 
+- Drop Ruby 2.2 support
+
 ## v0.5.0
 
 - Use MutationObserver to observe log for work instance_linker.js correctly [#68](https://github.com/cookpad/kuroko2/pull/68)
