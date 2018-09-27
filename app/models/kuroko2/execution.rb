@@ -28,6 +28,10 @@ class Kuroko2::Execution < Kuroko2::ApplicationRecord
     exit_status == 0
   end
 
+  def terminatable?
+    pid? && !Kuroko2::ProcessSignal.where(execution_id: id).exists?
+  end
+
   def self.poll(queue = DEFAULT_QUEUE)
     self.transaction do
       unstarted.with(queue).lock.take.tap do |execution|

@@ -7,7 +7,7 @@ class Kuroko2::ExecutionsController < Kuroko2::ApplicationController
   end
 
   def destroy
-    if @execution.try!(:pid)
+    if @execution.terminatable?
       hostname = Kuroko2::Worker.executing(@execution.id).try!(:hostname) || ''
       # XXX: Store pid and hostname for compatibility
       Kuroko2::ProcessSignal.create!(pid: @execution.pid, hostname: hostname, execution_id: @execution.id)
@@ -19,7 +19,7 @@ class Kuroko2::ExecutionsController < Kuroko2::ApplicationController
   private
 
   def set_execution
-    @execution = Kuroko2::Execution.where(job_definition_id: execution_params[:job_definition_id], job_instance_id: execution_params[:job_instance_id], id: execution_params[:id]).take
+    @execution = Kuroko2::Execution.find_by!(job_definition_id: execution_params[:job_definition_id], job_instance_id: execution_params[:job_instance_id], id: execution_params[:id])
   end
 
   def execution_params
