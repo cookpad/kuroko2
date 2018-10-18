@@ -6,7 +6,7 @@ Kuroko2 is a web-based job scheduler / workflow engine created at Cookpad Inc.
 
 ## System requirements
 
-* Ruby >= 2.2
+* Ruby >= 2.3
 * Ruby on Rails >= 5.0.0.1
 * MySQL >= 5.6
 
