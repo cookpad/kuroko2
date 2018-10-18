@@ -12,7 +12,7 @@ Kuroko2 is a web-based job scheduler / workflow engine created at Cookpad Inc.
 
 ## Screenshots
 
-Bookmarked jobs are summairsed on user dashboard
+Bookmarked jobs are summarised on user dashboard
 
 ![](images/kuroko2_dashborad.png)
 
@@ -54,7 +54,7 @@ Bookmarked job are described with timeline
 $ rails new my_kuroko2 --database=mysql --skip-turbolinks --skip-javascript -m https://raw.githubusercontent.com/cookpad/kuroko2/master/app_template.rb
 ```
 
-## 2. Setting authenctication configuration
+## 2. Setting authentication configuration
 
 Kuroko2's authentication system supports only Google OAuth.
 
