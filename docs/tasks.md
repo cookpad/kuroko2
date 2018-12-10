@@ -72,7 +72,7 @@ A number of parallel size.
 
 ```
 parallel_fork: 5
-  execute: sleep $KUROKO2_PARALLEL_INDEX
+  execute: sleep $KUROKO2_PARALLEL_FORK_INDEX
   execute: echo $KUROKO2_PARALLEL_FORK_INDEX $KUROKO2_PARALLEL_FORK_SIZE
 ```
 
