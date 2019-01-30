@@ -40,7 +40,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'rack-store', '~> 0.0.4'
   s.add_dependency 'dotenv-rails', '~> 0.11.1'
   s.add_dependency 'serverengine', '~> 1.5.7'
-  s.add_dependency 'omniauth-google-oauth2', '~> 0.2.4'
+  s.add_dependency 'omniauth-google-oauth2', '~> 0.6.0'
 
   s.add_dependency 'html-pipeline'
   s.add_dependency 'commonmarker', '>= 0.17.8'
