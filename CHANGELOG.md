@@ -1,6 +1,8 @@
 ## lastest(master branch)
 
+## v0.5.1
 - Drop Ruby 2.2 support
+- Update omniauth-google-oauth2
 
 ## v0.5.0
 
