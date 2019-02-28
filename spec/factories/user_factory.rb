@@ -4,8 +4,8 @@ FactoryBot.define do
 
     name { "Alice Pleasance Liddell #{uid}" }
     email { "#{uid}@example.com" }
-    first_name 'Alice'
-    last_name 'Liddell'
-    image 'http://example.com/alice/image'
+    first_name { 'Alice' }
+    last_name { 'Liddell' }
+    image { 'http://example.com/alice/image' }
   end
 end

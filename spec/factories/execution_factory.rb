@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :execution, class: Kuroko2::Execution do
-    shell 'echo $NAME'
-    exit_status 0
+    shell { 'echo $NAME' }
+    exit_status { 0 }
 
     job_definition { token.job_definition if token }
     job_instance { token.job_instance if token }
