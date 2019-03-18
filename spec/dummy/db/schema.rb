@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 34) do
+ActiveRecord::Schema.define(version: 35) do
 
   create_table "admin_assignments", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.bigint "user_id", null: false
@@ -148,7 +148,7 @@ ActiveRecord::Schema.define(version: 34) do
     t.datetime "updated_at"
     t.text "message"
     t.integer "execution_id"
-    t.index ["execution_id"], name: "index_kuroko2_process_signals_on_execution_id"
+    t.index ["execution_id"], name: "index_kuroko2_process_signals_on_execution_id", unique: true
     t.index ["hostname", "started_at"], name: "hostname_started_at"
   end
 
