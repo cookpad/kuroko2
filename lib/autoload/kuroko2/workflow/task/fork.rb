@@ -43,9 +43,9 @@ module Kuroko2
         end
 
         def create_child_token(child_node:, env: {})
-          attributes = token.attributes.except('id', 'uuid', 'script', 'path', 'message', 'created_at', 'updated_at')
-          attributes = attributes.merge(uuid: SecureRandom.uuid, parent: token, script: child_node.to_script, path: '/')
-          attributes['context']['ENV'] = (attributes['context']['ENV'] || {}).merge(env)
+          attributes = token.attributes.except('id', 'uuid', 'script', 'path', 'message', 'created_at', 'updated_at', 'context')
+          attributes = attributes.merge(uuid: SecureRandom.uuid, parent: token, script: child_node.to_script, path: '/', context: token.context.deep_dup)
+          attributes[:context]['ENV'] = (attributes[:context]['ENV'] || {}).merge(env)
 
           Token.create!(attributes).tap do |created|
             fork_children_ids << created.id
