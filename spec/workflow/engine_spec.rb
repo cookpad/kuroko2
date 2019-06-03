@@ -126,6 +126,7 @@ module Kuroko2::Workflow
             parallel_fork: 3
               noop: noop1
               noop: noop2
+            noop: noop3
           EOF
         end
 
@@ -172,6 +173,13 @@ module Kuroko2::Workflow
           expect(token.path).to eq '/1-parallel_fork'
           expect(parallel_tokens.map(&:path)).to all(eq('/0-sequence/1-noop'))
           expect(parallel_tokens.map(&:status_name)).to all(eq('finished'))
+
+          subject.process(token)
+          expect(token.path).to eq '/2-noop'
+          expect(token.status_name).to eq 'working'
+          expect(token.context['ENV']['GLOBAL_ENV']).to eq('g')
+          expect(token.context['ENV']['KUROKO2_PARALLEL_FORK_SIZE']).to be_nil
+          expect(token.context['ENV']['KUROKO2_PARALLEL_FORK_INDEX']).to be_nil
 
           subject.process_all
           expect(Kuroko2::Token.all.count).to eq 0
