@@ -1,5 +1,8 @@
 ## lastest(master branch)
 
+## v0.5.2
+- Prevent from propagating env vars at outside of fork task scope [#128](https://github.com/cookpad/kuroko2/pull/128)
+
 ## v0.5.1
 - Drop Ruby 2.2 support
 - Update omniauth-google-oauth2
