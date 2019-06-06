@@ -34,6 +34,7 @@ describe 'job_definitions' do
           "name" => job_definition.name,
           "description" => job_definition.description,
           "script" => job_definition.script,
+          "tags" => [],
         )
       end
     end
@@ -127,8 +128,9 @@ describe 'job_definitions' do
   end
 
   describe 'GET /v1/definitions/:id' do
+    let(:tag) { Kuroko2::Tag.create(name: "taggy-mc-tagface") }
     let(:definition) do
-      create(:job_definition, script: 'noop:', api_allowed: true)
+      create(:job_definition, script: 'noop:', api_allowed: true, tags: [tag])
     end
 
     it 'returns a definition' do
@@ -138,7 +140,8 @@ describe 'job_definitions' do
           'id' => definition.id,
           'name' => definition.name,
           'description' => definition.description,
-          'script' => definition.script
+          'script' => definition.script,
+          'tags' => ['taggy-mc-tagface'],
         }
       )
       expect(response.status).to eq(200)
