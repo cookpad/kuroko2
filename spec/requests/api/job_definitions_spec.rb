@@ -35,6 +35,7 @@ describe 'job_definitions' do
           "description" => job_definition.description,
           "script" => job_definition.script,
           "tags" => [],
+          "job_schedules"=>[],
         )
       end
     end
@@ -151,6 +152,76 @@ describe 'job_definitions' do
           expect(result['script']).to eq(params[:script])
           expect(result['tags']).to eq ["awesome", "sauce"]
         end
+
+      end
+    end
+
+    context 'updating a schedule' do
+      it 'updates the job_schedules' do
+        params = {
+          name: "test",
+          description: "description",
+          script: "noop:",
+          user_id: [user.id],
+          job_schedules: ["0 0 1,15 * *", "0 */7 * * *"],
+        }
+
+        expect {
+          post "/v1/definitions", params: params, env: env
+        }.to change {
+          Kuroko2::JobSchedule.count
+        }.by(2)
+
+
+        expect(response.status).to eq(201)
+
+        params[:job_schedules] = ["0 0 1 * *"]
+        put "/v1/definitions/#{result['id']}", params: params, env: env
+        expect(response.status).to eq(204)
+        expect(Kuroko2::JobSchedule.count).to eq 1
+      end
+    end
+
+    context 'with schedules' do
+      let(:params) do
+        {
+          name: "test",
+          description: "description",
+          script: "noop:",
+          user_id: [user.id],
+          job_schedules: ["0 0 1,15 * *", "0 */7 * * *"],
+        }
+      end
+
+      it 'creates the schedule' do
+        expect {
+          post "/v1/definitions", params: params, env: env
+        }.to change {
+          Kuroko2::JobSchedule.count
+        }.by(2)
+
+        expect(response.status).to eq(201)
+        expect(result['name']).to eq(params[:name])
+        expect(result['description']).to eq(params[:description])
+        expect(result['script']).to eq(params[:script])
+      end
+
+      context 'an invalid schedule' do
+        let(:params) do
+          {
+            name: "test",
+            description: "description",
+            script: "noop:",
+            user_id: [user.id],
+            job_schedules: ["hotdogs"],
+          }
+        end
+
+        it 'errors' do
+          post "/v1/definitions", params: params, env: env
+          expect(response.status).to eq(422)
+          expect(result["message"]).to eq "hotdogs: Cron is invalid"
+        end
       end
     end
 
@@ -181,8 +252,9 @@ describe 'job_definitions' do
 
   describe 'GET /v1/definitions/:id' do
     let(:tag) { Kuroko2::Tag.create(name: "taggy-mc-tagface") }
+    let(:schedule) { create(:job_schedule) }
     let(:definition) do
-      create(:job_definition, script: 'noop:', api_allowed: true, tags: [tag])
+      create(:job_definition, script: 'noop:', api_allowed: true, tags: [tag], job_schedules: [schedule])
     end
 
     it 'returns a definition' do
@@ -194,6 +266,7 @@ describe 'job_definitions' do
           'description' => definition.description,
           'script' => definition.script,
           'tags' => ['taggy-mc-tagface'],
+          'job_schedules' => [schedule.cron],
         }
       )
       expect(response.status).to eq(200)
