@@ -15,6 +15,7 @@ class Kuroko2::Api::JobDefinitionsController < Kuroko2::Api::ApplicationControll
     definition = Kuroko2::JobDefinition.new(definition_params(params))
     user_ids = admin_id_params(params)
     definition.admins = Kuroko2::User.active.with(user_ids)
+    definition.tags = tags(params)
 
     if definition.save_and_record_revision
       definition.admins.each do |user|
@@ -34,6 +35,7 @@ class Kuroko2::Api::JobDefinitionsController < Kuroko2::Api::ApplicationControll
 
   def update_resource
     definition = Kuroko2::JobDefinition.find(params[:id])
+    definition.tags = tags(params)
 
     if definition.update_and_record_revision(definition_params(params))
       @resource = Kuroko2::Api::JobDefinitionResource.new(definition)
@@ -62,6 +64,13 @@ class Kuroko2::Api::JobDefinitionsController < Kuroko2::Api::ApplicationControll
       :api_allowed,
       :slack_channel,
       :webhook_url)
+  end
+
+  def tags(params)
+    tag_strings = params.permit(tags: [])[:tags] || []
+    tag_strings.map do |name|
+      Kuroko2::Tag.find_or_create_by(name: name)
+    end
   end
 
   def admin_id_params(params)

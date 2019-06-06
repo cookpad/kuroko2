@@ -80,7 +80,6 @@ describe 'job_definitions' do
           suspended: false,
           prevent_multi: 1,
           hipchat_additional_text: "",
-          text_tags: "",
           api_allowed: 1,
           slack_channel: "",
           webhook_url: "",
@@ -101,6 +100,60 @@ describe 'job_definitions' do
       end
     end
 
+    context 'with tags' do
+      let(:params) do
+        {
+          name: "test",
+          description: "description",
+          script: "noop:",
+          notify_cancellation: 1,
+          hipchat_room: "",
+          hipchat_notify_finished: 1,
+          suspended: false,
+          prevent_multi: 1,
+          hipchat_additional_text: "",
+          tags: ["awesome", "sauce"],
+          api_allowed: 1,
+          slack_channel: "",
+          webhook_url: "",
+          user_id: [user.id],
+        }
+      end
+
+      it 'creates the new tags' do
+        expect {
+          post "/v1/definitions", params: params, env: env
+        }.to change {
+          Kuroko2::Tag.count
+        }.by(2)
+
+        expect(response.status).to eq(201)
+        expect(result['name']).to eq(params[:name])
+        expect(result['description']).to eq(params[:description])
+        expect(result['script']).to eq(params[:script])
+        expect(result['tags']).to eq ["awesome", "sauce"]
+      end
+
+      context 'with a preexisiting tag' do
+        before do
+          Kuroko2::Tag.create(name: "awesome")
+        end
+
+        it 'only creates the tag the does not exist' do
+          expect {
+            post "/v1/definitions", params: params, env: env
+          }.to change {
+            Kuroko2::Tag.count
+          }.by(1)
+
+          expect(result['name']).to eq(params[:name])
+          expect(result['description']).to eq(params[:description])
+          expect(result['script']).to eq(params[:script])
+          expect(result['tags']).to eq ["awesome", "sauce"]
+        end
+      end
+    end
+
     context 'with invalid parameters' do
       let(:params) do
         {
@@ -112,7 +165,6 @@ describe 'job_definitions' do
           suspended: false,
           prevent_multi: 1,
           hipchat_additional_text: "",
-          text_tags: "",
           api_allowed: 1,
           slack_channel: "",
           webhook_url: "",
@@ -165,7 +217,6 @@ describe 'job_definitions' do
           suspended: false,
           prevent_multi: 1,
           hipchat_additional_text: "",
-          text_tags: "",
           api_allowed: 1,
           slack_channel: "",
           webhook_url: "",
@@ -175,6 +226,36 @@ describe 'job_definitions' do
       it 'updates a definition' do
         put "/v1/definitions/#{definition.id}", params: params, env: env
         expect(response.status).to eq(204)
+      end
+    end
+
+    context 'with tags' do
+      let(:params) do
+        {
+          name: "test",
+          description: "description",
+          script: "echo: Hello",
+          notify_cancellation: 1,
+          hipchat_room: "",
+          hipchat_notify_finished: 1,
+          suspended: false,
+          prevent_multi: 1,
+          hipchat_additional_text: "",
+          api_allowed: 1,
+          slack_channel: "",
+          webhook_url: "",
+          tags: ["new-tag"]
+        }
+      end
+
+      it 'adds the tags' do
+        expect {
+          put "/v1/definitions/#{definition.id}", params: params, env: env
+        }.to change {
+          Kuroko2::Tag.count
+        }.by(1)
+        expect(response.status).to eq(204)
+        expect(definition.tags.pluck(:name)).to eq ["new-tag"]
       end
     end
 
@@ -190,7 +271,6 @@ describe 'job_definitions' do
           suspended: false,
           prevent_multi: 1,
           hipchat_additional_text: "",
-          text_tags: "",
           api_allowed: 1,
           slack_channel: "",
           webhook_url: "",
@@ -215,7 +295,6 @@ describe 'job_definitions' do
           suspended: false,
           prevent_multi: 1,
           hipchat_additional_text: "",
-          text_tags: "",
           api_allowed: 1,
           slack_channel: "",
           webhook_url: "",
