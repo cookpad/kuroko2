@@ -225,4 +225,29 @@ describe 'job_definitions' do
       end
     end
   end
+
+  describe 'DELETE /v1/definitions/:id' do
+    let!(:definition) do
+      create(:job_definition, script: 'noop:')
+    end
+
+    before do
+      create_list(:job_definition, 2, script: 'noop:')
+    end
+
+    it 'deletes the job' do
+      expect do
+        delete "/v1/definitions/#{definition.id}", env: env
+      end.to change { Kuroko2::JobDefinition.count }.by(-1)
+      expect(Kuroko2::JobDefinition.where(id: definition.id)).to be_empty
+      expect(response.status).to eq(204)
+    end
+
+    it 'errors when trying to delete a job_definition that does not exist' do
+      definition.destroy
+
+      delete "/v1/definitions/#{definition.id}", env: env
+      expect(response.status).to eq(404)
+    end
+  end
 end

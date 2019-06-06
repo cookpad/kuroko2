@@ -7,5 +7,5 @@ class Kuroko2::Api::JobDefinitionResource < Kuroko2::Api::ApplicationResource
 
   property :script
 
-  delegate :id, :name, :description, :script, to: :model
+  delegate :id, :name, :description, :script, :destroy, to: :model
 end

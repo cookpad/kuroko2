@@ -42,6 +42,10 @@ class Kuroko2::Api::JobDefinitionsController < Kuroko2::Api::ApplicationControll
     end
   end
 
+  def destroy_resource
+    @resource.destroy
+  end
+
   def definition_params(params)
     params.permit(
       :name,
