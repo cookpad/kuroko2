@@ -11,6 +11,56 @@ describe 'job_definitions' do
   end
   let(:result) { JSON.parse(response.body) }
 
+  describe 'GET /v1/definitions' do
+    context "listing all definitions" do
+      let!(:job_definition) do
+        create(
+          :job_definition,
+          name: "My awsome job",
+          description: "This is great",
+          script: 'noop: rake make:awesome',
+        )
+      end
+
+      before do
+        create_list(:job_definition, 5, script: 'noop:')
+      end
+
+      it 'lists all definitions' do
+        get "/v1/definitions", env: env
+        expect(result.length).to eq 6
+        expect(result.first).to eq(
+          "id" => job_definition.id,
+          "name" => job_definition.name,
+          "description" => job_definition.description,
+          "script" => job_definition.script,
+        )
+      end
+    end
+
+    context "listing tagged definitions" do
+      let(:foo) { Kuroko2::Tag.create(name: "foo") }
+      let(:bar) { Kuroko2::Tag.create(name: "bar") }
+
+      before do
+        create_list(:job_definition, 2, script: 'noop:', tags: [foo])
+        create_list(:job_definition, 3, script: 'noop:', tags: [bar])
+        create_list(:job_definition, 2, script: 'noop:', tags: [foo, bar])
+        create_list(:job_definition, 3, script: 'noop:')
+      end
+
+      it 'lists the definitions with specified tags' do
+        get "/v1/definitions", env: env, params: { tags: ["foo"] }
+        expect(result.length).to eq 4
+      end
+
+      it 'lists the definitions with several tags' do
+        get "/v1/definitions", env: env, params: { tags: ["foo", "bar"] }
+        expect(result.length).to eq 2
+      end
+    end
+  end
+
   describe 'POST /v1/definitions' do
 
     let(:user) do
