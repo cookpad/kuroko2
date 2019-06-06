@@ -12,11 +12,11 @@ class Kuroko2::Api::JobDefinitionResource < Kuroko2::Api::ApplicationResource
   property :job_schedules
 
   def tags
-    model.tags.pluck(:name)
+    model.tags.map(&:name)
   end
 
   def job_schedules
-    model.job_schedules.pluck(:cron)
+    model.job_schedules.map(&:cron)
   end
 
   delegate :id, :name, :description, :script, :destroy, to: :model
