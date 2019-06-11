@@ -35,7 +35,7 @@ describe 'job_definitions' do
           "description" => job_definition.description,
           "script" => job_definition.script,
           "tags" => [],
-          "job_schedules"=>[],
+          "cron"=>[],
         )
       end
     end
@@ -163,7 +163,7 @@ describe 'job_definitions' do
           description: "description",
           script: "noop:",
           user_id: [user.id],
-          job_schedules: ["0 0 1,15 * *", "0 */7 * * *"],
+          cron: ["0 0 1,15 * *", "0 */7 * * *"],
         }
 
         expect {
@@ -175,7 +175,7 @@ describe 'job_definitions' do
 
         expect(response.status).to eq(201)
 
-        params[:job_schedules] = ["0 0 1 * *"]
+        params[:cron] = ["0 0 1 * *"]
         put "/v1/definitions/#{result['id']}", params: params, env: env
         expect(response.status).to eq(204)
         expect(Kuroko2::JobSchedule.count).to eq 1
@@ -189,7 +189,7 @@ describe 'job_definitions' do
           description: "description",
           script: "noop:",
           user_id: [user.id],
-          job_schedules: ["0 0 1,15 * *", "0 */7 * * *"],
+          cron: ["0 0 1,15 * *", "0 */7 * * *", "0 0 * * *"],
         }
       end
 
@@ -198,12 +198,13 @@ describe 'job_definitions' do
           post "/v1/definitions", params: params, env: env
         }.to change {
           Kuroko2::JobSchedule.count
-        }.by(2)
+        }.by(3)
 
         expect(response.status).to eq(201)
         expect(result['name']).to eq(params[:name])
         expect(result['description']).to eq(params[:description])
         expect(result['script']).to eq(params[:script])
+        expect(result['cron']).to eq(params[:cron])
       end
 
       context 'an invalid schedule' do
@@ -213,7 +214,7 @@ describe 'job_definitions' do
             description: "description",
             script: "noop:",
             user_id: [user.id],
-            job_schedules: ["hotdogs"],
+            cron: ["hotdogs"],
           }
         end
 
@@ -266,7 +267,7 @@ describe 'job_definitions' do
           'description' => definition.description,
           'script' => definition.script,
           'tags' => ['taggy-mc-tagface'],
-          'job_schedules' => [schedule.cron],
+          'cron' => [schedule.cron],
         }
       )
       expect(response.status).to eq(200)

@@ -15,17 +15,17 @@ class Kuroko2::Api::JobDefinitionsController < Kuroko2::Api::ApplicationControll
     definition = Kuroko2::JobDefinition.new(definition_params(params))
     user_ids = admin_id_params(params)
     definition.admins = Kuroko2::User.active.with(user_ids)
-    definition.job_schedules = job_schedules(params)
     definition.tags = tags(params)
 
     if definition.save_and_record_revision
+      definition.job_schedules = job_schedules(params, definition)
       definition.admins.each do |user|
         user.stars.create(job_definition: definition) if user.google_account?
       end
 
       @resource = Kuroko2::Api::JobDefinitionResource.new(definition)
     else
-      raise HTTP::UnprocessableEntity.new("#{definition.name}: #{definition.errors.full_messages.join()}")
+      raise HTTP::UnprocessableEntity.new("#{definition.name}: #{definition.errors.full_messages.join}")
     end
   end
 
@@ -36,13 +36,13 @@ class Kuroko2::Api::JobDefinitionsController < Kuroko2::Api::ApplicationControll
 
   def update_resource
     definition = Kuroko2::JobDefinition.find(params[:id])
-    definition.job_schedules = job_schedules(params)
     definition.tags = tags(params)
+    definition.job_schedules = job_schedules(params, definition)
 
     if definition.update_and_record_revision(definition_params(params))
       @resource = Kuroko2::Api::JobDefinitionResource.new(definition)
     else
-      raise HTTP::UnprocessableEntity.new("#{definition.name}: #{definition.errors.full_messages.join()}")
+      raise HTTP::UnprocessableEntity.new("#{definition.name}: #{definition.errors.full_messages.join}")
     end
   end
 
@@ -69,17 +69,17 @@ class Kuroko2::Api::JobDefinitionsController < Kuroko2::Api::ApplicationControll
   end
 
   def tags(params)
-    tag_strings = params.permit(tags: [])[:tags] || []
+    tag_strings = params.permit(tags: []).fetch(:tags, [])
     tag_strings.map do |name|
       Kuroko2::Tag.find_or_create_by(name: name)
     end
   end
 
-  def job_schedules(params)
-    cron_strings = params.permit(job_schedules: [])[:job_schedules] || []
+  def job_schedules(params, definition)
+    cron_strings = params.permit(cron: []).fetch(:cron, [])
     cron_strings.map do |cron|
-      schedule = Kuroko2::JobSchedule.find_or_create_by(cron: cron)
-      raise HTTP::UnprocessableEntity.new("#{cron}: #{schedule.errors.full_messages.join()}") unless schedule.valid?
+      schedule = definition.job_schedules.find_or_create_by(cron: cron)
+      raise HTTP::UnprocessableEntity.new("#{cron}: #{schedule.errors.full_messages.join}") unless schedule.valid?
       schedule
     end
   end

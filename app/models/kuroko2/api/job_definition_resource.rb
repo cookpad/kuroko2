@@ -9,13 +9,13 @@ class Kuroko2::Api::JobDefinitionResource < Kuroko2::Api::ApplicationResource
 
   property :tags
 
-  property :job_schedules
+  property :cron
 
   def tags
     model.tags.map(&:name)
   end
 
-  def job_schedules
+  def cron
     model.job_schedules.map(&:cron)
   end
 
