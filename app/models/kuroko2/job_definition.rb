@@ -62,7 +62,7 @@ class Kuroko2::JobDefinition < Kuroko2::ApplicationRecord
   }
 
 
-  validates :name, length: { maximum: 40 }, presence: true
+  validates :name, length: { maximum: 180 }, presence: true
   validates :description, presence: true
   validates :script, presence: true
   validate :script_syntax
