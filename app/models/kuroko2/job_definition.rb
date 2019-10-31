@@ -69,7 +69,7 @@ class Kuroko2::JobDefinition < Kuroko2::ApplicationRecord
   validate :validate_number_of_admins
   validates :hipchat_additional_text, length: { maximum: 180 }
   validates :slack_channel,
-    length: { maximum: 22, too_long: ' is too long (maximum is 21 characters without `#` symbol at the head)' },
+    length: { maximum: 81, too_long: ' is too long (maximum is 80 characters without `#` symbol at the head)' },
     format: {
       with: /\A#[^\.\s]+\z/, allow_blank: true,
       message: ' must start with # and must not include any dots or spaces'
