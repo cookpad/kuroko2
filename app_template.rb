@@ -76,6 +76,10 @@ scheduler: ./bin/rails runner Kuroko2::Servers::JobScheduler.new.run
 processor: ./bin/rails runner Kuroko2::Servers::WorkflowProcessor.new.run
 EOF
 
+inject_into_file "app/assets/config/manifest.js", after: "//= link_directory ../stylesheets .css\n" do
+  "//= link kuroko2_manifest.js"
+end
+
 run 'bundle install'
 rake 'kuroko2:install:migrations'
 rake 'db:create'
