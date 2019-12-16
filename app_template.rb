@@ -4,7 +4,7 @@ gsub_file 'Gemfile', /^gem 'turbolinks'.+/, ""
 gsub_file 'Gemfile', /^gem 'jbuilder'.+/, ""
 gsub_file 'Gemfile', /^gem 'jquery-rails'.+/, ""
 gsub_file 'Gemfile', /^gem 'coffee-rails'.+/, ""
-gsub_file 'config/database.yml', "encoding: utf8", "encoding: utf8mb4"
+gsub_file 'config/database.yml', /encoding: utf8$/, "encoding: utf8mb4"
 
 gem 'kuroko2'
 
