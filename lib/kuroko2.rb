@@ -1,6 +1,6 @@
 require 'chrono'
 require 'addressable'
-require 'aws-sdk'
+require 'aws-sdk-cloudwatchlogs'
 require 'retryable'
 require 'faraday'
 require 'html/pipeline'
