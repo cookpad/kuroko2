@@ -35,7 +35,7 @@ class Kuroko2::JobDefinition < Kuroko2::ApplicationRecord
 
   before_destroy :confirm_active_instances
   after_initialize :set_default_values
-  after_save :create_default_memory_expectancy, on: :create
+  after_create :create_default_memory_expectancy
 
   scope :ordered, -> { order(:id) }
   scope :tagged_by, ->(tags) {
