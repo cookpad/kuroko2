@@ -15,7 +15,7 @@ $ ->
     new vis.Timeline(
       container.get(0),
       response.data,
-      $.extend(options, {start: response.start_at, end: response.end_at})
+      $.extend(options, {start: response.start, end: response.end})
     )
 
   $.get(datasetPath, callback)
