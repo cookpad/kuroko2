@@ -5,6 +5,8 @@ require 'retryable'
 require 'faraday'
 require 'html/pipeline'
 require 'hipchat'
+require 'omniauth-google-oauth2'
+require 'omniauth/rails_csrf_protection'
 
 require "kuroko2/engine"
 require "kuroko2/configuration"
