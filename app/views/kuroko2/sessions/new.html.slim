@@ -14,7 +14,7 @@ html.bg-black
       .body
         p.lead Please sign in with Google account.
         .text-center
-          a.btn.btn-social.btn-google-plus href=auth_path("google_oauth2", state: params[:return_to])
+          = button_to auth_path("google_oauth2", state: params[:return_to]), class: 'btn btn-social btn-google-plus' do
             i.fa.fa-google-plus
             span Sign in with Google
       .footer
