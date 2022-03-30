@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby:
+          # TODO: Update tested versions
+          - '2.4'
+          - '2.5'
+          - '2.6'
+    name: Run test with Ruby ${{ matrix.ruby }}
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: kuroko2_root
+          MYSQL_USER: kuroko2
+          MYSQL_PASSWORD: kuroko2
+          MYSQL_DATABASE: kuroko2
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd "mysqladmin ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: mysql2://kuroko2:kuroko2@127.0.0.1:3306/kuroko2
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+      - run: bin/rails db:create db:schema:load
+      - run: bundle exec rspec
