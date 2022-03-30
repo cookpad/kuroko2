@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 34) do
     t.text "shell", null: false
     t.datetime "started_at", null: false
     t.datetime "finished_at", null: false
-    t.index ["worker_id", "started_at"], name: "index_kuroko2_execution_histories_on_worker_id_and_started_at"
+    t.index ["worker_id", "started_at"], name: "index_execution_histories_on_worker_id_and_started_at"
   end
 
   create_table "executions", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 34) do
     t.datetime "updated_at"
     t.string "hostname", limit: 180
     t.integer "worker_id", limit: 1
-    t.index ["job_definition_id", "token_id"], name: "index_kuroko2_executions_on_job_definition_id_and_token_id", unique: true
+    t.index ["job_definition_id", "token_id"], name: "index_executions_on_job_definition_id_and_token_id", unique: true
     t.index ["started_at"], name: "started_at"
   end
 
@@ -95,7 +95,7 @@ ActiveRecord::Schema.define(version: 34) do
     t.datetime "updated_at"
     t.boolean "retrying", default: false, null: false
     t.index ["finished_at", "canceled_at", "job_definition_id"], name: "job_instance_idx"
-    t.index ["job_definition_id"], name: "index_kuroko2_job_instances_on_job_definition_id"
+    t.index ["job_definition_id"], name: "index_job_instances_on_job_definition_id"
   end
 
   create_table "job_schedules", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
@@ -128,7 +128,7 @@ ActiveRecord::Schema.define(version: 34) do
     t.integer "value", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["job_instance_id"], name: "index_kuroko2_memory_consumption_logs_on_job_instance_id"
+    t.index ["job_instance_id"], name: "index_memory_consumption_logs_on_job_instance_id"
   end
 
   create_table "memory_expectancies", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
@@ -136,7 +136,7 @@ ActiveRecord::Schema.define(version: 34) do
     t.bigint "job_definition_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["job_definition_id"], name: "index_kuroko2_memory_expectancies_on_job_definition_id"
+    t.index ["job_definition_id"], name: "index_memory_expectancies_on_job_definition_id"
   end
 
   create_table "process_signals", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
@@ -148,7 +148,7 @@ ActiveRecord::Schema.define(version: 34) do
     t.datetime "updated_at"
     t.text "message"
     t.integer "execution_id"
-    t.index ["execution_id"], name: "index_kuroko2_process_signals_on_execution_id"
+    t.index ["execution_id"], name: "index_process_signals_on_execution_id"
     t.index ["hostname", "started_at"], name: "hostname_started_at"
   end
 
@@ -159,8 +159,8 @@ ActiveRecord::Schema.define(version: 34) do
     t.datetime "changed_at", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["job_definition_id"], name: "index_kuroko2_script_revisions_on_job_definition_id"
-    t.index ["user_id"], name: "index_kuroko2_script_revisions_on_user_id"
+    t.index ["job_definition_id"], name: "index_script_revisions_on_job_definition_id"
+    t.index ["user_id"], name: "index_script_revisions_on_user_id"
   end
 
   create_table "stars", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
@@ -168,14 +168,14 @@ ActiveRecord::Schema.define(version: 34) do
     t.bigint "job_definition_id", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["user_id", "job_definition_id"], name: "index_kuroko2_stars_on_user_id_and_job_definition_id", unique: true
+    t.index ["user_id", "job_definition_id"], name: "index_stars_on_user_id_and_job_definition_id", unique: true
   end
 
   create_table "tags", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.string "name", limit: 100, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_kuroko2_tags_on_name", unique: true
+    t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
   create_table "ticks", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
