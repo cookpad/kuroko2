@@ -11,10 +11,9 @@ jobs:
       fail-fast: false
       matrix:
         ruby:
-          # TODO: Update tested versions
-          - '2.4'
-          - '2.5'
           - '2.6'
+          - '2.7'
+          # TODO: Add 3.0 and 3.1 after upgrading Rails
     name: Run test with Ruby ${{ matrix.ruby }}
     services:
       mysql:
