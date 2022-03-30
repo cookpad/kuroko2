@@ -1,5 +1,6 @@
 default: &default
   url: 'http://localhost:3000'
+  table_name_prefix: ''
   action_mailer:
     delivery_method: 'test'
   execution_logger:
