@@ -3,8 +3,8 @@ FactoryBot.define do
     shell { 'echo $NAME' }
     exit_status { 0 }
 
-    job_definition { token.job_definition if token }
-    job_instance { token.job_instance if token }
+    job_definition { token ? token.job_definition : create(:job_definition) }
+    job_instance { token ? token.job_instance : create(:job_instance, job_definition: job_definition) }
     context { token.context if token }
 
     started_at { Time.current }

@@ -1,22 +1,22 @@
 require 'rails_helper'
 
 describe Kuroko2::JobSchedule do
+  let(:definition) { create(:job_definition) }
 
   describe '#valid?' do
     it 'accepts only CRON notation' do
-      expect(Kuroko2::JobSchedule.new(cron: '* * * * *')).to be_valid
-      expect(Kuroko2::JobSchedule.new(cron: '1,2-3,*,*/4,5-6/7 1,2-3,*,*/4,5-6/7 1,2-3,*,*/4,5-6/7 1,2-3,*,*/4,5-6/7 1,2-3,*,*/4,1-3/5')).to be_valid
-      expect(Kuroko2::JobSchedule.new(cron: '* * * *')).not_to be_valid
+      expect(Kuroko2::JobSchedule.new(cron: '* * * * *', job_definition: definition)).to be_valid
+      expect(Kuroko2::JobSchedule.new(cron: '1,2-3,*,*/4,5-6/7 1,2-3,*,*/4,5-6/7 1,2-3,*,*/4,5-6/7 1,2-3,*,*/4,5-6/7 1,2-3,*,*/4,1-3/5', job_definition: definition)).to be_valid
+      expect(Kuroko2::JobSchedule.new(cron: '* * * *', job_definition: definition)).not_to be_valid
     end
 
     it 'accepts only valid CRON notation' do
-      expect(Kuroko2::JobSchedule.new(cron: '5-0 * * * *')).not_to be_valid
+      expect(Kuroko2::JobSchedule.new(cron: '5-0 * * * *', job_definition: definition)).not_to be_valid
     end
   end
 
   describe '#next' do
     let(:cron) { '0,15,30,45 10 * * *' }
-    let(:definition) { create(:job_definition) }
     let(:schedule) { create(:job_schedule, job_definition: definition, cron: cron) }
     let(:time) { Time.new(2016, 1, 1, 10, 0) }
 

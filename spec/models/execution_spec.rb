@@ -4,7 +4,7 @@ describe Kuroko2::Execution do
 
   describe '.poll' do
     context 'with active execution' do
-      let(:definition) { create(:job_definition) }
+      let(:definition) { token.job_instance.job_definition }
       let(:token) { create(:token) }
 
       context 'default queue' do
