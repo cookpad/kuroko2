@@ -62,6 +62,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rspec-rails"
   s.add_development_dependency "factory_bot_rails", '>= 5.0.0'
   s.add_development_dependency 'capybara', '>= 3.0.0'
-  s.add_development_dependency 'poltergeist'
+  s.add_development_dependency 'selenium-webdriver'
   s.add_development_dependency 'puma'
 end

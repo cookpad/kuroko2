@@ -32,7 +32,9 @@ RSpec.describe "Management job definitions", type: :feature do
     expect(page).to have_content('Job Definition Details')
     expect(page).to have_content('test1-edit')
 
-    click_on 'Destroy Job definition'
+    accept_alert do
+      click_on 'Destroy Job definition'
+    end
     expect(page).to have_content('All Job Definitions')
   end
 
