@@ -6,7 +6,7 @@ class Kuroko2::WorkersController < Kuroko2::ApplicationController
   end
 
   def update
-    @worker.update_attributes(worker_params)
+    @worker.update(worker_params)
     redirect_to workers_path
   end
 
