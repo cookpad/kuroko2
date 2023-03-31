@@ -14,7 +14,7 @@ class Kuroko2::JobInstancesController < Kuroko2::ApplicationController
       creation_params.merge!(params.require(:job_definition).permit(:script).to_h.symbolize_keys)
     end
 
-    @instance = @definition.create_instance(creation_params)
+    @instance = @definition.create_instance(**creation_params)
     redirect_to job_definition_job_instance_path(@definition, @instance)
   end
 
