@@ -39,20 +39,7 @@ module Kuroko2
 
       def skip(token)
         token.with_lock do
-          node = extract_node(token)
-
-          message = "(token #{token.uuid}) Skip current node: '#{node.type}: #{node.option}'"
-          token.job_instance.update_column(:error_at, nil)
-          token.job_instance.logs.info(message)
-
-          token.mark_as_working
-          process_next(node.next, token)
-
-          token.save! unless token.destroyed?
-
-          Kuroko2.logger.info(message)
-
-          Notifier.notify(:skipping, token.job_instance)
+          skip_with_lock(token)
         end
       end
 
@@ -68,7 +55,7 @@ module Kuroko2
         Notifier.notify(:failure, token.job_instance)
 
         if token.context['AUTO_SKIP_ERROR']
-          skip(token)
+          skip_with_lock(token)
         end
       end
 
@@ -148,6 +135,23 @@ module Kuroko2
         Notifier.notify(:critical, token.job_instance)
       ensure
         token.save! unless token.destroyed?
+      end
+
+      def skip_with_lock(token)
+        node = extract_node(token)
+
+        message = "(token #{token.uuid}) Skip current node: '#{node.type}: #{node.option}'"
+        token.job_instance.update_column(:error_at, nil)
+        token.job_instance.logs.info(message)
+
+        token.mark_as_working
+        process_next(node.next, token)
+
+        token.save! unless token.destroyed?
+
+        Kuroko2.logger.info(message)
+
+        Notifier.notify(:skipping, token.job_instance)
       end
 
       def extract_node(token)
