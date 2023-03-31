@@ -17,7 +17,7 @@ class Kuroko2::JobSchedule < Kuroko2::ApplicationRecord
 
   CHRONO_SCHEDULE_METHODS = %i[minutes hours days months wdays]
 
-  validates :cron, format: { with: CRON_FORMAT }, uniqueness: { scope: :job_definition_id }
+  validates :cron, format: { with: CRON_FORMAT }, uniqueness: { scope: :job_definition_id, case_sensitive: true }
   validate :validate_cron_schedule
 
   def next(now = Time.current)

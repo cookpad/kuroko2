@@ -3,7 +3,7 @@ class Kuroko2::JobSuspendSchedule < Kuroko2::ApplicationRecord
 
   belongs_to :job_definition
 
-  validates :cron, format: { with: Kuroko2::JobSchedule::CRON_FORMAT }, uniqueness: { scope: :job_definition_id }
+  validates :cron, format: { with: Kuroko2::JobSchedule::CRON_FORMAT }, uniqueness: { scope: :job_definition_id, case_sensitive: true }
   validate :validate_cron_schedule
 
   def suspend_times(time_from, time_to)
