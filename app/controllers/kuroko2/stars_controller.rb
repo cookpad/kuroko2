@@ -8,7 +8,7 @@ class Kuroko2::StarsController < Kuroko2::ApplicationController
     if (star.save)
       render json: star, status: :created
     else
-      raise HTTP::BadRequest
+      raise Http::BadRequest
     end
   end
 
@@ -18,7 +18,7 @@ class Kuroko2::StarsController < Kuroko2::ApplicationController
     if (star.destroy)
       render json: star, status: :ok
     else
-      raise HTTP::BadRequest
+      raise Http::BadRequest
     end
   end
 

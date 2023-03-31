@@ -25,7 +25,7 @@ class Kuroko2::Api::JobDefinitionsController < Kuroko2::Api::ApplicationControll
 
       @resource = Kuroko2::Api::JobDefinitionResource.new(definition)
     else
-      raise HTTP::UnprocessableEntity.new("#{definition.name}: #{definition.errors.full_messages.join}")
+      raise Http::UnprocessableEntity.new("#{definition.name}: #{definition.errors.full_messages.join}")
     end
   end
 
@@ -42,7 +42,7 @@ class Kuroko2::Api::JobDefinitionsController < Kuroko2::Api::ApplicationControll
     if definition.update_and_record_revision(definition_params(params))
       @resource = Kuroko2::Api::JobDefinitionResource.new(definition)
     else
-      raise HTTP::UnprocessableEntity.new("#{definition.name}: #{definition.errors.full_messages.join}")
+      raise Http::UnprocessableEntity.new("#{definition.name}: #{definition.errors.full_messages.join}")
     end
   end
 
@@ -79,7 +79,7 @@ class Kuroko2::Api::JobDefinitionsController < Kuroko2::Api::ApplicationControll
     cron_strings = params.permit(cron: []).fetch(:cron, [])
     cron_strings.map do |cron|
       schedule = definition.job_schedules.find_or_create_by(cron: cron)
-      raise HTTP::UnprocessableEntity.new("#{cron}: #{schedule.errors.full_messages.join}") unless schedule.valid?
+      raise Http::UnprocessableEntity.new("#{cron}: #{schedule.errors.full_messages.join}") unless schedule.valid?
       schedule
     end
   end
