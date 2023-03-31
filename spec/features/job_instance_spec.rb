@@ -21,11 +21,11 @@ RSpec.describe "Launches a job instace and Management job instances on the web c
 
     expect(page).to have_content('Job Definition Details')
     expect(page).to have_content(job_definition.name)
-    find_button('Launch').trigger(:click)
+    click_on('Launch')
 
     expect(page).to have_selector('#launchAdHocModal .modal-dialog', visible: true)
     within '#launchAdHocModal .modal-dialog' do
-      find_button('Launch').trigger(:click)
+      click_on('Launch')
     end
 
     expect(page).to have_content('Job Instance Details')
@@ -57,7 +57,9 @@ RSpec.describe "Launches a job instace and Management job instances on the web c
       visit kuroko2.job_definition_job_instance_path(job_definition, job_definition.job_instances.first)
       expect(page).to have_selector('#instance-status .label', text: 'ERROR')
 
-      find_button('Skip').trigger(:click)
+      accept_alert do
+        click_on('Skip')
+      end
 
       sleep(2) # wait for setInterval, 2000
       expect(page).to have_selector('#instance-status .label', text: 'SUCCESS')
@@ -84,7 +86,9 @@ RSpec.describe "Launches a job instace and Management job instances on the web c
       expect(page).to have_selector('#instance-status .label', text: 'ERROR')
 
       within '#instance' do
-        find_link('Cancel').trigger(:click)
+        accept_alert do
+          click_on('Cancel')
+        end
       end
 
       sleep(2) # wait for setInterval, 2000

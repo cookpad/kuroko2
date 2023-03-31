@@ -16,8 +16,15 @@ require 'webmock/rspec'
 WebMock.disable_net_connect!(allow_localhost: true)
 
 require 'capybara/rspec'
-require 'capybara/poltergeist'
-Capybara.javascript_driver = :poltergeist
+require 'selenium-webdriver'
+Capybara.register_driver(:selenium_chrome_headless) do |app|
+  options = Selenium::WebDriver::Chrome::Options.new
+  options.add_argument('--headless')
+  # Set wide screen to show sidebars
+  options.add_argument('--window-size=1280,720')
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+end
+Capybara.javascript_driver = :selenium_chrome_headless
 Capybara.default_max_wait_time = 5
 
 OmniAuth.config.test_mode = true
