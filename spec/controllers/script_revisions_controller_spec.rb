@@ -7,7 +7,7 @@ describe Kuroko2::ScriptRevisionsController do
 
   let!(:definition) { create(:job_definition, script: "noop:\n") }
   before do
-    1.upto(3) { |i| definition.update_and_record_revision(script: "noop:\n" * i) }
+    1.upto(3) { |i| definition.update_and_record_revision({script: "noop:\n" * i}) }
   end
 
   describe '#index' do
