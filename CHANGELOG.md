@@ -1,4 +1,19 @@
 ## lastest(master branch)
+## v0.6.0
+- New features
+    - Add `GET /v1/definitions` API
+    - Add `DELETE /v1/definitions/:id` API
+- Changes
+    - Extend job definition name length limit from 40 characters to 180
+    - Extend Slack channel name length limit from 21 characters to 80
+- Bug fixes
+    - Fix token handling when the job definition allows "parallel execution" and one of running job instances raises EngineError (like syntax error in job script)
+- Dependencies
+    - Support sprockets v4
+    - Upgrade aws-sdk to v3
+    - Upgrade omniauth to v2
+    - Upgrade Rails to v6.0
+    - Drop support for Ruby <= 2.6
 
 ## v0.5.2
 - Prevent from propagating env vars at outside of fork task scope [#128](https://github.com/cookpad/kuroko2/pull/128)
