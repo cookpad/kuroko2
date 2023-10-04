@@ -30,17 +30,6 @@ module Kuroko2
 
       config.active_record.table_name_prefix = Kuroko2.config.table_name_prefix
 
-      if Kuroko2.config.custom_tasks
-        Kuroko2.config.custom_tasks.each do |key, klass|
-          unless Workflow::Node::TASK_REGISTRY.has_key?(key)
-            Workflow::Node.register(
-              key: key.to_sym,
-              klass: Workflow::Task.const_get(klass, false)
-            )
-          end
-        end
-      end
-
       config.action_mailer.default_url_options = {
         host:     Kuroko2.config.url_host,
         protocol: Kuroko2.config.url_scheme,
@@ -52,6 +41,19 @@ module Kuroko2
         Kuroko2.config.action_mailer.smtp_settings.to_h.symbolize_keys || {}
 
       app.config.assets.precompile += %w(kuroko2/kuroko-logo-success.png kuroko2/kuroko-logo-error.png)
+    end
+
+    config.after_initialize do
+      if Kuroko2.config.custom_tasks
+        Kuroko2.config.custom_tasks.each do |key, klass|
+          unless Workflow::Node::TASK_REGISTRY.has_key?(key)
+            Workflow::Node.register(
+              key: key.to_sym,
+              klass: Workflow::Task.const_get(klass, false)
+            )
+          end
+        end
+      end
 
       if Kuroko2.config.extensions && Kuroko2.config.extensions.controller
         Kuroko2.config.extensions.controller.each do |extension|

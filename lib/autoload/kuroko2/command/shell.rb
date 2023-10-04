@@ -102,7 +102,7 @@ module Kuroko2
             stdin.close
 
             pid = thread.pid
-            execution.update_attributes(pid: pid)
+            execution.update(pid: pid)
 
             reader = Thread.new do
               begin

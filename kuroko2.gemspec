@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md", "bin/*.rb"]
   s.test_files = Dir["spec/**/*"]
 
-  s.add_dependency "rails", ">= 5.0.0.1", '< 5.2'
+  s.add_dependency "rails", ">= 6.0.6.1", '< 6.1'
   s.add_dependency "kaminari"
   s.add_dependency "chrono"
   s.add_dependency "hashie"
@@ -29,7 +29,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'slim-rails'
   s.add_dependency 'sass', '~> 3.4.5'
   s.add_dependency 'sass-rails'
-  s.add_dependency 'uglifier', '~> 2.7.1'
+  s.add_dependency 'uglifier', '>= 4'
   s.add_dependency 'jbuilder'
 
   s.add_dependency 'jquery-rails'
@@ -56,7 +56,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'diffy'
 
-  s.add_development_dependency 'mysql2', '< 0.5'
+  s.add_development_dependency 'mysql2', '>= 0.4.4'
   s.add_development_dependency "rspec-rails"
   s.add_development_dependency "factory_bot_rails", '>= 5.0.0'
   s.add_development_dependency 'capybara', '>= 3.0.0'

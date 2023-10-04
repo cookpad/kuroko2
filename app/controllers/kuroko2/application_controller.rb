@@ -6,7 +6,7 @@ class Kuroko2::ApplicationController < ActionController::Base
   helper_method :current_user, :signed_in?
   before_action :require_sign_in
 
-  rescue_from HTTP::BadRequest do
+  rescue_from Http::BadRequest do
     respond_to do |format|
       format.html { render 'public/500.html', layout: false, status: :bad_request }
       format.json { render json: { message: 'Bad Request' }, status: :bad_request }

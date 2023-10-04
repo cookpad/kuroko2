@@ -12,7 +12,7 @@ describe Kuroko2::UsersController do
 
     context 'with groups parameter' do
       before do
-        users.each {|u| u.update_attributes!(provider: 'group_mail') }
+        users.each {|u| u.update!(provider: 'group_mail') }
       end
       it { expect(assigns(:users).to_a).to eq users }
     end

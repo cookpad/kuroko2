@@ -5,6 +5,7 @@ FactoryBot.define do
     script { 'execute:' }
     context { Hash.new }
 
-    job_definition { job_instance.job_definition if job_instance }
+    job_instance
+    job_definition { job_instance.job_definition }
   end
 end

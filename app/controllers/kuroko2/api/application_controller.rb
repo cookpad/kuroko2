@@ -7,15 +7,15 @@ class Kuroko2::Api::ApplicationController < ActionController::Base
     respond_with_error(404, 'record_not_found', exception.message)
   end
 
-  rescue_from HTTP::Forbidden do |exception|
+  rescue_from Http::Forbidden do |exception|
     respond_with_error(403, 'forbidden', exception.message)
   end
 
-  rescue_from HTTP::Unauthorized do |exception|
+  rescue_from Http::Unauthorized do |exception|
     respond_with_error(401, 'unauthorized', exception.message)
   end
 
-  rescue_from HTTP::UnprocessableEntity do |exception|
+  rescue_from Http::UnprocessableEntity do |exception|
     respond_with_error(422, 'unprocessable_entity', exception.message)
   end
 
@@ -43,7 +43,7 @@ class Kuroko2::Api::ApplicationController < ActionController::Base
     end
 
     if service_name.nil?
-      raise HTTP::Unauthorized
+      raise Http::Unauthorized
     end
   end
 

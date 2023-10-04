@@ -102,14 +102,26 @@ class Kuroko2::JobDefinition < Kuroko2::ApplicationRecord
   end
 
   def save_and_record_revision(edited_user: nil)
-    record_revision(edited_user: edited_user)
-    save
+    transaction do
+      if save
+        record_revision(edited_user: edited_user)
+        true
+      else
+        false
+      end
+    end
   end
 
   def update_and_record_revision(attributes, edited_user: nil)
     assign_attributes(attributes)
-    record_revision(edited_user: edited_user)
-    save
+    transaction do
+      if save
+        record_revision(edited_user: edited_user)
+        true
+      else
+        false
+      end
+    end
   end
 
   private
@@ -142,8 +154,9 @@ class Kuroko2::JobDefinition < Kuroko2::ApplicationRecord
 
   def record_revision(edited_user: nil)
     unless revisions.first.try(:script) == script
-      revisions.new(script: script, user: edited_user, changed_at: Time.current)
+      revisions.create!(script: script, user: edited_user, changed_at: Time.current)
     end
+    nil
   end
 
   def create_default_memory_expectancy

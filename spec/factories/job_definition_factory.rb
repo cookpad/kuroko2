@@ -5,7 +5,6 @@ FactoryBot.define do
     script { "noop:\n" }
     admins { build_list(:user, 1) }
     prevent_multi { false }
-    memory_expectancy { create_memory_expectancy! }
 
     trait :with_revisions do
       transient do

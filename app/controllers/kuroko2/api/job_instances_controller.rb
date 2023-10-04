@@ -16,7 +16,7 @@ class Kuroko2::Api::JobInstancesController < Kuroko2::Api::ApplicationController
   def create_resource
     definition = Kuroko2::JobDefinition.find(params[:job_definition_id])
     unless definition.api_allowed?
-      raise HTTP::Forbidden.new("#{definition.name} is not allowed to be executed via API")
+      raise Http::Forbidden.new("#{definition.name} is not allowed to be executed via API")
     end
 
     instance = definition.create_instance(

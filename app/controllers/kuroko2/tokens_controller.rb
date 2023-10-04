@@ -24,7 +24,7 @@ class Kuroko2::TokensController < Kuroko2::ApplicationController
 
       @engine.retry(@token)
     else
-      raise HTTP::BadRequest
+      raise Http::BadRequest
     end
 
     redirect_to job_definition_job_instance_path(job_definition_id: @token.job_definition_id, id: @token.job_instance.id)
