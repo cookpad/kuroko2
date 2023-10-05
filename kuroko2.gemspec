@@ -35,7 +35,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'rails_bootstrap_sortable'
   s.add_dependency "select2-rails"
   s.add_dependency 'rack-store', '~> 0.0.4'
-  s.add_dependency 'dotenv-rails', '~> 0.11.1'
   s.add_dependency 'serverengine', '~> 1.5.7'
   s.add_dependency 'omniauth', '>= 2.0.0'
   s.add_dependency 'omniauth-google-oauth2', '>= 1.0.0'
