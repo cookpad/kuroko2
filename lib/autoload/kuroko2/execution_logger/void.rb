@@ -1,6 +1,6 @@
 module Kuroko2
   class ExecutionLogger::Void
-    def initialize(option = {})
+    def initialize(**)
     end
 
     def send_log(message)
