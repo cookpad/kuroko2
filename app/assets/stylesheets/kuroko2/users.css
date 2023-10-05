@@ -1,0 +1,6 @@
+.user-controls {
+  text-align: right;
+}
+.user-controls a:not(:last-child) {
+  margin-right: 5px;
+}
