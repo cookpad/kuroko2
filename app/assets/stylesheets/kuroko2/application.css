@@ -8,7 +8,6 @@
  * = require select2
  * = require vis
 */
-
 .spacer-top-10 {
   padding-top: 10px;
 }
@@ -22,48 +21,38 @@
 }
 
 .log {
-  font-family: 'Inconsolata';
+  font-family: "Inconsolata";
   white-space: pre-wrap;
 }
 
-.no-decorate {
-  a {
-    color: #444;
-  }
+.no-decorate a {
+  color: #444;
 }
 
 .display-none {
   display: none;
 }
 
-.skin-black .sidebar > .sidebar-menu > li {
-  a[name]:hover {
-    background-color: #333;
-  }
-
-  .active a {
-    background: #444;
-  }
-
-  .menu-child {
-    padding: 0px;
-  }
-
-  .menu-child-item {
-    > a {
-      padding: 12px 5px 12px 35px;
-      display: block;
-      margin-right: 1px;
-      color: #f6f6f6;
-
-      .fa {
-        width: 20px;
-      }
-    }
-    > a:hover {
-      background: #444;
-    }
-  }
+.skin-black .sidebar > .sidebar-menu > li a[name]:hover {
+  background-color: #333;
+}
+.skin-black .sidebar > .sidebar-menu > li .active a {
+  background: #444;
+}
+.skin-black .sidebar > .sidebar-menu > li .menu-child {
+  padding: 0px;
+}
+.skin-black .sidebar > .sidebar-menu > li .menu-child-item > a {
+  padding: 12px 5px 12px 35px;
+  display: block;
+  margin-right: 1px;
+  color: #f6f6f6;
+}
+.skin-black .sidebar > .sidebar-menu > li .menu-child-item > a .fa {
+  width: 20px;
+}
+.skin-black .sidebar > .sidebar-menu > li .menu-child-item > a:hover {
+  background: #444;
 }
 
 #peek {
