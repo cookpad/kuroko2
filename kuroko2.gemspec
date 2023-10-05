@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'aws-sdk-cloudwatchlogs', '>= 1.0.0'
   s.add_dependency 'retryable'
   s.add_dependency 'faraday'
-  s.add_dependency 'sprockets'
+  s.add_dependency 'sprockets-rails'
   s.add_dependency 'slim-rails'
   s.add_dependency 'uglifier', '>= 4'
   s.add_dependency 'jbuilder'
