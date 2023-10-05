@@ -60,10 +60,9 @@ Kuroko2's authentication system supports only Google OAuth.
 
 ```bash
 $ cd my_kuroko2/
-$ vi .env
 ```
 
-And adding variables to the `.env` file.
+And setup environment variables.
 
 ```
 GOOGLE_CLIENT_ID=[client_id]

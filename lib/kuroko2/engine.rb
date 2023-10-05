@@ -13,7 +13,6 @@ module Kuroko2
       require 'select2-rails'
       require 'font-awesome-rails'
       require 'visjs/rails'
-      require 'dotenv-rails'
       require 'weak_parameters'
       require 'diffy'
     end
