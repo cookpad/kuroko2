@@ -1,4 +1,8 @@
 ## lastest(master branch)
+## v0.7.0
+- Upgrade Rails to v6.1
+- Support Ruby 3.0 and 3.1
+
 ## v0.6.0
 - New features
     - Add `GET /v1/definitions` API
