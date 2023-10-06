@@ -91,7 +91,7 @@ class Kuroko2::JobDefinitionsController < Kuroko2::ApplicationController
   end
 
   def definition_params
-    params.require(:job_definition).permit(:name, :description, :script, :notify_cancellation, :hipchat_room, :hipchat_notify_finished, :suspended, :prevent_multi, :prevent_multi_on_failure, :hipchat_additional_text, :text_tags, :api_allowed, :slack_channel, :webhook_url)
+    params.require(:job_definition).permit(:name, :description, :script, :notify_cancellation, :hipchat_notify_finished, :suspended, :prevent_multi, :prevent_multi_on_failure, :hipchat_additional_text, :text_tags, :api_allowed, :slack_channel, :webhook_url)
   end
 
   def query_params

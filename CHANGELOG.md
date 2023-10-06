@@ -1,4 +1,6 @@
 ## lastest(master branch)
+- Drop HipChat notifier
+
 ## v0.8.0
 - Upgrade Rails to v7.0
 - Support Ruby 3.2

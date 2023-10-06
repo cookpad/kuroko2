@@ -12,7 +12,7 @@
 - Name ... The name of the job.
 - Description ... A description of the job.
 - Script ... Definition of a workflow, will be explained later.
-- Slack channel / Hipchat room ... A chat room to send a message.
+- Slack channel ... A chat room to send a message.
 - Next Job Execution ... Check if you want to prevent multiple instances of same jobs.
 
 ![](images/kuroko2_job_form.png)
@@ -92,16 +92,15 @@ Kuroko2 notifies job statuses by below methods.
 
 - Mail
 - Slack
-- Hipchat
 - Webhook
 
 ### Notifications Frequency Options
 
 You can configurable notifications frequency.
 
-#### Notify all event to Slack/Hipchat/Webhook
+#### Notify all event to Slack/Webhook
 
-If you enable this option, Kuroko2 notifies all events by Slack/Hipchat/Webhook (except Email) that jobs state is changed,
+If you enable this option, Kuroko2 notifies all events by Slack/Webhook (except Email) that jobs state is changed,
 Events is below.
 
 - The job is launched

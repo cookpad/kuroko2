@@ -56,7 +56,6 @@ class Kuroko2::Api::JobDefinitionsController < Kuroko2::Api::ApplicationControll
       :description,
       :script,
       :notify_cancellation,
-      :hipchat_room,
       :hipchat_notify_finished,
       :suspended,
       :prevent_multi,
