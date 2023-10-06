@@ -24,9 +24,6 @@
 
     label Notification
     .form-group
-      label Hipchat Room Name
-      = form.text_field :hipchat_room, class: 'form-control', placeholder: 'Hipchat Room name'
-    .form-group
       label Slack Channel
       = form.text_field :slack_channel, class: 'form-control', placeholder: '#slack-channel'
     .form-group
@@ -36,7 +33,7 @@
     .checkbox
       label
         = form.check_box :hipchat_notify_finished
-        ' Notify all event to Slack/Hipchat/Webhook
+        ' Notify all event to Slack/Webhook
 
     .checkbox
       label

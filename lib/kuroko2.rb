@@ -4,7 +4,6 @@ require 'aws-sdk-cloudwatchlogs'
 require 'retryable'
 require 'faraday'
 require 'html/pipeline'
-require 'hipchat'
 require 'omniauth-google-oauth2'
 require 'omniauth/rails_csrf_protection'
 

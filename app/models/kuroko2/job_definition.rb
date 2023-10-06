@@ -1,6 +1,9 @@
 class Kuroko2::JobDefinition < Kuroko2::ApplicationRecord
   include Kuroko2::TableNameCustomizable
 
+  # TODO: Drop column in the next release
+  self.ignored_columns += %i[hipchat_room]
+
   module PreventMultiStatus
     NONE = 0
     WORKING_OR_ERROR = 1

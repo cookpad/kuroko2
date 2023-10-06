@@ -43,22 +43,20 @@
         h3 Options
         h4 Notification
         ul
-          - if @definition.hipchat_room.present? || @definition.slack_channel.present?
+          - if @definition.slack_channel.present?
             - if @definition.hipchat_notify_finished?
               li
-                'Notify all event to Slack/Hipchat/Webhook
+                'Notify all event to Slack/Webhook
                 ul
                   li webhook url: #{@definition.webhook_url}
-                  li hipchat room: #{@definition.hipchat_room}
                   li slack channel: #{@definition.slack_channel}
                   - if @definition.hipchat_additional_text
                     li Failure notification text: #{@definition.hipchat_additional_text}
             - else
               li
-                'Notify failure event to Slack/Hipchat/Webhook
+                'Notify failure event to Slack/Webhook
                 ul
                   li webhook url: #{@definition.webhook_url}
-                  li hipchat room: #{@definition.hipchat_room}
                   li slack channel: #{@definition.slack_channel}
                   - if @definition.hipchat_additional_text
                     li Failure notification text: #{@definition.hipchat_additional_text}
@@ -66,7 +64,7 @@
           - if @definition.notify_cancellation
             li Notify administrators when the job is cancelled by system.
 
-          - if !@definition.hipchat_room.present? && !@definition.slack_channel && !@definition.notify_cancellation
+          - if !@definition.slack_channel && !@definition.notify_cancellation
             li None
 
         h4 Next Job Execution

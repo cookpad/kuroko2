@@ -45,8 +45,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'rinku'
   s.add_dependency 'visjs-rails'
 
-  s.add_dependency 'hipchat', '~> 1.3.0'
-
   s.add_dependency 'the_garage'
   s.add_dependency 'weak_parameters'
 
