@@ -1,4 +1,11 @@
 ## lastest(master branch)
+## v0.8.0
+- Upgrade Rails to v7.0
+- Support Ruby 3.2
+- Support serverengine v2
+- Drop dotenv-rails
+    - You can continue using dotenv-rails by adding the gem to your Gemfile.
+
 ## v0.7.0
 - Upgrade Rails to v6.1
 - Support Ruby 3.0 and 3.1
