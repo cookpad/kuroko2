@@ -3,6 +3,7 @@ module Kuroko2
     isolate_namespace Kuroko2
 
     config.before_configuration do
+      require 'sprockets/rails'
       require 'kaminari'
       require 'slim'
       require 'jbuilder'

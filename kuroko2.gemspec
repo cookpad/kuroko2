@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md", "bin/*.rb"]
   s.test_files = Dir["spec/**/*"]
 
-  s.add_dependency "rails", ">= 6.1.7.6", '< 7.0'
+  s.add_dependency "rails", ">= 7.0.8", '< 7.1'
   s.add_dependency "kaminari"
   s.add_dependency "chrono"
   s.add_dependency "hashie"
@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'aws-sdk-cloudwatchlogs', '>= 1.0.0'
   s.add_dependency 'retryable'
   s.add_dependency 'faraday'
-  s.add_dependency 'sprockets'
+  s.add_dependency 'sprockets-rails'
   s.add_dependency 'slim-rails'
   s.add_dependency 'uglifier', '>= 4'
   s.add_dependency 'jbuilder'
