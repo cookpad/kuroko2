@@ -1,4 +1,7 @@
 ## lastest(master branch)
+- Dependencies
+    - Upgrade html-pipeline to v3
+
 ## v0.8.0
 - Upgrade Rails to v7.0
 - Support Ruby 3.2
