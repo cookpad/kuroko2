@@ -37,7 +37,8 @@ describe Kuroko2::JobDefinitionsHelper do
       EOF
     end
 
-    it { is_expected.to match %r(<h1>Title</h1>) }
+    # commonmarker >= 1 includes an anchor in headings
+    it { is_expected.to match %r(<h1>(<a href="#title" aria-hidden="true" id="title"></a>)?Title</h1>) }
     it { is_expected.to match %r(LGTM) }
   end
 
