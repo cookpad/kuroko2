@@ -204,7 +204,7 @@ describe 'job_definitions' do
         expect(result['name']).to eq(params[:name])
         expect(result['description']).to eq(params[:description])
         expect(result['script']).to eq(params[:script])
-        expect(result['cron']).to eq(params[:cron])
+        expect(result['cron']).to match_array(params[:cron])
       end
 
       context 'an invalid schedule' do
