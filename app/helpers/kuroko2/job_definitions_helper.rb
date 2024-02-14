@@ -5,7 +5,7 @@ module Kuroko2
     end
 
     def markdown_format(text)
-      pipeline = HTML::Pipeline.new([HTML::Pipeline::MarkdownFilter])
+      pipeline = HTMLPipeline.new(convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter.new)
       raw(pipeline.call(text)[:output].to_s)
     end
 
