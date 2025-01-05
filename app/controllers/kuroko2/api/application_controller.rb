@@ -1,4 +1,5 @@
-class Kuroko2::Api::ApplicationController < ActionController::Base
+class Kuroko2::Api::ApplicationController < ActionController::API
+  include ActionController::HttpAuthentication::Basic::ControllerMethods
   include Garage::ControllerHelper
 
   before_action :api_authentication
