@@ -13,6 +13,9 @@ gemspec
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
 
+# Workaround for https://github.com/rails/rails/pull/54264
+gem 'concurrent-ruby', '< 1.3.5'
+
 group :test do
   gem 'pry-byebug'
   gem 'timecop'
