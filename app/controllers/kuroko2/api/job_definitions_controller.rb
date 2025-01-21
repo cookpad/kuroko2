@@ -30,7 +30,7 @@ class Kuroko2::Api::JobDefinitionsController < Kuroko2::Api::ApplicationControll
   end
 
   def require_resource
-    definition = Kuroko2::JobDefinition.includes(:tags, :job_schedules).find(params[:id])
+    definition = Kuroko2::JobDefinition.includes(:tags, :job_schedules, :admins).find(params[:id])
     @resource = Kuroko2::Api::JobDefinitionResource.new(definition)
   end
 

@@ -4,7 +4,7 @@ FactoryBot.define do
     description { 'This is description for the job definition.' }
     script { "noop:\n" }
     admins { build_list(:user, 1) }
-    prevent_multi { false }
+    prevent_multi { Kuroko2::JobDefinition::PreventMultiStatus::WORKING_OR_ERROR }
 
     trait :with_revisions do
       transient do

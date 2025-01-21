@@ -35,7 +35,12 @@ describe 'job_definitions' do
           "description" => job_definition.description,
           "script" => job_definition.script,
           "tags" => [],
-          "cron"=>[],
+          "cron" => [],
+          "user_id" => [job_definition.admins[0].id],
+          "notify_cancellation" => true,
+          "suspended" => false,
+          "prevent_multi" => Kuroko2::JobDefinition::PreventMultiStatus::WORKING_OR_ERROR,
+          "slack_channel" => "",
         )
       end
     end
@@ -268,6 +273,11 @@ describe 'job_definitions' do
           'script' => definition.script,
           'tags' => ['taggy-mc-tagface'],
           'cron' => [schedule.cron],
+          'user_id' => [definition.admins[0].id],
+          'notify_cancellation' => true,
+          'suspended' => false,
+          'prevent_multi' => Kuroko2::JobDefinition::PreventMultiStatus::WORKING_OR_ERROR,
+          'slack_channel' => '',
         }
       )
       expect(response.status).to eq(200)
