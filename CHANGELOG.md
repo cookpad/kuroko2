@@ -1,4 +1,4 @@
-## lastest(master branch)
+## latest(master branch)
 - Dependencies
     - Upgrade html-pipeline to v3
     - Drop support for Ruby <= 3.1
