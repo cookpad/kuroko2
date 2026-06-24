@@ -7,6 +7,7 @@ class Kuroko2::Api::JobDefinitionResource < Kuroko2::Api::ApplicationResource
     :tags,
     :cron,
     :notify_cancellation,
+    :hipchat_notify_finished,
     :suspended,
     :prevent_multi,
     :slack_channel,
