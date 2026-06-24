@@ -343,6 +343,61 @@ describe 'job_definitions' do
       end
     end
 
+    context 'with admins' do
+      let(:new_admin) { create(:user) }
+      let(:params) do
+        {
+          name: "test",
+          description: "description",
+          script: "echo: Hello",
+          user_id: [new_admin.id],
+        }
+      end
+
+      it 'updates the admins' do
+        put "/v1/definitions/#{definition.id}", params: params, env: env
+        expect(response.status).to eq(204)
+        expect(definition.reload.admins).to eq [new_admin]
+      end
+    end
+
+    context 'without user_id' do
+      let(:original_admins) { definition.admins.to_a }
+      let(:params) do
+        {
+          name: "test",
+          description: "description",
+          script: "echo: Hello",
+        }
+      end
+
+      it 'leaves the admins unchanged' do
+        original_admins
+        put "/v1/definitions/#{definition.id}", params: params, env: env
+        expect(response.status).to eq(204)
+        expect(definition.reload.admins).to eq original_admins
+      end
+    end
+
+    context 'with an empty user_id' do
+      let(:original_admins) { definition.admins.to_a }
+      let(:params) do
+        {
+          name: "test",
+          description: "description",
+          script: "echo: Hello",
+          user_id: [],
+        }
+      end
+
+      it 'returns 422 and leaves the admins unchanged' do
+        original_admins
+        put "/v1/definitions/#{definition.id}", params: params, env: env
+        expect(response.status).to eq(422)
+        expect(definition.reload.admins).to eq original_admins
+      end
+    end
+
     context 'with invalid parameters' do
       let(:params) do
         {
