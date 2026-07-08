@@ -36,13 +36,20 @@ class Kuroko2::Api::JobDefinitionsController < Kuroko2::Api::ApplicationControll
 
   def update_resource
     definition = Kuroko2::JobDefinition.find(params[:id])
-    definition.tags = tags(params)
-    definition.job_schedules = job_schedules(params, definition)
 
-    if definition.update_and_record_revision(definition_params(params))
-      @resource = Kuroko2::Api::JobDefinitionResource.new(definition)
-    else
-      raise Http::UnprocessableEntity.new("#{definition.name}: #{definition.errors.full_messages.join}")
+    Kuroko2::JobDefinition.transaction do
+      definition.tags = tags(params)
+      definition.job_schedules = job_schedules(params, definition)
+
+      if params.key?(:user_id)
+        definition.admins = Kuroko2::User.active.with(admin_id_params(params))
+      end
+
+      if definition.update_and_record_revision(definition_params(params))
+        @resource = Kuroko2::Api::JobDefinitionResource.new(definition)
+      else
+        raise Http::UnprocessableEntity.new(definition.errors.full_messages.join(", "))
+      end
     end
   end
 
