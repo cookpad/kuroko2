@@ -125,7 +125,13 @@ class Kuroko2::JobInstance < Kuroko2::ApplicationRecord
     else
       self.touch(:canceled_at)
 
-      message = 'This job was canceled because there is already a working or erred job instance.'
+      preventing_token_statuses = job_definition.prevent_multi_tokens.pluck(:status)
+      message =
+        if preventing_token_statuses.intersect?(Kuroko2::JobDefinition::PREVENT_TOKEN_STATUSES[Kuroko2::JobDefinition::PreventMultiStatus::ERROR])
+          'This job was canceled because there is an erred job instance.'
+        else
+          'This job was canceled because there is a working job instance.'
+        end
       self.logs.warn(message)
       Kuroko2.logger.warn(message)
 

@@ -1,4 +1,6 @@
 ## latest(master branch)
+- Changes
+    - Distinguish whether the cause is a working or an erred job instance in the message for cancellation due to the "Next Job Execution" setting
 - Dependencies
     - Upgrade html-pipeline to v3
     - Drop support for Ruby <= 3.1
