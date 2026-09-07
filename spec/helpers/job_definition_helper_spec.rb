@@ -38,7 +38,7 @@ describe Kuroko2::JobDefinitionsHelper do
     end
 
     # commonmarker >= 1 includes an anchor in headings
-    it { is_expected.to match %r(<h1>(<a href="#title" aria-hidden="true" id="title"></a>)?Title</h1>) }
+    it { is_expected.to match %r(<h1\b[^>]*>(<a\b[^>]*></a>)?Title(<a\b[^>]*></a>)?</h1>) }
     it { is_expected.to match %r(LGTM) }
   end
 
