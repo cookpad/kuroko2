@@ -16,6 +16,9 @@ gemspec
 # Workaround for https://github.com/rails/rails/pull/54264
 gem 'concurrent-ruby', '< 1.3.5'
 
+# Workaround for https://github.com/rails/rails/issues/58685
+gem 'json', '< 3'
+
 group :test do
   gem 'pry-byebug'
   gem 'timecop'
