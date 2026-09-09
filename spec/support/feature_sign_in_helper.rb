@@ -11,6 +11,7 @@ module FeatureSignInHelper
 
     visit kuroko2_path
     click_on('Sign in with Google')
+    expect(page).to have_title('Dashboard « Kuroko 2')
   end
 
   def mock_omni_auth_google_oauth2(options = {})

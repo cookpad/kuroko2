@@ -27,6 +27,7 @@ jobs:
           --health-retries 5
     env:
       RAILS_ENV: test
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v2
       - uses: ruby/setup-ruby@v1
@@ -44,6 +45,7 @@ jobs:
         ruby:
           - '3.3'
     name: Run assets:precompile with Ruby ${{ matrix.ruby }}
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v3
       - uses: ruby/setup-ruby@v1
