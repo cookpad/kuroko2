@@ -71,6 +71,7 @@ RSpec.describe "Launches a job instace and Management job instances on the web c
       expect(page).to have_selector('#instance-status .label', text: 'ERROR')
 
       click_on('Retry')
+      expect(page).to have_selector('#instance-status .label', text: 'WORKING')
       token.reload
 
       until token.status == Kuroko2::Token::FINISHED
