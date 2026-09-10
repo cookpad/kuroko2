@@ -48,10 +48,20 @@ describe Kuroko2::JobInstance do
   end
 
   describe '#generate_token' do
+    let(:existing_token_statuses) { [Kuroko2::Token::WORKING] }
+
     before do
       ActionMailer::Base.deliveries.clear
-      create(:job_instance, job_definition: definition)
+
+      definition.update!(prevent_multi: false)
+      existing_token_statuses.each do |status|
+        create(:job_instance, job_definition: definition) do |instance|
+          instance.tokens.update_all(status: status)
+        end
+      end
+      definition.update!(prevent_multi: true)
     end
+
     subject! { definition.job_instances.create }
 
     context 'notify_cancellation is false' do
@@ -60,10 +70,42 @@ describe Kuroko2::JobInstance do
       it { expect(ActionMailer::Base.deliveries).to be_empty }
     end
 
-    context 'notify_cancellation is false' do
+    context 'notify_cancellation is true' do
       let(:definition) { create(:job_definition, notify_cancellation: true, prevent_multi: true) }
 
       it { expect(ActionMailer::Base.deliveries).not_to be_empty }
+    end
+
+    context 'with a working job instance' do
+      let(:definition) { create(:job_definition, notify_cancellation: false, prevent_multi: true) }
+
+      it 'logs the working job instance as the cancellation reason' do
+        expect(subject.logs.last.message).to eq(
+          'This job was canceled because there is a working job instance.'
+        )
+      end
+    end
+
+    context 'with an erred job instance' do
+      let(:definition) { create(:job_definition, notify_cancellation: false, prevent_multi: true) }
+      let(:existing_token_statuses) { [Kuroko2::Token::FAILURE] }
+
+      it 'logs the erred job instance as the cancellation reason' do
+        expect(subject.logs.last.message).to eq(
+          'This job was canceled because there is an erred job instance.'
+        )
+      end
+    end
+
+    context 'with a working and an erred job instance' do
+      let(:definition) { create(:job_definition, notify_cancellation: false, prevent_multi: true) }
+      let(:existing_token_statuses) { [Kuroko2::Token::WORKING, Kuroko2::Token::FAILURE] }
+
+      it 'logs the erred job instance as the cancellation reason' do
+        expect(subject.logs.last.message).to eq(
+          'This job was canceled because there is an erred job instance.'
+        )
+      end
     end
   end
 

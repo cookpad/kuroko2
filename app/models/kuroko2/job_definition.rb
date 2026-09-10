@@ -76,9 +76,12 @@ class Kuroko2::JobDefinition < Kuroko2::ApplicationRecord
     }
   validates :webhook_url, format: { with: /\A#{URI::regexp(%w(http https))}\z/, allow_blank: true }
 
+  def prevent_multi_tokens
+    Kuroko2::Token.where(job_definition_id: self.id, status: PREVENT_TOKEN_STATUSES[self.prevent_multi])
+  end
+
   def proceed_multi_instance?
-    tokens = Kuroko2::Token.where(job_definition_id: self.id)
-    (tokens.map(&:status) & PREVENT_TOKEN_STATUSES[self.prevent_multi]).empty?
+    prevent_multi_tokens.empty?
   end
 
   def text_tags
